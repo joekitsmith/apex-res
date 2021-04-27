@@ -1,7 +1,6 @@
 import math as math
 import scipy.optimize as optimize
 import numpy as np
-import pandas as pd
 import itertools as itertools
 import time as time
 import scipy.ndimage
