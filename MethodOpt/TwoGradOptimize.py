@@ -13,7 +13,7 @@ class TwoGradOptimize:
         
         ## Instrument
         self.instrument_name = instrument_params[0]
-        self.tD = instrument_params[8]
+        self.td = instrument_params[8]
     
         ## Column
         self.col_name = instrument_params[1]
@@ -25,7 +25,7 @@ class TwoGradOptimize:
         self.t0 = instrument_params[7]
         
         ## Method
-        self.F = method_params[0]
+        self.flow_rate = method_params[0]
         self.tG_final = method_params[1]
         self.phi0_init = np.array([method_params[2]], dtype='float64')
         self.phif_init = np.array([method_params[3]], dtype='float64')
@@ -55,11 +55,11 @@ class TwoGradOptimize:
     def calculateParameters(self):
 
         def estimate_b(beta, tr1, tr2):
-            b = math.sqrt(((self.t0 * math.log10(beta)) / (tr1 - (tr2/beta) - (self.t0 + self.tD)*(beta - 1)/beta))**2)
+            b = math.sqrt(((self.t0 * math.log10(beta)) / (tr1 - (tr2/beta) - (self.t0 + self.td)*(beta - 1)/beta))**2)
             return(b)
 
         def calculate_logk0(b, tr):
-            logk0_est = b * (tr - self.t0 - self.tD) / self.t0-math.log10(2.3*b)
+            logk0_est = b * (tr - self.t0 - self.td) / self.t0-math.log10(2.3*b)
             return(logk0_est)
 
         def calculate_s(b, tG, delta_phi):
@@ -71,7 +71,7 @@ class TwoGradOptimize:
             return(logkw)
 
         def estimate_N(logk0, b, w):
-            k_star = (10**logk0) / (2.3 * b * ((10**logk0) / 2) - (self.t0 / self.tD) + 1)
+            k_star = (10**logk0) / (2.3 * b * ((10**logk0) / 2) - (self.t0 / self.td) + 1)
             N = (4 * ((k_star + 2)**2) * (self.t0**2)) / w**2
             return(N)
 
@@ -105,7 +105,7 @@ class TwoGradOptimize:
                 logk0_est = calculate_logk0(b_est, tr)
 
                 def retention_f(b):
-                    tr_est = (self.t0/b_est) * math.log10(2.3 * (10**logk0_est) * b * (1 - (self.tD / (self.t0 * (10**logk0_est)))) + 1) + self.t0 + self.tD
+                    tr_est = (self.t0/b_est) * math.log10(2.3 * (10**logk0_est) * b * (1 - (self.td / (self.t0 * (10**logk0_est)))) + 1) + self.t0 + self.td
                     return(math.sqrt((tr_est - tr)**2))
 
                 b_opt = optimize.root(retention_f, b_est).x[0]
@@ -144,11 +144,11 @@ class TwoGradOptimize:
             return(tr)
 
         def calculate_tr_largek0(b, logk0):
-            tr = (self.t0 / b) * np.log10(2.3 * (10**logk0) * b * (1 - (self.tD / (self.t0 * (10**logk0)))) + 1) + self.t0 + self.tD
+            tr = (self.t0 / b) * np.log10(2.3 * (10**logk0) * b * (1 - (self.td / (self.t0 * (10**logk0)))) + 1) + self.t0 + self.td
             return(tr)
 
         def calculate_w(logk0, b, N):
-            k_star = (10**logk0) / (2.3 * b * ((10**logk0) / 2) - (self.t0 / self.tD) + 1)
+            k_star = (10**logk0) / (2.3 * b * ((10**logk0) / 2) - (self.t0 / self.td) + 1)
             w = (4 * (N**(-1/2))) * self.t0 * (1 + (k_star / 2))
             return(w)
 
@@ -169,7 +169,7 @@ class TwoGradOptimize:
 
             tr = np.zeros(len(self.phi0))
 
-            smallk0 = np.where((self.t0 * (10**logk0)) <= self.tD)
+            smallk0 = np.where((self.t0 * (10**logk0)) <= self.td)
             tr[smallk0] = calculate_tr_smallk0(logk0[smallk0])
             
             largek0 = np.where(tr == 0)

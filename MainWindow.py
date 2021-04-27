@@ -2,7 +2,7 @@ import os
 from PyQt5.QtCore import Qt, QSize, QPropertyAnimation, pyqtProperty
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QMainWindow, QWidget, QSizePolicy, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QTabBar, QTabWidget, QGridLayout, \
-    QFrame, QSpacerItem, QToolBar
+    QFrame, QSpacerItem, QToolBar, QCheckBox
     
 class RibbonToolBar(QToolBar):
     def __init__(self, parent=None):
@@ -19,7 +19,7 @@ class RibbonToolBar(QToolBar):
 
         self.addMenu = self.ribbon_widget.menu_bar.addMenu
         self.addGroup = self.ribbon_widget.menu_bar.addGroup
-        self.listGroups = self.ribbon_widget.menu_bar.listGroups
+        self.addSliderChoiceWidget = self.ribbon_widget.menu_bar.addSliderChoiceWidget
     
 class RibbonWidget(QWidget):
     def __init__(self, parent=None):
@@ -34,9 +34,9 @@ class RibbonWidget(QWidget):
 
         self.setMouseTracking(True)
 
-class FramelessWindow(QMainWindow):
+class WindowWidget(QMainWindow):
     def __init__(self):
-        super(FramelessWindow, self).__init__()
+        super(WindowWidget, self).__init__()
         self.margin = 4
         self.setMouseTracking(True)
         
@@ -55,6 +55,26 @@ class MenuWidget(QWidget):
 
     _height = pyqtProperty(int, fset=_setHeight)
     
+class GroupWidget(QWidget):
+    def __init__(self, p_str, parent=None):
+        super(GroupWidget, self).__init__(parent)
+        self.title = p_str
+        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
+        self.setMouseTracking(True)
+
+        self.glayout = QGridLayout(self)
+        self.glayout.setContentsMargins(3, 10, 3, 3)
+        self.glayout.setSpacing(5)
+        self.glayout.setVerticalSpacing(1)
+        label = QLabel(self.title)
+        label.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+        label.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Maximum)
+        self.glayout.addWidget(label, 1, 0, 1, 1)
+        line = QFrame(self)
+        line.setFrameShape(QFrame.VLine)
+        line.setFrameShadow(QFrame.Raised)
+        self.glayout.addWidget(line, 0, 1, 3, 1)
+    
 class TabBar(QTabBar):
     def __init__(self, *args):
         super(TabBar, self).__init__(*args)
@@ -67,7 +87,7 @@ class MenuBar(QTabWidget):
 
         tabbar = TabBar(parent)
         self.setTabBar(tabbar)
-        self.setMinimumHeight(130)
+        self.setMinimumHeight(135)
         self.setMouseTracking(True)
 
         self._drop = False
@@ -93,7 +113,7 @@ class MenuBar(QTabWidget):
         self.hlayout.setSpacing(0)
         hs = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.hlayout.addItem(hs)
-        return menu
+        return(menu)
 
     def addGroup(self, p_str, menu):
         group = GroupWidget(p_str, menu)
@@ -101,7 +121,7 @@ class MenuBar(QTabWidget):
         group.setObjectName('group')
         insert_index = len(menu.findChildren(GroupWidget, 'group')) - 1
         self.hlayout.insertWidget(insert_index, group)
-        return group
+        return(group)
 
     def listGroups(self, menu):
         self.group_list = []
@@ -112,25 +132,53 @@ class MenuBar(QTabWidget):
             except: AttributeError
         return(self.group_list)
     
-class GroupWidget(QWidget):
-    def __init__(self, p_str, parent=None):
-        super(GroupWidget, self).__init__(parent)
-        self._title = p_str
+    def addSliderChoiceWidget(self, menu):
+        slider_choice = SliderChoiceWidget()
+        slider_choice.setObjectName('param')
+        insert_index = len(menu.findChildren(GroupWidget, 'group'))
+        self.hlayout.insertWidget(insert_index, slider_choice)
+        return(slider_choice)
+    
+class SliderCheckBox(QCheckBox):
+    def __init__(self, p_str):
+        super(SliderCheckBox, self).__init__()
+        self.setMouseTracking(True)
+        self.setText(p_str)
+        self.setStyleSheet('''QCheckBox { font-size: 10px;}''')
+        self.setStyleSheet('''QCheckBox::indicator{ height: 10px;
+                           width: 10px}''')
+        
+class SliderChoiceWidget(QWidget):
+    def __init__(self):
+        super(SliderChoiceWidget, self).__init__()
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
         self.setMouseTracking(True)
-
         self.glayout = QGridLayout(self)
-        self.glayout.setContentsMargins(3, 10, 3, 3)
+        self.glayout.setContentsMargins(10, 10, 3, 3)
         self.glayout.setSpacing(5)
         self.glayout.setVerticalSpacing(1)
-        label = QLabel(self._title)
-        label.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+        label = QLabel('Sliders')
+        label.setAlignment(Qt.AlignHCenter | Qt.AlignBottom)
         label.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Maximum)
-        self.glayout.addWidget(label, 1, 0, 1, 1)
+        self.glayout.addWidget(label, 2, 0, 1, 1)
+        self.clayout = QGridLayout()
+        self.clayout.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        self.clayout.setSpacing(3)
+        self.clayout.setContentsMargins(0, 0, 0, 5)
+        self.glayout.addLayout(self.clayout, 0, 0, 2, 1)
         line = QFrame(self)
         line.setFrameShape(QFrame.VLine)
         line.setFrameShadow(QFrame.Raised)
         self.glayout.addWidget(line, 0, 1, 3, 1)
-
-    #def addWidget(self, widget):
-    #    self.glayout.addWidget(widget, 0, 0, 1, 2)
+        
+    def addSliderChoice(self, p_str):
+        check = SliderCheckBox(p_str)
+        count = self.clayout.count()
+        if count < 3:
+            self.clayout.addWidget(check, count, 0, 1, 1)
+            self.setFixedWidth(150)
+        if count >= 3:
+            cols = (count-(count%3))/3
+            self.clayout.addWidget(check, count%3, cols, 1, 1)
+            self.setFixedWidth((cols+1) * 150)
+        return(check)
