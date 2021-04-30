@@ -9,6 +9,7 @@ from MethodOpt import TwoGradOptimize
 from Chromatogram import FigCanvas
 from Chromatogram import Parameters
 from Chromatogram import Resolution
+from Chromatogram import Sliders
 
 
 start = time.process_time()
@@ -17,41 +18,10 @@ class Form(WindowWidget):
 
     def __init__(self):
         super(Form, self).__init__()
-        #self.resize(1920,1050)
+
         self.setWindowTitle("Apex Res")
         self.showMaximized()
-        self.init_ui()
-        
-
-    def init_ui(self):
-
-        ribbon_toolbar = RibbonToolBar(self)
-        # ----------------------------------------------
-        menu = ribbon_toolbar.addMenu('Home')
-        group = ribbon_toolbar.addGroup('\nData\nEntry\n\n', menu)
-        param = ribbon_toolbar.addSliderChoiceWidget(menu)
-        
-        # -----------------------------------------
-        menu = ribbon_toolbar.addMenu('Mode')
-        group = ribbon_toolbar.addGroup('Isocratic\nto\nGradient\n\n2 runs', menu)
-        group = ribbon_toolbar.addGroup('Gradient\nto\nGradient\n\n2 runs', menu)
-        group = ribbon_toolbar.addGroup('Isocratic\nto\nGradient\n\n3 runs', menu)
-        group = ribbon_toolbar.addGroup('Gradient\nto\nGradient\n\n3 runs', menu)
-        group = ribbon_toolbar.addGroup('\npH\n\n\n3 runs', menu)
-        group = ribbon_toolbar.addGroup('\nTemperature\n\n\n2 runs', menu)
-        group = ribbon_toolbar.addGroup('Gradient\nand\nTemperature\n\n4 runs', menu)
-        group = ribbon_toolbar.addGroup('Isocratic\nand\nTemperature\n\n4 runs', menu)
-        group = ribbon_toolbar.addGroup('Gradient\nand\npH\n\n6 runs', menu)
-        group = ribbon_toolbar.addGroup('Isocratic\nand\npH\n\n6 runs', menu)
-        # ---------------------------------------------
-        menu = ribbon_toolbar.addMenu('Instrument')
-        group = ribbon_toolbar.addGroup('\nEdit\nInstrument\n\n', menu)
-
-
-        ## Initialize layout
-
-        self.setWindowIcon(QIcon('image/left.ico'))
-        self.addToolBar(ribbon_toolbar)
+        self.configureToolBar()
 
         self.centralwidget = QWidget(self)
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -62,44 +32,39 @@ class Form(WindowWidget):
         self.gridLayout.addWidget(self.fig1, 0, 0, 1, 1)
         self.setCentralWidget(self.centralwidget)
         self.centralwidget.setMouseTracking(True)
-
+        
         self.initialiseData()
         self.addSliderWidget()
         self.addParameterWidget()
         self.addResolutionWidget()
+        self.initialiseSliderCheckBoxes()
+        self.initialiseSliders()
         self.configureLayout()
-
-        b0 = param.addSliderChoice('Initial % B')
-        b0.stateChanged.connect(lambda:self.slider_widget.changeSlider(b0, 'b0', self.tgo))
-        b0.setChecked(True)
-        bf = param.addSliderChoice('Final % B')
-        bf.stateChanged.connect(lambda:self.slider_widget.changeSlider(bf, 'bf', self.tgo))
-        bf.setChecked(True)
-        tg = param.addSliderChoice('Gradient time')
-        tg.stateChanged.connect(lambda:self.slider_widget.changeSlider(tg, 'tg', self.tgo))
-        tg.setChecked(True)
-        t0 = param.addSliderChoice('Dead time')
-        t0.stateChanged.connect(lambda:self.slider_widget.changeSlider(t0, 't0', self.tgo))
-        td = param.addSliderChoice('Dwell time')
-        td.stateChanged.connect(lambda:self.slider_widget.changeSlider(td, 'td', self.tgo))
-        flow = param.addSliderChoice('Flow rate')
-        flow.stateChanged.connect(lambda:self.slider_widget.changeSlider(flow, 'flow', self.tgo))
-        col_len = param.addSliderChoice('Column length')
-        col_len.stateChanged.connect(lambda:self.slider_widget.changeSlider(col_len, 'col_len', self.tgo))
-        col_diam = param.addSliderChoice('Column diameter')
-        col_diam.stateChanged.connect(lambda:self.slider_widget.changeSlider(col_diam, 'col_diam', self.tgo))
-        part_size = param.addSliderChoice('Particle size')
-        part_size.stateChanged.connect(lambda:self.slider_widget.changeSlider(part_size, 'part_size', self.tgo))
-        self.slider_choice_list = [b0, bf, tg, t0, td, flow, col_len, col_diam, part_size]
         
-        for slider_name, slider_values in self.slider_dict.items():
-            if slider_name == 'b0':
-                slider_values[0].valueChanged.connect(self.update_phi0)
-            if slider_name == 'bf':
-                slider_values[0].valueChanged.connect(self.update_phif)
-            if slider_name == 'tg':
-                slider_values[0].valueChanged.connect(self.update_tg)
+    def configureToolBar(self):
+        
+        ribbon_toolbar = RibbonToolBar(self)
+        
+        home_menu = ribbon_toolbar.addMenu('Home')
+        data_group = ribbon_toolbar.addGroup('\nData\nEntry\n\n', home_menu)
+        self.slider_check = ribbon_toolbar.addSliderChoiceWidget(home_menu)
 
+        mode_menu = ribbon_toolbar.addMenu('Mode')
+        ig2_group = ribbon_toolbar.addGroup('Isocratic\nto\nGradient\n\n2 runs', mode_menu)
+        gg2_group = ribbon_toolbar.addGroup('Gradient\nto\nGradient\n\n2 runs', mode_menu)
+        ig3_group = ribbon_toolbar.addGroup('Isocratic\nto\nGradient\n\n3 runs', mode_menu)
+        gg3_group = ribbon_toolbar.addGroup('Gradient\nto\nGradient\n\n3 runs', mode_menu)
+        ph3_group = ribbon_toolbar.addGroup('\npH\n\n\n3 runs', mode_menu)
+        t2_group = ribbon_toolbar.addGroup('\nTemperature\n\n\n2 runs', mode_menu)
+        gt4_group = ribbon_toolbar.addGroup('Gradient\nand\nTemperature\n\n4 runs', mode_menu)
+        it4_group = ribbon_toolbar.addGroup('Isocratic\nand\nTemperature\n\n4 runs', mode_menu)
+        gph6_group = ribbon_toolbar.addGroup('Gradient\nand\npH\n\n6 runs', mode_menu)
+        iph6_group = ribbon_toolbar.addGroup('Isocratic\nand\npH\n\n6 runs', mode_menu)
+
+        ins_menu = ribbon_toolbar.addMenu('Instrument')
+        edit_ins_group = ribbon_toolbar.addGroup('\nEdit\nInstrument\n\n', ins_menu)
+        
+        self.addToolBar(ribbon_toolbar)
         
     def initialiseData(self):
         self.instrument_params = ['Agilent 1260 Inifinity I', 'Phenomenex Gemini C18', 250, 4, 5, 2, 19000, 2.56, 3.05]
@@ -112,14 +77,14 @@ class Form(WindowWidget):
 
     def addSliderWidget(self):
         
-        self.slider_widget = SliderWidget()
+        self.slider_widget = Sliders.SliderWidget(self.tgo)
         self.gridLayout.addWidget(self.slider_widget, 0, 1, 1, 1)
         self.slider_dict = self.slider_widget.slider_dict
 
     def addParameterWidget(self):
         self.pw = Parameters.ParamWidget()
-        self.pw.setupUi()
-        #self.pw.addData(self.instrument_params, self.method_params, self.slider_list)
+        print(self.slider_dict)
+        self.pw.addData(self.instrument_params, self.method_params, self.slider_dict)
         self.gridLayout.addWidget(self.pw, 1, 0, 1, 1)
 
     def addResolutionWidget(self):
@@ -127,6 +92,50 @@ class Form(WindowWidget):
         self.rw.setupUi(self.tgo.peakinterest, self.tgo.critical_Rs)
         self.gridLayout.addWidget(self.rw, 1, 1, 1, 1)
         self.rw.maximise_button.clicked.connect(self.maximise_res)
+
+    def initialiseSliderCheckBoxes(self):
+        
+        b0 = self.slider_check.addSliderChoice('Initial % B')
+        b0.stateChanged.connect(lambda:self.slider_widget.changeSlider(b0, 'b0'))
+        b0.setChecked(True)
+        
+        bf = self.slider_check.addSliderChoice('Final % B')
+        bf.stateChanged.connect(lambda:self.slider_widget.changeSlider(bf, 'bf'))
+        bf.setChecked(True)
+        
+        tg = self.slider_check.addSliderChoice('Gradient time')
+        tg.stateChanged.connect(lambda:self.slider_widget.changeSlider(tg, 'tg'))
+        tg.setChecked(True)
+        
+        t0 = self.slider_check.addSliderChoice('Dead time')
+        t0.stateChanged.connect(lambda:self.slider_widget.changeSlider(t0, 't0'))
+        
+        td = self.slider_check.addSliderChoice('Dwell time')
+        td.stateChanged.connect(lambda:self.slider_widget.changeSlider(td, 'td'))
+        
+        flow = self.slider_check.addSliderChoice('Flow rate')
+        flow.stateChanged.connect(lambda:self.slider_widget.changeSlider(flow, 'flow'))
+        
+        col_len = self.slider_check.addSliderChoice('Column length')
+        col_len.stateChanged.connect(lambda:self.slider_widget.changeSlider(col_len, 'col_len'))
+        
+        col_diam = self.slider_check.addSliderChoice('Column diameter')
+        col_diam.stateChanged.connect(lambda:self.slider_widget.changeSlider(col_diam, 'col_diam'))
+        
+        part_size = self.slider_check.addSliderChoice('Particle size')
+        part_size.stateChanged.connect(lambda:self.slider_widget.changeSlider(part_size, 'part_size'))
+        
+        self.slider_choice_list = [b0, bf, tg, t0, td, flow, col_len, col_diam, part_size]
+        
+    def initialiseSliders(self):
+        
+        for slider_name, slider_values in self.slider_dict.items():
+            if slider_name == 'b0':
+                slider_values[0].valueChanged.connect(self.update_phi0)
+            if slider_name == 'bf':
+                slider_values[0].valueChanged.connect(self.update_phif)
+            if slider_name == 'tg':
+                slider_values[0].valueChanged.connect(self.update_tg)
 
     def configureLayout(self):
 
@@ -220,95 +229,28 @@ class Form(WindowWidget):
         self.update_Ui()
 
 
-class SliderWidget(QWidget):
-    
-    def __init__(self):
-        super(SliderWidget, self).__init__()
         
-        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
-        self.gridLayout = QGridLayout()
-        self.gridLayout.setContentsMargins(30,0,30,0)
-        self.gridLayout.setVerticalSpacing(10)
-        self.gridLayout.setHorizontalSpacing(50)
-        
-        self.slider_dict = {}
-        
-        self.setLayout(self.gridLayout)
-        
-    def changeSlider(self, checkbox, slider_name, tgo):
+        slider, slider_label = self.slider_dict[slider_name]
         
         if checkbox.isChecked() == True:
-        
-            slider_label = QLabel()
-            slider_label.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
-        
-            if slider_name == 'b0':
-                slider = Slider(res=200, minimum=0, maximum=200, interval=10, value=tgo.phi0_init[0])
-                slider_label.setText('Initial \n % B')
-            
-            if slider_name == 'bf':
-                slider = Slider(res=200, minimum=0, maximum=200, interval=10, value=tgo.phif_init[0])
-                slider_label.setText('Final \n % B')
-            
-            if slider_name == 'tg':
-                slider = Slider(res=1, minimum=0, maximum=120, interval=10, value=tgo.tG1)
-                slider_label.setText('Gradient \n time')
-            
-            if slider_name == 't0':
-                slider = Slider(res=1, minimum=0, maximum=5, interval=0.1, value=tgo.t0)
-                slider_label.setText('Dead \n time')
-            
-            if slider_name == 'td':
-                slider = Slider(res=1, minimum=0, maximum=5, interval=0.1, value=tgo.td)
-                slider_label.setText('Dwell \n time')
-        
-            if slider_name == 'flow':
-                slider = Slider(res=1, minimum=0, maximum=5, interval=0.1, value=tgo.flow_rate)
-                slider_label.setText('Flow \n rate')
-            
-            if slider_name == 'col_len':
-                slider = Slider(res=1, minimum=0, maximum=50, interval=1, value=tgo.col_length)
-                slider_label.setText('Column \n length')
-            
-            if slider_name == 'col_diam':
-                slider = Slider(res=1, minimum=0, maximum=5, interval=0.1, value=tgo.col_diameter)
-                slider_label.setText('Column \n diameter')
-            
-            if slider_name == 'part_size':
-                slider = Slider(res=1, minimum=0, maximum=200, interval=5, value=tgo.particle_size)
-                slider_label.setText('Particle \n size')
-            
-            self.slider_dict[slider_name] = (slider, slider_label)
-            
-            cols = self.gridLayout.columnCount()
-            self.gridLayout.addWidget(slider, 0, (cols*2)+2, 1, 1, alignment=Qt.AlignHCenter)
-            self.gridLayout.addWidget(slider_label, 1, (cols*2)+2, 1, 1, alignment=Qt.AlignHCenter)
+            count = self.gridLayout.count()/2
+            row = (count-(count%3))/3 + 1
+            if count < 3:
+                self.gridLayout.addWidget(slider, 0, count, 1, 1, alignment=Qt.AlignHCenter)
+                self.gridLayout.addWidget(slider_label, 1, count, 1, 1, alignment=Qt.AlignHCenter)
+            else:
+                self.gridLayout.addWidget(slider, row, count%3, 1, 1, alignment=Qt.AlignHCenter)
+                self.gridLayout.addWidget(slider_label, row+1, count%3, 1, 1, alignment=Qt.AlignHCenter)
+            slider.show()
+            slider_label.show()
             
         else:
-            
-            if len(self.slider_dict) > 0:
-                slider, slider_label = self.slider_dict[slider_name]
-                del self.slider_dict[slider_name]
-                self.gridLayout.removeWidget(slider)
-                self.gridLayout.removeWidget(slider_label)
+            count = self.gridLayout.count()/2
+            self.gridLayout.removeWidget(slider)
+            self.gridLayout.removeWidget(slider_label)
+            slider.hide()
+            slider_label.hide()         
         
-            
-        
-class Slider(QSlider):
-
-    def __init__(self, res, minimum, maximum, interval, value):
-        super(Slider, self).__init__()
-
-        self.res = res
-        self.minimum = minimum
-        self.maximum = maximum
-
-        self.setRange(minimum, maximum)
-        self.setValue(value * res)
-        self.setMouseTracking(True)
-        self.setTickPosition(QSlider.TicksBothSides)
-        self.setTickInterval(interval)
-           
 
 if __name__ == '__main__':
     import sys

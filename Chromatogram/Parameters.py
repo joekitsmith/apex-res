@@ -1,6 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class ParamWidget(QtWidgets.QWidget):
+    
+    def __init__(self, *args, **kwargs):
+        super(ParamWidget, self).__init__()
+        
+        self.setupUi()
 
     def setupUi(self):
         
@@ -128,12 +133,15 @@ class ParamWidget(QtWidgets.QWidget):
 
         gridLayout.addWidget(self.label_title, 0,0,3,1)
         gridLayout.addWidget(self.label_instrument_title, 1,0,1,1)
-        #gridLayout.addWidget(self.)
+        gridLayout.addWidget(self.ins_name_label, 2, 0, 1, 1)
 
 
-    def addData(self, instrument_params, method_params, slider_list):
+    def addData(self, instrument_params, method_params, slider_dict):
 
-        slider_B0, slider_Bf, slider_tG = slider_list
+        slider_B0 = slider_dict['b0'][0]
+        slider_Bf = slider_dict['bf'][0]
+        slider_tG = slider_dict['tg'][0]
+        
 
         field_end = []
         for n, field in enumerate(self.instrument_fields):
