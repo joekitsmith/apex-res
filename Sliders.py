@@ -85,10 +85,12 @@ class SliderWidget(QWidget):
             self.visible_slider_list.remove(slider_name)
         
         for visible_slider in self.visible_slider_list:
+            
             self.createSlider(visible_slider)
             slider, slider_label = self.slider_dict[visible_slider]
             count = self.gridLayout.count()/2
             row = (2*count-(count%3))/3 + 1
+            
             if count < 3:
                 self.gridLayout.addWidget(slider, 0, count, 1, 1, alignment=Qt.AlignHCenter)
                 self.gridLayout.addWidget(slider_label, 1, count, 1, 1, alignment=Qt.AlignHCenter)
