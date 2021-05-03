@@ -111,12 +111,12 @@ class ChromatogramWidget(QWidget):
         slider_b0 = self.slider_dict['b0'][0]
         slider_bf = self.slider_dict['bf'][0]
         slider_tg = self.slider_dict['tg'][0]
-        self.pw.tG_field.setText(str(slider_tg.value()) + 'min')
-        self.pw.B0_field.setText(str(slider_b0.value() / (slider_b0.res / 100)) + '%')
-        self.pw.Bf_field.setText(str(slider_bf.value() / (slider_bf.res / 100)) + '%')
-        self.pw.tG_field.adjustSize()
-        self.pw.B0_field.adjustSize()
-        self.pw.Bf_field.adjustSize()
+        self.pw.tg_field.setText(str(slider_tg.value()) + 'min')
+        self.pw.b0_field.setText(str(slider_b0.value() / (slider_b0.res / 100)) + '%')
+        self.pw.bf_field.setText(str(slider_bf.value() / (slider_bf.res / 100)) + '%')
+        self.pw.tg_field.adjustSize()
+        self.pw.b0_field.adjustSize()
+        self.pw.bf_field.adjustSize()
 
         self.tgo.updatePlot(self.fig1)
         self.rw.resolution_label2.setText('%s' %(round(self.tgo.critical_Rs[0],2)))

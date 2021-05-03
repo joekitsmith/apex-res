@@ -1,140 +1,210 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QFrame, QHBoxLayout, QSizePolicy
+from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtGui import QFont
 
-class ParamWidget(QtWidgets.QWidget):
+class ParamWidget(QWidget):
     
     def __init__(self, *args, **kwargs):
         super(ParamWidget, self).__init__()
         
+        self.instrument_layout = QGridLayout()
+        self.method_layout = QGridLayout()
+        self.peak_layout = QGridLayout()
+        
+        self.total_layout = QGridLayout(self)
+        
+        self.configureFonts()
+        self.configureInstrumentParameters()
+        self.configureMethodParameters()
+        self.configurePeakParameters()
+        
         self.setupUi()
-
+        
     def setupUi(self):
         
         self.setObjectName('ParamWidget')
 
-        gridLayout = QtWidgets.QGridLayout(self)
-
         self.setStyleSheet('background-color: (0.906, 0.906, 0.906)')
 
-        self.label_title = QtWidgets.QLabel()
-        self.label_title.setGeometry(QtCore.QRect(600, 0, 150 ,25))
-        self.label_title.setText('Parameters')
-        font14 = QtGui.QFont()
-        font14.setBold(True)
-        font14.setPointSize(14)
-        self.label_title.setFont(font14)
-        self.label_title.setAlignment(QtCore.Qt.AlignTop)
+        label_title = QLabel()
+        label_title.setText('Parameters')
+        label_title.setFont(self.font14)
+        label_title.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+        label_title.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Maximum)
+        
+        hline = QFrame()
+        hline.setFrameShape(QFrame.HLine)
+        hline.setFrameShadow(QFrame.Sunken)
 
-        self.label_instrument_title = QtWidgets.QLabel()
-        self.label_instrument_title.setGeometry(QtCore.QRect(5, 40, 100, 50))
-        self.label_instrument_title.setText('Instrument')
-        font11 = QtGui.QFont()
-        font11.setBold(True)
-        font11.setPointSize(11)
-        self.label_instrument_title.setFont(font11)
-        self.label_instrument_title.setAlignment(QtCore.Qt.AlignTop)
+        vline1 = QFrame()
+        vline1.setFrameShape(QFrame.VLine)
+        vline1.setFrameShadow(QFrame.Sunken)
+         
+        vline2 = QFrame()
+        vline2.setFrameShape(QFrame.VLine)
+        vline2.setFrameShadow(QFrame.Sunken)
+         
+        total_layout = self.total_layout
+        total_layout.setContentsMargins(20,10,20,20)
+        total_layout.setSpacing(8)
+        total_layout.addWidget(label_title, 0,0,1,5)
+        total_layout.addWidget(hline, 1,0,1,5)
+        total_layout.addLayout(self.instrument_layout, 2,0,1,1)
+        total_layout.addWidget(vline1, 2,1,1,1)
+        total_layout.addLayout(self.method_layout, 2,2,1,1)
+        total_layout.addWidget(vline2, 2,3,1,1)
+        total_layout.addLayout(self.peak_layout, 2,4,1,1)
+        
+        total_layout.setColumnStretch(0,3)
+        total_layout.setColumnStretch(2,2)
+        total_layout.setColumnStretch(4,12)
 
-        font9 = QtGui.QFont()
-        font9.setPointSize(9)
-        font9bold = QtGui.QFont()
-        font9bold.setPointSize(9)
-        font9bold.setBold(True)
-        self.ins_name_label = QtWidgets.QLabel()
-        self.col_name_label = QtWidgets.QLabel()
-        self.col_length_label = QtWidgets.QLabel()
-        self.col_diam_label = QtWidgets.QLabel()
-        self.part_size_label = QtWidgets.QLabel()
-        self.pore_diam_label = QtWidgets.QLabel()
-        self.plate_num_label = QtWidgets.QLabel()
-        self.dead_vol_label = QtWidgets.QLabel()
-        self.dwell_vol_label = QtWidgets.QLabel()
-        self.ins_name_field = QtWidgets.QLabel()
-        self.col_name_field = QtWidgets.QLabel()
-        self.col_length_field = QtWidgets.QLabel()
-        self.col_diam_field = QtWidgets.QLabel()
-        self.part_size_field = QtWidgets.QLabel()
-        self.pore_diam_field = QtWidgets.QLabel()
-        self.plate_num_field = QtWidgets.QLabel()
-        self.dead_vol_field = QtWidgets.QLabel()
-        self.dwell_vol_field = QtWidgets.QLabel()
-        self.instrument_labels = [self.ins_name_label, self.col_name_label, self.col_length_label, self.col_diam_label, self.part_size_label, self.pore_diam_label, self.plate_num_label, self.dead_vol_label, self.dwell_vol_label]
-        self.instrument_fields = [self.ins_name_field, self.col_name_field, self.col_length_field, self.col_diam_field, self.part_size_field, self.pore_diam_field, self.plate_num_field, self.dead_vol_field, self.dwell_vol_field]
-        instrument_strings = ['Instrument name', 'Column name', 'Column length', 'Column diameter', 'Particle size', 'Pore diameter', 'Plate number', 'Dead volume', 'Dwell volume']
-        for n, label in enumerate(self.instrument_labels):
-            label.setGeometry(QtCore.QRect(5, 70+(n*21), 100, 50))
+    def configureInstrumentParameters(self):
+        
+        ins_layout = self.instrument_layout
+        ins_layout.setContentsMargins(0,10,15,2)
+        ins_layout.setVerticalSpacing(9)
+        
+        instrument_label = QLabel()
+        instrument_label.setText('Instrument')
+        instrument_label.setFont(self.font11)
+        instrument_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        instrument_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        ins_name_label = QLabel()
+        col_name_label = QLabel()
+        col_len_label = QLabel()
+        col_diam_label = QLabel()
+        part_size_label = QLabel()
+        plate_num_label = QLabel()
+        dead_vol_label = QLabel()
+        dwell_vol_label = QLabel()
+        self.ins_name_field = QLabel()
+        self.col_name_field = QLabel()
+        self.col_len_field = QLabel()
+        self.col_diam_field = QLabel()
+        self.part_size_field = QLabel()
+        self.plate_num_field = QLabel()
+        self.dead_vol_field = QLabel()
+        self.dwell_vol_field = QLabel()
+        instrument_labels = [ins_name_label, col_name_label, col_len_label, col_diam_label, part_size_label, plate_num_label, dead_vol_label, dwell_vol_label]
+        self.instrument_fields = [self.ins_name_field, self.col_name_field, self.col_len_field, self.col_diam_field, self.part_size_field, self.plate_num_field, self.dead_vol_field, self.dwell_vol_field]
+        instrument_strings = ['Instrument name', 'Column name', 'Column length', 'Column diameter', 'Particle size', 'Plate number', 'Dead volume', 'Dwell volume']
+        for n, label in enumerate(instrument_labels):
             label.setText(str(instrument_strings[n] + ':'))
-            label.setFont(font9bold)
-            label.setAlignment(QtCore.Qt.AlignLeft)
+            label.setFont(self.font9bold)
+            label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
             label.adjustSize()
 
             field = self.instrument_fields[n]
-            label_end = label.width() + label.x()
-            field.setGeometry(QtCore.QRect(label_end+5, 70+(n*21), 100, 50))
-            field.setFont(font9)
-            label.setAlignment(QtCore.Qt.AlignLeft)
+            field.setFont(self.font9)
+            field.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            field.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
+            
+        
+        ins_layout.addWidget(instrument_label, 0,0,1,1)
+            
+        for i, label in enumerate(instrument_labels):
+            hlayout = QHBoxLayout()
+            hlayout.setSpacing(5)
+            field = self.instrument_fields[i]
+            hlayout.addWidget(label, 0)
+            hlayout.addWidget(field, 1)
+            ins_layout.addLayout(hlayout, i+1,0,1,1)
+              
+    def configureMethodParameters(self):
+        
+        method_layout = self.method_layout
+        method_layout.setContentsMargins(10,10,15,2)
+        method_layout.setVerticalSpacing(3)
+        method_layout.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+        
+        method_label = QLabel()
+        method_label.setText('Method')
+        method_label.setFont(self.font11)
+        method_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        method_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        self.label_method_title = QtWidgets.QLabel()
-        self.label_method_title.setGeometry(QtCore.QRect(280, 40, 100, 50))
-        self.label_method_title.setText('Method')
-        font11 = QtGui.QFont()
-        font11.setBold(True)
-        font11.setPointSize(11)
-        self.label_method_title.setFont(font11)
-        self.label_method_title.setAlignment(QtCore.Qt.AlignTop)
-
-        self.flow_rate_label = QtWidgets.QLabel()
-        self.tG_label = QtWidgets.QLabel()
-        self.B0_label = QtWidgets.QLabel()
-        self.Bf_label = QtWidgets.QLabel()
-        self.UV_label = QtWidgets.QLabel()
-        self.flow_rate_field = QtWidgets.QLabel()
-        self.tG_field = QtWidgets.QLabel()
-        self.B0_field = QtWidgets.QLabel()
-        self.Bf_field = QtWidgets.QLabel()
-        self.UV_field = QtWidgets.QLabel()
-        self.method_labels = [self.flow_rate_label, self.tG_label, self.B0_label, self.Bf_label, self.UV_label]
-        self.method_fields = [self.flow_rate_field, self.tG_field, self.B0_field, self.Bf_field, self.UV_field]
+        flow_label = QLabel()
+        tg_label = QLabel()
+        b0_label = QLabel()
+        bf_label = QLabel()
+        uv_label = QLabel()
+        self.flow_field = QLabel()
+        self.tg_field = QLabel()
+        self.b0_field = QLabel()
+        self.bf_field = QLabel()
+        self.uv_field = QLabel()
+        method_labels = [flow_label, tg_label, b0_label, bf_label, uv_label]
+        self.method_fields = [self.flow_field, self.tg_field, self.b0_field, self.bf_field, self.uv_field]
         method_strings = ['Flow rate', 'Gradient time', 'Initial'+' % ' +'organic', 'Final'+' % ' +'organic', 'UV']
-        for n, label in enumerate(self.method_labels):
-            label.setGeometry(QtCore.QRect(320, 70+(n*40), 100, 50))
+        for n, label in enumerate(method_labels):
             label.setText(str(method_strings[n] + ':'))
-            label.setFont(font9bold)
-            label.setAlignment(QtCore.Qt.AlignLeft)
+            label.setFont(self.font9bold)
+            label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
             label.adjustSize()
 
             field = self.method_fields[n]
-            label_end = label.width() + label.x()
-            field.setGeometry(QtCore.QRect(label_end+5, 70+(n*40), 100, 50))
-            field.setFont(font9)
-            label.setAlignment(QtCore.Qt.AlignLeft)
+            field.setFont(self.font9)
+            field.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            field.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.MinimumExpanding)
+            
+        
+        method_layout.addWidget(method_label, 0,0,1,1)
+            
+        for i, label in enumerate(method_labels):
+            hlayout = QHBoxLayout()
+            hlayout.setSpacing(5)
+            field = self.method_fields[i]
+            hlayout.addWidget(label, 0)
+            hlayout.addWidget(field, 1)
+            hlayout.setAlignment(Qt.AlignLeft| Qt.AlignTop)
+            method_layout.addLayout(hlayout, i+1,0,1,1)
 
-        self.line = QtWidgets.QFrame()
-        self.line.setGeometry(QtCore.QRect(0, 30, 1200, 5))
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+    def configurePeakParameters(self):
+        
+        peak_label = QLabel()
+        peak_label.setText('Peaks')
+        peak_label.setFont(self.font11)
+        peak_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        peak_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
+        dev_label = QLabel()
+        dev_label.setText("In development")
+        dev_label.setFont(self.font9)
+        dev_label.setAlignment(Qt.AlignTop)
+        dev_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
+        peak_layout = self.peak_layout
+        peak_layout.setContentsMargins(10,10,15,2)
+        peak_layout.setVerticalSpacing(3)
+        peak_layout.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+        
+        peak_layout.addWidget(peak_label, 0,0,1,1)
+        peak_layout.addWidget(dev_label, 1,0,1,1)
 
-        self.line2 = QtWidgets.QFrame()
-        self.line2.setGeometry(QtCore.QRect(300, 31, 5, 250))
-        self.line2.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line2.setFrameShadow(QtWidgets.QFrame.Sunken)
-
-        self.line3 = QtWidgets.QFrame()
-        self.line3.setGeometry(QtCore.QRect(470, 31, 5, 250))
-        self.line3.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line3.setFrameShadow(QtWidgets.QFrame.Sunken)
-
-        self.label_peak_title = QtWidgets.QLabel()
-        self.label_peak_title.setGeometry(QtCore.QRect(490, 40, 100, 50))
-        self.label_peak_title.setText('Peak')
-        font11 = QtGui.QFont()
+    def configureFonts(self):
+        
+        self.font9 = QFont()
+        font9 = self.font9
+        font9.setPointSize(9)
+        
+        self.font9bold = QFont()
+        font9bold = self.font9bold
+        font9bold.setPointSize(9)
+        font9bold.setBold(True)
+        
+        self.font11 = QFont()
+        font11 = self.font11
         font11.setBold(True)
         font11.setPointSize(11)
-        self.label_peak_title.setFont(font11)
-        self.label_peak_title.setAlignment(QtCore.Qt.AlignTop)
-
-        gridLayout.addWidget(self.label_title, 0,0,3,1)
-        gridLayout.addWidget(self.label_instrument_title, 1,0,1,1)
-        gridLayout.addWidget(self.ins_name_label, 2, 0, 1, 1)
-
+        
+        self.font14 = QFont()
+        font14 = self.font14
+        font14.setBold(True)
+        font14.setPointSize(14)
 
     def addData(self, instrument_params, method_params, slider_dict):
 
@@ -153,16 +223,16 @@ class ParamWidget(QtWidgets.QWidget):
             elif n == 7 or n == 8:
                 string += 's'
             field.setText(string)
-            field.adjustSize()
-            field_end.append(field.width() + field.x())
+            #field.adjustSize()
+            #field_end.append(field.width() + field.x())
         
-        max_end = max(field_end)
-        self.line2.setGeometry(max_end+20, self.line2.y(), self.line2.width(), self.line2.height())
+        #max_end = max(field_end)
+        #self.line2.setGeometry(max_end+20, self.line2.y(), self.line2.width(), self.line2.height())
 
-        for label in self.method_labels:
-            label.setGeometry(max_end+35, label.y(), label.width(), label.height())
-            label.adjustSize()
-        self.label_method_title.setGeometry(max_end+35, self.label_method_title.y(), self.label_method_title.width(), self.label_method_title.height())
+        #for label in self.method_labels:
+        #    label.setGeometry(max_end+35, label.y(), label.width(), label.height())
+        #    label.adjustSize()
+        #self.label_method_title.setGeometry(max_end+35, self.label_method_title.y(), self.label_method_title.width(), self.label_method_title.height())
 
         for n, field in enumerate(self.method_fields):
             string = str(method_params[n])
@@ -180,9 +250,9 @@ class ParamWidget(QtWidgets.QWidget):
             elif n == 4:
                 string += 'nm'
             field.setText(string)
-            field_end = self.method_labels[n].x() + self.method_labels[n].width()
-            field.setGeometry(field_end+5, field.y(), field.width(), field.height())
-            field.adjustSize()
+            #field_end = self.method_labels[n].x() + self.method_labels[n].width()
+            #field.setGeometry(field_end+5, field.y(), field.width(), field.height())
+            #field.adjustSize()
 
         
 
