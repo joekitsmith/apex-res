@@ -10,18 +10,23 @@ class SliderWidget(QWidget):
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
         self.gridLayout = QGridLayout()
         self.gridLayout.setContentsMargins(30,0,30,0)
-        self.gridLayout.setVerticalSpacing(10)
+        self.gridLayout.setVerticalSpacing(20)
         self.gridLayout.setHorizontalSpacing(50)
+        
+        self.tgo = tgo
         
         self.slider_dict = {}
         slider_list = ['b0', 'bf', 'tg', 't0', 'td', 'flow', 'col_len', 'col_diam', 'part_size']
         for slider in slider_list:
-            self.createSlider(slider, tgo)
+            self.createSlider(slider)
+            
+        self.visible_slider_list = []
         
         self.setLayout(self.gridLayout)
         
-    def createSlider(self, slider_name, tgo):
+    def createSlider(self, slider_name):
         
+        tgo = self.tgo
         slider_label = QLabel()
         slider_label.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
         
@@ -65,26 +70,31 @@ class SliderWidget(QWidget):
          
     def changeSlider(self, checkbox, slider_name):
         
-        slider, slider_label = self.slider_dict[slider_name]
+        def clearLayout(layout):
+            while layout.count():
+                child = layout.takeAt(0)
+                if child.widget():
+                    child.widget().deleteLater()
+                    
+        clearLayout(self.gridLayout)
         
         if checkbox.isChecked() == True:
+            self.visible_slider_list.append(slider_name)
+        
+        else:
+            self.visible_slider_list.remove(slider_name)
+        
+        for visible_slider in self.visible_slider_list:
+            self.createSlider(visible_slider)
+            slider, slider_label = self.slider_dict[visible_slider]
             count = self.gridLayout.count()/2
-            row = (count-(count%3))/3 + 1
+            row = (2*count-(count%3))/3 + 1
             if count < 3:
                 self.gridLayout.addWidget(slider, 0, count, 1, 1, alignment=Qt.AlignHCenter)
                 self.gridLayout.addWidget(slider_label, 1, count, 1, 1, alignment=Qt.AlignHCenter)
             else:
                 self.gridLayout.addWidget(slider, row, count%3, 1, 1, alignment=Qt.AlignHCenter)
-                self.gridLayout.addWidget(slider_label, row+1, count%3, 1, 1, alignment=Qt.AlignHCenter)
-            slider.show()
-            slider_label.show()
-            
-        else:
-            count = self.gridLayout.count()/2
-            self.gridLayout.removeWidget(slider)
-            self.gridLayout.removeWidget(slider_label)
-            slider.hide()
-            slider_label.hide()         
+                self.gridLayout.addWidget(slider_label, row+1, count%3, 1, 1, alignment=Qt.AlignHCenter)       
         
         
 class Slider(QSlider):
