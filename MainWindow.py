@@ -63,7 +63,7 @@ class GroupWidget(QWidget):
         self.setMouseTracking(True)
         self.glayout = QGridLayout(self)
         self.glayout.setContentsMargins(3, 10, 3, 3)
-        self.glayout.setSpacing(5)
+        self.glayout.setHorizontalSpacing(10)
         self.glayout.setVerticalSpacing(1)
         self.button = QPushButton()
         self.button.setText(p_str)
@@ -117,7 +117,6 @@ class MenuBar(QTabWidget):
 
     def addGroup(self, p_str, menu):
         group = GroupWidget(p_str, menu)
-        group.setFixedWidth(100)
         group.setObjectName('group')
         insert_index = len(menu.findChildren(GroupWidget, 'group')) - 1
         self.hlayout.insertWidget(insert_index, group)
@@ -134,7 +133,6 @@ class MenuBar(QTabWidget):
     
     def addSliderChoiceWidget(self, menu):
         slider_choice = SliderChoiceWidget()
-        slider_choice.setObjectName('param')
         insert_index = len(menu.findChildren(GroupWidget, 'group'))
         self.hlayout.insertWidget(insert_index, slider_choice)
         return(slider_choice)

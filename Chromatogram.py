@@ -2,6 +2,7 @@ from PyQt5.QtCore import Qt, QRect, QSize
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QApplication, QGridLayout, QStatusBar, QDockWidget, QWidget, QLabel, QTableWidget, QTableWidgetItem, QAbstractItemView, QSlider, QPushButton, QSizePolicy
 
+import numpy as np
 from MainWindow import RibbonToolBar, WindowWidget
 from TwoGradOptimize import TwoGradOptimize
 from FigCanvas import CustomFigCanvas
@@ -21,7 +22,6 @@ class ChromatogramWidget(QWidget):
         self.addSliderWidget()
         self.addParameterWidget()
         self.addResolutionWidget()
-        self.initialiseSliders()
         self.configureLayout()
         self.setLayout(self.gridLayout)
         
@@ -43,10 +43,9 @@ class ChromatogramWidget(QWidget):
         self.slider_widget = SliderWidget(self.tgo)
         self.gridLayout.addWidget(self.slider_widget, 0, 1, 1, 1)
         self.slider_dict = self.slider_widget.slider_dict
-
+              
     def addParameterWidget(self):
         self.pw = ParamWidget()
-        print(self.slider_dict)
         self.pw.addData(self.instrument_params, self.method_params, self.slider_dict)
         self.gridLayout.addWidget(self.pw, 1, 0, 1, 1)
 
@@ -123,6 +122,7 @@ class ChromatogramWidget(QWidget):
         self.rw.resolution_label2.setText('%s' %(round(self.tgo.critical_Rs[0],2)))
 
     def update_phi0(self, val):
+        print('test')
         slider_b0 = self.slider_dict['b0'][0]
         slider_bf = self.slider_dict['bf'][0]
         slider_tg = self.slider_dict['tg'][0]

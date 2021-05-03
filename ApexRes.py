@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QApplication, QGridLayout, QStatusBar, QDockWidget, 
 
 from MainWindow import RibbonToolBar, WindowWidget
 from Chromatogram import ChromatogramWidget
-from DataEntry import DataEntryWidget
+from DataEntry import TwoGradOptimizeTable
 
 
 start = time.process_time()
@@ -33,6 +33,8 @@ class ApexRes(WindowWidget):
         ribbon_toolbar = RibbonToolBar(self)
         
         home_menu = ribbon_toolbar.addMenu('Home')
+        chrom_group = ribbon_toolbar.addGroup('\nChromatogram\n\n', home_menu)
+        chrom_group.button.clicked.connect(self.addChromatogramWidget)
         data_group = ribbon_toolbar.addGroup('\nData\nEntry\n\n', home_menu)
         data_group.button.clicked.connect(self.addDataEntryWidget)
         self.slider_check = ribbon_toolbar.addSliderChoiceWidget(home_menu)
@@ -53,16 +55,17 @@ class ApexRes(WindowWidget):
         edit_ins_group = ribbon_toolbar.addGroup('\nEdit\nInstrument\n\n', ins_menu)
         
         self.addToolBar(ribbon_toolbar)
-               
-        
+                
     def addChromatogramWidget(self):
         chromatogram_widget = ChromatogramWidget()
         self.stacked_layout.addWidget(chromatogram_widget)
-        chromatogram_widget.initialiseSliderCheckBoxes(self.slider_check)
         self.stacked_layout.setCurrentIndex(0)
+        if self.slider_check.clayout.count() == 0:
+            chromatogram_widget.initialiseSliderCheckBoxes(self.slider_check)
+        chromatogram_widget.initialiseSliders()
 
     def addDataEntryWidget(self):
-        data_widget = DataEntryWidget()
+        data_widget = TwoGradOptimizeTable()
         self.stacked_layout.addWidget(data_widget)
         self.stacked_layout.setCurrentIndex(1)
 
