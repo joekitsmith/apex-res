@@ -59,7 +59,7 @@ class TwoGradOptimisePlot:
         self._set_limits()
         self._set_xticks()
 
-        self.fig_canvas.draw()
+        self.fig_canvas.figure.canvas.draw()
 
     def plot_resolution_map(self):
         """
