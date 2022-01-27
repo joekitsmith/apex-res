@@ -1,0 +1,10 @@
+class SliderNames:
+    B0 = "Initial %B"
+    BF = "Final %B"
+    TG = "Gradient time"
+    T0 = "Dead time"
+    TD = "Dwell time"
+    FLOW_RATE = "Flow rate"
+    COLUMN_LENGTH = "Column length"
+    COLUMN_DIAMETER = "Column diameter"
+    PARTICLE_SIZE = "Particle size"
