@@ -27,12 +27,12 @@ class TwoGradOptimize:
         self.td = instrument_params.td
 
         ## Column
-        self.col_name = column_params.column_name
-        self.col_length = column_params.column_length
-        self.col_diameter = column_params.column_diameter
+        self.column_name = column_params.column_name
+        self.column_length = column_params.column_length
+        self.column_diameter = column_params.column_diameter
         self.particle_size = column_params.particle_size
         self.pore_diameter = column_params.pore_diameter
-        self.N = column_params.N
+        self.n = column_params.N
         self.t0 = column_params.t0
 
         ## Method
@@ -90,7 +90,7 @@ class TwoGradOptimize:
         b_opt = self._optimise_b(b_est, logk0_est, tr_np)
 
         # calculate s, logkw and N
-        self.s, self.logkw, self.N = self._calculate_parameters(
+        self.s, self.logkw, self.n = self._calculate_parameters(
             b_opt, tr_np, w_np, tg_np, delta_phi_np
         )
 
@@ -242,6 +242,6 @@ class TwoGradOptimize:
         self.tr_pred = tr
 
     def _predict_width(self, logk0, b):
-        w = RetentionWidthEquations.calculate_w(logk0, b, self.N, self.t0, self.td)
+        w = RetentionWidthEquations.calculate_w(logk0, b, self.n, self.t0, self.td)
 
         self.w_pred = w

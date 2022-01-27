@@ -17,6 +17,7 @@ from PyQt5.QtWidgets import (
 
 from .group import ParametersGroupWidget
 from .names import (
+    ParameterGroupNames,
     InstrumentParameterNames,
     MethodParameterNames,
     PeakParameterNames,
@@ -33,13 +34,13 @@ class ParametersWidget(QWidget):
 
     def add_parameters(self):
         instrument_parameters = ParametersGroupWidget(
-            self.optimiser, InstrumentParameterNames.INSTRUMENT
+            self.optimiser, ParameterGroupNames.INSTRUMENT
         )
         method_parameters = ParametersGroupWidget(
-            self.optimiser, MethodParameterNames.METHOD
+            self.optimiser, ParameterGroupNames.METHOD
         )
         peak_parameters = ParametersGroupWidget(
-            self.optimiser, PeakParameterNames.PEAKS
+            self.optimiser, ParameterGroupNames.PEAKS
         )
 
         self.layout.addWidget(instrument_parameters, 2, 0, 1, 1)
@@ -68,14 +69,14 @@ class ParametersWidget(QWidget):
         self.layout.setColumnStretch(4, 12)
 
     def _configure_fonts(self):
-        self.font_label = QFont()
-        self.font_label.setBold(True)
-        self.font_label.setPointSize(14)
+        self.font_title = QFont()
+        self.font_title.setBold(True)
+        self.font_title.setPointSize(14)
 
     def _add_label(self):
         label_title = QLabel()
         label_title.setText("Parameters")
-        label_title.setFont(self.font_label)
+        label_title.setFont(self.font_title)
         label_title.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
         label_title.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Maximum)
         self.layout.addWidget(label_title, 0, 0, 1, 5)
