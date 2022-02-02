@@ -10,7 +10,7 @@ class UpdateUI:
         self.sliders = sliders.sliders
         self.resolution = resolution
 
-        for slider, slider_label in self.sliders.values():
+        for slider in self.sliders.values():
             slider.valueChanged.connect(
                 lambda val, slider=slider: self.update(val, slider)
             )
@@ -37,14 +37,14 @@ class UpdateUI:
         abs_val = val / slider.resolution
 
         if slider.name == SliderNames.B0:
-            bf_slider = self.sliders[SliderNames.BF][0]
+            bf_slider = self.sliders[SliderNames.BF]
             if slider.value() < bf_slider.value():
                 self.optimiser.phi0 = abs_val
             else:
                 bf_slider.setValue(val)
 
         elif slider.name == SliderNames.BF:
-            b0_slider = self.sliders[SliderNames.B0][0]
+            b0_slider = self.sliders[SliderNames.B0]
             if slider.value() > b0_slider.value():
                 self.optimiser.phif = abs_val
             else:

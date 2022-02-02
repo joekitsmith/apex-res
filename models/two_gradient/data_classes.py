@@ -12,7 +12,7 @@ class ColumnParams(NamedTuple):
     column_diameter: float
     particle_size: float
     pore_diameter: float
-    N: float
+    n_est: float
     t0: float
 
 

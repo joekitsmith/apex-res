@@ -99,3 +99,5 @@ class Resolution:
         )
 
         total_res = np.sum(total_res)
+
+        return total_res

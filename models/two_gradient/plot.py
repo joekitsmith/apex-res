@@ -35,7 +35,7 @@ class TwoGradOptimisePlot:
 
         # create plot on axis 1
         self.fig_canvas.ax1.set_visible(True)
-        (self.graph,) = self.fig_canvas.ax1.plot(x, y, linewidth=1.2)
+        (self.graph,) = self.fig_canvas.ax1.plot(x, y, linewidth=1, color="black")
 
         # tidy graph
         self._set_limits()

@@ -1,7 +1,9 @@
 import sys
+import os
 
 from PyQt5.QtWidgets import QApplication
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QMainWindow,
     QWidget,
@@ -15,6 +17,7 @@ from chromatogram.chromatogram import ChromatogramWidget
 from models.two_gradient.example import generate_example_inputs
 from models.two_gradient.two_grad_optimise import TwoGradOptimize
 from ui.slider.slider import SliderWidget
+from ui.slider.checkboxes import SliderCheckBoxWidget
 from ui.slider.data_classes import SliderNames
 from ui.resolution.resolution import ResolutionWidget
 from ui.parameters.parameters import ParametersWidget
@@ -29,13 +32,28 @@ class MainWidget(QWidget):
 
         self.initialise_model()
 
+        self.initial_sliders = [
+            SliderNames.B0,
+            SliderNames.BF,
+            SliderNames.TG,
+            SliderNames.T0,
+            SliderNames.TD,
+            SliderNames.FLOW_RATE,
+            SliderNames.COLUMN_LENGTH,
+            SliderNames.COLUMN_DIAMETER,
+            SliderNames.PARTICLE_SIZE,
+        ]
+
         self.add_chromatogram_widget()
-        self.add_slider_widget()
+        self.add_slider_interface()
         self.add_parameters_widget()
         self.add_resolution_widget()
 
         update_ui = UpdateUI(
-            self.chromatogram_widget, self.parameters_widget, self.slider_widget, self.resolution_widget
+            self.chromatogram_widget,
+            self.parameters_widget,
+            self.slider_widget,
+            self.resolution_widget,
         )
 
     def initialise_model(self):
@@ -50,13 +68,18 @@ class MainWidget(QWidget):
         self.optimiser = self.chromatogram_widget.optimiser
         self.grid_layout.addWidget(self.chromatogram_widget, 2, 1, 4, 1)
 
-    def add_slider_widget(self):
+    def add_slider_interface(self):
         self.slider_widget = SliderWidget(self.optimiser)
-        self.slider_widget.add_slider(SliderNames.B0)
-        self.slider_widget.add_slider(SliderNames.BF)
-        self.slider_widget.add_slider(SliderNames.TG)
+        self.slider_checkboxes = SliderCheckBoxWidget(self.slider_widget)
+
+        for slider_name in self.initial_sliders:
+            self.slider_checkboxes.add_checkbox(slider_name)
+
+        self.slider_widget = self.slider_checkboxes.slider_widget
         self.optimiser = self.slider_widget.optimiser
-        self.grid_layout.addWidget(self.slider_widget, 1, 0, 5, 1)
+
+        self.grid_layout.addWidget(self.slider_widget, 2, 0, 4, 1)
+        self.grid_layout.addWidget(self.slider_checkboxes, 1, 0, 1, 1)
 
     def add_parameters_widget(self):
         self.parameters_widget = ParametersWidget(self.optimiser)
@@ -71,6 +94,7 @@ class MainWidget(QWidget):
 
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
+        self.setAttribute(Qt.WA_StyledBackground, True)
 
 
 class Window(QMainWindow):
@@ -79,6 +103,11 @@ class Window(QMainWindow):
 
         self.margin = 4
         self.setMouseTracking(True)
+        with open(
+            os.path.join(os.path.dirname(__file__), "styles/light.qss")
+        ) as style_file:
+            style = style_file.read()
+        self.setStyleSheet(style)
 
         self.setWindowTitle("Apex Res")
 

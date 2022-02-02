@@ -43,14 +43,12 @@ class ParametersWidget(QWidget):
             self.optimiser, ParameterGroupNames.PEAKS
         )
 
-        self.layout.addWidget(instrument_parameters, 2, 0, 1, 1)
-        self.layout.addWidget(method_parameters, 2, 2, 1, 1)
-        self.layout.addWidget(peak_parameters, 2, 4, 1, 1)
+        self.layout.addWidget(instrument_parameters, 1, 0, 1, 1)
+        self.layout.addWidget(method_parameters, 1, 2, 1, 1)
+        self.layout.addWidget(peak_parameters, 1, 4, 1, 1)
 
     def _configure(self):
-        self.setObjectName("Parameters")
-
-        self.setStyleSheet("background-color: (0.906, 0.906, 0.906)")
+        self.setObjectName("ParametersWidget")
 
         self._configure_layouts()
         self._configure_fonts()
@@ -61,31 +59,27 @@ class ParametersWidget(QWidget):
     def _configure_layouts(self):
         self.layout = QGridLayout(self)
 
-        self.layout.setContentsMargins(20, 10, 20, 20)
-        self.layout.setSpacing(8)
+        self.layout.setContentsMargins(20, 0, 20, 0)
+        self.layout.setSpacing(0)
 
         self.layout.setColumnStretch(0, 3)
         self.layout.setColumnStretch(2, 2)
-        self.layout.setColumnStretch(4, 12)
+        self.layout.setColumnStretch(4, 8)
 
     def _configure_fonts(self):
         self.font_title = QFont()
-        self.font_title.setBold(True)
         self.font_title.setPointSize(14)
+        self.font_title.setBold(True)
 
     def _add_label(self):
         label_title = QLabel()
-        label_title.setText("Parameters")
+        label_title.setObjectName("ParametersTitle")
+        label_title.setText("PARAMETERS")
         label_title.setFont(self.font_title)
         label_title.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
-        label_title.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Maximum)
         self.layout.addWidget(label_title, 0, 0, 1, 5)
 
     def _add_background(self):
-        hline = QFrame()
-        hline.setFrameShape(QFrame.HLine)
-        hline.setFrameShadow(QFrame.Sunken)
-
         vline1 = QFrame()
         vline1.setFrameShape(QFrame.VLine)
         vline1.setFrameShadow(QFrame.Sunken)
@@ -94,6 +88,5 @@ class ParametersWidget(QWidget):
         vline2.setFrameShape(QFrame.VLine)
         vline2.setFrameShadow(QFrame.Sunken)
 
-        self.layout.addWidget(hline, 1, 0, 1, 5)
-        self.layout.addWidget(vline1, 2, 1, 1, 1)
-        self.layout.addWidget(vline2, 2, 3, 1, 1)
+        self.layout.addWidget(vline1, 1, 1, 1, 1)
+        self.layout.addWidget(vline2, 1, 3, 1, 1)

@@ -42,6 +42,8 @@ class ChromatogramWidget(QWidget):
         """
         Create chromatogram canvas.
         """
+        self.setObjectName("ChromatogramWidget")
+
         self.figure = ChromatogramCanvas()
 
         self.v_layout = QVBoxLayout(self)

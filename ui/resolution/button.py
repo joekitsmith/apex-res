@@ -9,6 +9,8 @@ class MaximiseResolutionButton(QPushButton):
         self._configure()
 
     def _configure(self):
+        self.setObjectName("MaximiseResolution")
+
         self.setMouseTracking(True)
         self.setMinimumHeight(50)
         self.setText("Maximise resolution")

@@ -9,7 +9,9 @@ class ChromatogramCanvas(FigureCanvas):
         super(ChromatogramCanvas, self).__init__()
 
         self.figure = Figure(figsize=(8, 4))
-        self.figure.set_facecolor((0.906, 0.906, 0.906, 0.5))
+        self.figure.set_facecolor((1, 1, 1, 0))
+        self.figure.set_edgecolor("grey")
+        self.figure.set_linewidth("4")
 
         FigureCanvas.__init__(self, self.figure)
 
@@ -20,7 +22,7 @@ class ChromatogramCanvas(FigureCanvas):
         Initialise chromatogram axes and make them invisible.
         """
         # create axis with defined colour
-        self.ax1 = self.figure.add_axes([0.05, 0.05, 0.92, 0.9])
+        self.ax1 = self.figure.add_axes([0, 0.07, 1, 0.93])
         self.ax1.set_facecolor((0.906, 0.906, 0.906, 0.001))
         # set invisible
         self.ax1.spines["top"].set_visible(False)

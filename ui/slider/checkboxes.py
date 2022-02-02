@@ -1,5 +1,9 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QCheckBox, QSizePolicy, QGridLayout, QLabel, QFrame
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QCheckBox, QSizePolicy, QGridLayout, QLabel, QFrame, QWidget
+
+from .functions import clear_layout
+from .data_classes import SliderNames
 
 
 class SliderCheckBox(QCheckBox):
@@ -22,11 +26,11 @@ class SliderCheckBox(QCheckBox):
         )
 
 
-class SliderCheckBoxWidget(QCheckBox):
-    def __init__(self, optimiser):
+class SliderCheckBoxWidget(QWidget):
+    def __init__(self, slider_widget):
         super(SliderCheckBoxWidget, self).__init__()
 
-        self.optimiser = optimiser
+        self.slider_widget = slider_widget
 
         self.checkboxes = {}
 
@@ -36,48 +40,129 @@ class SliderCheckBoxWidget(QCheckBox):
         self._create_checkbox(name)
 
         checkbox = self.checkboxes[name]
+        checkbox.setChecked(True)
+
+        self._add_checkbox_to_layout(checkbox)
+
+    def _create_checkbox(self, name):
+        if name == SliderNames.B0:
+            check_b0 = SliderCheckBox(name=SliderNames.B0)
+            check_b0.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(check_b0, SliderNames.B0)
+            )
+            self.checkboxes[name] = check_b0
+
+        elif name == SliderNames.BF:
+            check_bf = SliderCheckBox(name=SliderNames.BF)
+            check_bf.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(check_bf, SliderNames.BF)
+            )
+            self.checkboxes[name] = check_bf
+
+        elif name == SliderNames.TG:
+            check_tg = SliderCheckBox(name=SliderNames.TG)
+            check_tg.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(check_tg, SliderNames.TG)
+            )
+            self.checkboxes[name] = check_tg
+
+        elif name == SliderNames.T0:
+            check_t0 = SliderCheckBox(name=SliderNames.T0)
+            check_t0.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(check_t0, SliderNames.T0)
+            )
+            self.checkboxes[name] = check_t0
+
+        elif name == SliderNames.TD:
+            check_td = SliderCheckBox(name=SliderNames.TD)
+            check_td.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(check_td, SliderNames.TD)
+            )
+            self.checkboxes[name] = check_td
+
+        elif name == SliderNames.FLOW_RATE:
+            check_flow = SliderCheckBox(name=SliderNames.FLOW_RATE)
+            check_flow.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(
+                    check_flow, SliderNames.FLOW_RATE
+                )
+            )
+            self.checkboxes[name] = check_flow
+
+        elif name == SliderNames.COLUMN_LENGTH:
+            check_col_len = SliderCheckBox(name=SliderNames.COLUMN_LENGTH)
+            check_col_len.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(
+                    check_col_len, SliderNames.COLUMN_LENGTH
+                )
+            )
+            self.checkboxes[name] = check_col_len
+
+        elif name == SliderNames.COLUMN_DIAMETER:
+            check_col_diam = SliderCheckBox(name=SliderNames.COLUMN_DIAMETER)
+            check_col_diam.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(
+                    check_col_diam, SliderNames.COLUMN_DIAMETER
+                )
+            )
+            self.checkboxes[name] = check_col_diam
+
+        elif name == SliderNames.PARTICLE_SIZE:
+            check_part_size = SliderCheckBox(name=SliderNames.PARTICLE_SIZE)
+            check_part_size.stateChanged.connect(
+                lambda: self.slider_widget.update_slider(
+                    check_part_size, SliderNames.PARTICLE_SIZE
+                )
+            )
+            self.checkboxes[name] = check_part_size
+
+        check = self.checkboxes[name]
+        check.setFont(self.font_label)
+
+    def _add_checkbox_to_layout(self, checkbox):
+        total_checkboxes = len(self.checkboxes)
 
         count = self.checkbox_layout.count()
         if count < 3:
-            self.checkbox_layout.addWidget(checkbox, count, 0, 1, 1)
-            self.setFixedWidth(150)
+            self.checkbox_layout.addWidget(checkbox, total_checkboxes - 1, 0, 1, 1)
 
-        if count >= 3:
-            cols = (count - (count % 3)) / 3
+        elif count >= 3:
+            cols = int((count - (count % 3)) / 3)
             self.checkbox_layout.addWidget(checkbox, count % 3, cols, 1, 1)
-            self.setFixedWidth((cols + 1) * 150)
 
     def _configure(self):
+        self.setObjectName("SliderCheckboxes")
+
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
         self.setMouseTracking(True)
 
         self._create_layout()
+        self._configure_font()
         self._add_label()
+
+    def _configure_font(self):
+        self.font_label = QFont()
+        self.font_label.setPointSize(11)
+
+        self.font_title = QFont()
+        self.font_title.setPointSize(14)
+        self.font_title.setBold(True)
 
     def _create_layout(self):
         self.grid_layout = QGridLayout(self)
-        self.grid_layout.setContentsMargins(10, 10, 3, 3)
-        self.grid_layout.setSpacing(5)
-        self.grid_layout.setVerticalSpacing(1)
+        self.grid_layout.setContentsMargins(10, 0, 10, 0)
 
         self.checkbox_layout = QGridLayout()
-        self.checkbox_layout.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        self.checkbox_layout.setSpacing(3)
-        self.checkbox_layout.setContentsMargins(0, 0, 0, 5)
+        self.checkbox_layout.setAlignment(Qt.AlignHCenter | Qt.AlignBottom)
+        self.checkbox_layout.setVerticalSpacing(1)
+        self.checkbox_layout.setHorizontalSpacing(20)
+        self.checkbox_layout.setContentsMargins(0, 10, 0,0)
 
-        self.grid_layout.addLayout(self.checkbox_layout, 0, 0, 2, 1)
+        self.grid_layout.addLayout(self.checkbox_layout, 1, 0, 2, 1)
 
     def _add_label(self):
-        label = QLabel("Sliders")
+        label = QLabel("SLIDERS")
+        label.setObjectName("SliderTitle")
+        label.setFont(self.font_title)
         label.setAlignment(Qt.AlignHCenter | Qt.AlignBottom)
-        label.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Maximum)
-        self.grid_layout.addWidget(label, 2, 0, 1, 1)
-
-        line = QFrame(self)
-        line.setFrameShape(QFrame.VLine)
-        line.setFrameShadow(QFrame.Raised)
-        self.grid_layout.addWidget(line, 0, 1, 3, 1)
-
-    def _create_checkbox(self, name):
-        checkbox = SliderCheckBox(name)
-        self.checkboxes[name] = checkbox
+        self.grid_layout.addWidget(label, 0, 0, 1, 1)

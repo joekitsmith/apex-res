@@ -18,28 +18,32 @@ class ParametersGroupWidget(QWidget):
         self.optimiser = optimiser
         self.label = label
 
-        self._configure_layout()
-        self._configure_font()
+        self._configure()
 
         self._add_header()
         self._add_parameters()
 
+    def _configure(self):
+        self.setObjectName("ParametersGroupWidget")
+
+        self._configure_layout()
+        self._configure_font()
+
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
+        self.grid_layout.setAlignment(Qt.AlignTop)
+        self.grid_layout.setVerticalSpacing(10)
 
         if self.label == ParameterGroupNames.INSTRUMENT:
-            self.grid_layout.setContentsMargins(0, 10, 15, 2)
-            self.grid_layout.setVerticalSpacing(9)
+            pass
 
         elif self.label == ParameterGroupNames.METHOD:
-            self.grid_layout.setContentsMargins(10, 10, 15, 2)
-            self.grid_layout.setVerticalSpacing(3)
-            self.grid_layout.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+            pass
 
         else:
-            self.grid_layout.setContentsMargins(10, 10, 15, 2)
-            self.grid_layout.setVerticalSpacing(3)
-            self.grid_layout.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+            pass
 
     def _configure_font(self):
         self.font_title = QFont()
@@ -57,8 +61,8 @@ class ParametersGroupWidget(QWidget):
         title_label = QLabel()
         title_label.setText(self.label)
         title_label.setFont(self.font_title)
-        title_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
-        title_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        title_label.setAlignment(Qt.AlignCenter | Qt.AlignBottom)
+        title_label.setStyleSheet("margin-bottom: 5px")
         self.grid_layout.addWidget(title_label, 0, 0, 1, 1)
 
     def _add_parameters(self):
@@ -75,20 +79,14 @@ class ParametersGroupWidget(QWidget):
             for i, (name, text) in enumerate(names.__dict__.items()):
                 if name[0] != "_":
                     field = QLabel()
-                    print(name)
-                    print(type(text))
-                    print(text)
                     field.setText(str(text + ":"))
                     field.setFont(self.font_field)
                     field.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-                    field.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
-                    field.adjustSize()
 
                     value = QLabel()
                     value.setText(str(getattr(self.optimiser, name.lower())))
                     value.setFont(self.font_value)
                     value.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-                    value.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
 
                     h_layout = combine_field_and_value(field, value)
 

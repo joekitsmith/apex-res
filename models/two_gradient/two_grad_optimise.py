@@ -32,7 +32,7 @@ class TwoGradOptimize:
         self.column_diameter = column_params.column_diameter
         self.particle_size = column_params.particle_size
         self.pore_diameter = column_params.pore_diameter
-        self.n = column_params.N
+        self.n_est = column_params.n_est
         self.t0 = column_params.t0
 
         ## Method

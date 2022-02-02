@@ -18,7 +18,7 @@ class InstrumentParameterNames(NamedTuple):
     COLUMN_LENGTH = "Column length"
     COLUMN_DIAMETER = "Column diameter"
     PARTICLE_SIZE = "Particle size"
-    N = "Plate number"
+    N_EST = "Plate number"
     TD = "Dead volume"
 
 
