@@ -11,6 +11,7 @@ matplotlib = "*"
 
 [dev-packages]
 pytest = "*"
+pytest-mock = "*"
 mypy = "*"
 black = "*"
 
@@ -21,4 +22,5 @@ python_version = "3.9"
 allow_prereleases = true
 
 [scripts]
+apex = "python main.py"
 test = "pytest -vv"
