@@ -109,13 +109,22 @@ class TwoGradOptimisePlot:
         return (x, total_y)
 
     def _get_y_max(self, y):
-        max_y = np.nanmax(y)
+        """
+        Get maximum value of y.
+        """
+        if np.isnan(y).all():
+            max_y = 0
+        else:
+            max_y = np.nanmax(y)
 
         max_y = max_y + (0.1 * max_y)
 
         self.y_max = max_y
 
     def _generate_mesh_arrays(self, x):
+        """
+        Generate mesh matrix of x with retention time, area and width
+        """
         x_tr_mesh = np.meshgrid(x, self.optimiser.tr_pred)
         time_diff_matrix = x_tr_mesh[0] - x_tr_mesh[1]
 
