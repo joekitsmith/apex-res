@@ -9,7 +9,7 @@ import numpy as np
 
 from ui.chromatogram.figure_canvas import ChromatogramCanvas
 from models.two_gradient.plot import TwoGradOptimisePlot
-from models.two_gradient.two_grad_optimise import TwoGradOptimize
+from models.two_gradient.two_grad_optimise import TwoGradOptimise
 from models.two_gradient.data_classes import (
     InstrumentParams,
     ColumnParams,
@@ -27,7 +27,7 @@ def figure():
 
 @pytest.fixture
 def optimiser():
-    return TwoGradOptimize(
+    return TwoGradOptimise(
         InstrumentParams("", 3.05),
         ColumnParams("", 250, 4, 5, 2, 19000, 2.56),
         TwoGradMethodParams(1, 15, 0.6, 1, 254, 15, 30),

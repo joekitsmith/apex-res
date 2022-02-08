@@ -7,7 +7,7 @@ sys.path.append(str(root_dir))
 import pytest
 import numpy as np
 
-from two_grad_optimise import TwoGradOptimize
+from two_grad_optimise import TwoGradOptimise
 from data_classes import (
     InstrumentParams,
     ColumnParams,
@@ -18,7 +18,7 @@ from data_classes import (
 
 @pytest.fixture
 def optimiser():
-    return TwoGradOptimize(
+    return TwoGradOptimise(
         InstrumentParams("", 1.0),
         ColumnParams("", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),
         TwoGradMethodParams(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),
@@ -117,7 +117,7 @@ class TestGenerateMeshArrays:
         tr_np = np.array([[6.0, 7.2], [8.4, 9.6]])
         w_np = np.array([[10.8, 12.0], [13.2, 14.4]])
         mocker.patch(
-            "two_gradient.TwoGradOptimise._generate_mesh_arrays",
+            "two_grad_optimise.TwoGradOptimise._generate_mesh_arrays",
             return_value=[beta_np, tr_np, w_np],
         )
         optimiser.tg1 = 15

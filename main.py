@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import (
 
 from ui.chromatogram.chromatogram import ChromatogramWidget
 from models.two_gradient.example import generate_example_inputs
-from models.two_gradient.two_grad_optimise import TwoGradOptimize
+from models.two_gradient.two_grad_optimise import TwoGradOptimise
 from ui.slider.slider import SliderWidget
 from ui.slider.checkboxes import SliderCheckBoxWidget
 from ui.slider.data_classes import SliderNames
@@ -59,7 +59,7 @@ class MainWidget(QWidget):
     def initialise_model(self):
         inputs = generate_example_inputs()
 
-        self.optimiser = TwoGradOptimize(*inputs)
+        self.optimiser = TwoGradOptimise(*inputs)
         self.optimiser.calculate()
 
     def add_chromatogram_widget(self):

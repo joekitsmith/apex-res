@@ -9,7 +9,7 @@ from models.two_gradient.equations import (
 from models.two_gradient.resolution import Resolution
 
 
-class TwoGradOptimize:
+class TwoGradOptimise:
     def __init__(
         self, instrument_params, column_params, method_params, input_params, data
     ):

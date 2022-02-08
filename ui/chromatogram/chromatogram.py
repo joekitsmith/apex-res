@@ -13,7 +13,7 @@ from .figure_canvas import ChromatogramCanvas
 class ChromatogramWidget(QWidget):
     def __init__(self, optimiser):
         """
-        optimiser : TwoGradOptimize
+        optimiser : TwoGradOptimise
             initialised optimiser object with parameters calculated and tr, w predicted
         """
         super(ChromatogramWidget, self).__init__()
