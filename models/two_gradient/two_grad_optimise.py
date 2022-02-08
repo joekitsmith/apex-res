@@ -48,7 +48,7 @@ class TwoGradOptimize:
         self.number_of_peaks = input_params.number_of_peaks
         self.peak_of_interest = input_params.peak_of_interest
         self.data = data
-        self.process_data()
+        self._unpack_time_width_area()
 
         ## Resolution
         self.phi0 = np.array([method_params.phi0])
@@ -61,7 +61,7 @@ class TwoGradOptimize:
         ## Graph
         self.y_max = 0
 
-    def process_data(self):
+    def _unpack_time_width_area(self):
         self.tr = self.data[:, 0]
         self.tr1 = self.tr[0]
         self.tr2 = self.tr[1]
