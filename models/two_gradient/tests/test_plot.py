@@ -7,7 +7,7 @@ sys.path.append(str(root_dir))
 import pytest
 import numpy as np
 
-from FigCanvas import CustomFigCanvas
+from ui.chromatogram.figure_canvas import ChromatogramCanvas
 from models.two_gradient.plot import TwoGradOptimisePlot
 from models.two_gradient.two_grad_optimise import TwoGradOptimize
 from models.two_gradient.data_classes import (
