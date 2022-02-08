@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
 )
 
-from chromatogram.chromatogram import ChromatogramWidget
+from ui.chromatogram.chromatogram import ChromatogramWidget
 from models.two_gradient.example import generate_example_inputs
 from models.two_gradient.two_grad_optimise import TwoGradOptimize
 from ui.slider.slider import SliderWidget
@@ -104,7 +104,7 @@ class Window(QMainWindow):
         self.margin = 4
         self.setMouseTracking(True)
         with open(
-            os.path.join(os.path.dirname(__file__), "styles/light.qss")
+            os.path.join(os.path.dirname(__file__), "ui/styles/light.qss")
         ) as style_file:
             style = style_file.read()
         self.setStyleSheet(style)

@@ -1,3 +1,9 @@
+from pathlib import Path
+import sys
+
+root_dir = (Path(__file__).parent / "../").resolve()
+sys.path.append(str(root_dir))
+
 from slider.data_classes import SliderNames
 
 
