@@ -35,6 +35,8 @@ class ParametersGroupWidget(QWidget):
         self.grid_layout = QGridLayout(self)
         self.grid_layout.setAlignment(Qt.AlignTop)
         self.grid_layout.setVerticalSpacing(10)
+        self.grid_layout.setColumnStretch(0,2)
+        self.grid_layout.setColumnStretch(1,1)
 
         if self.label == ParameterGroupNames.INSTRUMENT:
             pass
@@ -48,14 +50,14 @@ class ParametersGroupWidget(QWidget):
     def _configure_font(self):
         self.font_title = QFont()
         self.font_title.setBold(True)
-        self.font_title.setPointSize(11)
+        self.font_title.setPointSize(13)
 
         self.font_field = QFont()
-        self.font_field.setPointSize(9)
+        self.font_field.setPointSize(11)
         self.font_field.setBold(True)
 
         self.font_value = QFont()
-        self.font_value.setPointSize(9)
+        self.font_value.setPointSize(11)
 
     def _add_header(self):
         title_label = QLabel()
