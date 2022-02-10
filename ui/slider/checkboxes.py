@@ -156,7 +156,7 @@ class SliderCheckBoxWidget(QWidget):
         self.checkbox_layout.setAlignment(Qt.AlignHCenter | Qt.AlignBottom)
         self.checkbox_layout.setVerticalSpacing(1)
         self.checkbox_layout.setHorizontalSpacing(20)
-        self.checkbox_layout.setContentsMargins(0, 10, 0,0)
+        self.checkbox_layout.setContentsMargins(0, 10, 0, 0)
 
         self.grid_layout.addLayout(self.checkbox_layout, 1, 0, 2, 1)
 
@@ -164,5 +164,5 @@ class SliderCheckBoxWidget(QWidget):
         label = QLabel("SLIDERS")
         label.setObjectName("SliderTitle")
         label.setFont(self.font_title)
-        label.setAlignment(Qt.AlignHCenter | Qt.AlignBottom)
+        label.setAlignment(Qt.AlignLeft | Qt.AlignBottom)
         self.grid_layout.addWidget(label, 0, 0, 1, 1)

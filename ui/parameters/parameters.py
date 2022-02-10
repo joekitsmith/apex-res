@@ -39,13 +39,13 @@ class ParametersWidget(QWidget):
         method_parameters = ParametersGroupWidget(
             self.optimiser, ParameterGroupNames.METHOD
         )
-        peak_parameters = ParametersGroupWidget(
-            self.optimiser, ParameterGroupNames.PEAKS
-        )
+        # peak_parameters = ParametersGroupWidget(
+        #     self.optimiser, ParameterGroupNames.PEAKS
+        # )
 
         self.layout.addWidget(instrument_parameters, 1, 0, 1, 1)
         self.layout.addWidget(method_parameters, 1, 2, 1, 1)
-        self.layout.addWidget(peak_parameters, 1, 4, 1, 1)
+        # self.layout.addWidget(peak_parameters, 1, 4, 1, 1)
 
     def _configure(self):
         self.setObjectName("ParametersWidget")
@@ -53,18 +53,18 @@ class ParametersWidget(QWidget):
         self._configure_layouts()
         self._configure_fonts()
 
-        self._add_background()
+        # self._add_background()
         self._add_label()
 
     def _configure_layouts(self):
         self.layout = QGridLayout(self)
 
-        self.layout.setContentsMargins(20, 0, 20, 0)
+        self.layout.setContentsMargins(20, 2, 20, 0)
         self.layout.setSpacing(0)
 
         self.layout.setColumnStretch(0, 3)
         self.layout.setColumnStretch(2, 2)
-        self.layout.setColumnStretch(4, 8)
+        # self.layout.setColumnStretch(4, 8)
 
     def _configure_fonts(self):
         self.font_title = QFont()
@@ -76,7 +76,7 @@ class ParametersWidget(QWidget):
         label_title.setObjectName("ParametersTitle")
         label_title.setText("PARAMETERS")
         label_title.setFont(self.font_title)
-        label_title.setAlignment(Qt.AlignVCenter | Qt.AlignHCenter)
+        label_title.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         self.layout.addWidget(label_title, 0, 0, 1, 5)
 
     def _add_background(self):
