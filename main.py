@@ -21,6 +21,7 @@ from ui.slider.checkboxes import SliderCheckBoxWidget
 from ui.slider.data_classes import SliderNames
 from ui.resolution.resolution import ResolutionWidget
 from ui.parameters.parameters import ParametersWidget
+from ui.data_entry.data_entry import DataEntryWidget
 from ui.update.update import UpdateUI
 
 
@@ -48,6 +49,7 @@ class MainWidget(QWidget):
         self.add_slider_interface()
         self.add_parameters_widget()
         self.add_resolution_widget()
+        self.add_data_entry_widget()
 
         update_ui = UpdateUI(
             self.chromatogram_widget,
@@ -66,7 +68,7 @@ class MainWidget(QWidget):
         self.chromatogram_widget = ChromatogramWidget(self.optimiser)
         self.chromatogram_widget.create_plot()
         self.optimiser = self.chromatogram_widget.optimiser
-        self.grid_layout.addWidget(self.chromatogram_widget, 2, 1, 4, 1)
+        self.grid_layout.addWidget(self.chromatogram_widget, 2, 1, 4, 2)
 
     def add_slider_interface(self):
         self.slider_widget = SliderWidget(self.optimiser)
@@ -91,6 +93,10 @@ class MainWidget(QWidget):
         self.resolution_widget = ResolutionWidget(self.optimiser)
         self.optimiser = self.resolution_widget.optimiser
         self.grid_layout.addWidget(self.resolution_widget, 0, 0, 1, 1)
+
+    def add_data_entry_widget(self):
+        self.data_entry_widget = DataEntryWidget()
+        self.grid_layout.addWidget(self.data_entry_widget, 0, 2, 2, 1)
 
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
