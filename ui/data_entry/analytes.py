@@ -59,7 +59,7 @@ class TableAnalytes(QWidget):
 
     def _add_peak_of_interest_label(self):
         peak_interest_label = QLabel()
-        peak_interest_label.setText("Peak of\ninterest")
+        peak_interest_label.setText("Peak of interest")
         peak_interest_label.setFont(self.font_peak_interest)
 
         self.grid_layout.addWidget(

@@ -14,6 +14,7 @@ from PyQt5.QtGui import QFont
 from .header import TableHeader
 from .analytes import TableAnalytes
 from .checkbox import TableCheckboxes
+from .conditions import TableConditions
 
 
 class DataEntryWidget(QWidget):
@@ -32,15 +33,18 @@ class DataEntryWidget(QWidget):
     def create_table(self):
         header = TableHeader()
         analytes = TableAnalytes(self.total_analytes)
+        conditions = TableConditions()
 
         self.grid_layout.addWidget(header, 1, 0, 1, 1)
-        self.grid_layout.addWidget(analytes, 2, 0, 1, 1)
+        self.grid_layout.addWidget(analytes, 2, 0, 1, 2)
+        self.grid_layout.addWidget(conditions, 1, 1, 1, 1)
 
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
         self.grid_layout.setContentsMargins(0, 2, 0, 0)
         self.grid_layout.setVerticalSpacing(0)
         self.grid_layout.setHorizontalSpacing(5)
+        self.grid_layout.setColumnStretch(0, 8)
 
     def _configure_font(self):
         self.font_title = QFont()
