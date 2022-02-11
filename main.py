@@ -37,6 +37,12 @@ class MainWidget(QWidget):
             SliderNames.B0,
             SliderNames.BF,
             SliderNames.TG,
+        ]
+
+        self.initial_slider_checks = [
+            SliderNames.B0,
+            SliderNames.BF,
+            SliderNames.TG,
             SliderNames.T0,
             SliderNames.TD,
             SliderNames.FLOW_RATE,
@@ -72,9 +78,11 @@ class MainWidget(QWidget):
 
     def add_slider_interface(self):
         self.slider_widget = SliderWidget(self.optimiser)
-        self.slider_checkboxes = SliderCheckBoxWidget(self.slider_widget)
+        self.slider_checkboxes = SliderCheckBoxWidget(
+            self.slider_widget, self.initial_sliders
+        )
 
-        for slider_name in self.initial_sliders:
+        for slider_name in self.initial_slider_checks:
             self.slider_checkboxes.add_checkbox(slider_name)
 
         self.slider_widget = self.slider_checkboxes.slider_widget

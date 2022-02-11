@@ -134,72 +134,72 @@ class SliderObject(QWidget):
             )
             title_label.setText("Gradient \n time")
 
-        elif self.name == SliderNames.T0:
-            self.slider = Slider(
-                name=SliderNames.T0,
-                resolution=1,
-                minimum=0,
-                maximum=5,
-                interval=1,
-                initial_value=self.optimiser.t0,
-            )
-            title_label.setText("Dead \n time")
+        # elif self.name == SliderNames.T0:
+        #     self.slider = Slider(
+        #         name=SliderNames.T0,
+        #         resolution=1,
+        #         minimum=0,
+        #         maximum=5,
+        #         interval=1,
+        #         initial_value=self.optimiser.t0,
+        #     )
+        #     title_label.setText("Dead \n time")
 
-        elif self.name == SliderNames.TD:
-            self.slider = Slider(
-                name=SliderNames.TD,
-                resolution=1,
-                minimum=0,
-                maximum=5,
-                interval=1,
-                initial_value=self.optimiser.td,
-            )
-            title_label.setText("Dwell \n time")
+        # elif self.name == SliderNames.TD:
+        #     self.slider = Slider(
+        #         name=SliderNames.TD,
+        #         resolution=1,
+        #         minimum=0,
+        #         maximum=5,
+        #         interval=1,
+        #         initial_value=self.optimiser.td,
+        #     )
+        #     title_label.setText("Dwell \n time")
 
-        elif self.name == SliderNames.FLOW_RATE:
-            self.slider = Slider(
-                name=SliderNames.FLOW_RATE,
-                resolution=1,
-                minimum=0,
-                maximum=5,
-                interval=1,
-                initial_value=self.optimiser.flow_rate,
-            )
+        # elif self.name == SliderNames.FLOW_RATE:
+        #     self.slider = Slider(
+        #         name=SliderNames.FLOW_RATE,
+        #         resolution=1,
+        #         minimum=0,
+        #         maximum=5,
+        #         interval=1,
+        #         initial_value=self.optimiser.flow_rate,
+        #     )
 
-            title_label.setText("Flow \n rate")
+        #     title_label.setText("Flow \n rate")
 
-        elif self.name == SliderNames.COLUMN_LENGTH:
-            self.slider = Slider(
-                name=SliderNames.COLUMN_LENGTH,
-                resolution=1,
-                minimum=0,
-                maximum=50,
-                interval=10,
-                initial_value=self.optimiser.column_length,
-            )
-            title_label.setText("Column \n length")
+        # elif self.name == SliderNames.COLUMN_LENGTH:
+        #     self.slider = Slider(
+        #         name=SliderNames.COLUMN_LENGTH,
+        #         resolution=1,
+        #         minimum=0,
+        #         maximum=50,
+        #         interval=10,
+        #         initial_value=self.optimiser.column_length,
+        #     )
+        #     title_label.setText("Column \n length")
 
-        elif self.name == SliderNames.COLUMN_DIAMETER:
-            self.slider = Slider(
-                name=SliderNames.COLUMN_DIAMETER,
-                resolution=1,
-                minimum=0,
-                maximum=5,
-                interval=1,
-                initial_value=self.optimiser.column_diameter,
-            )
-            title_label.setText("Column \n diameter")
+        # elif self.name == SliderNames.COLUMN_DIAMETER:
+        #     self.slider = Slider(
+        #         name=SliderNames.COLUMN_DIAMETER,
+        #         resolution=1,
+        #         minimum=0,
+        #         maximum=5,
+        #         interval=1,
+        #         initial_value=self.optimiser.column_diameter,
+        #     )
+        #     title_label.setText("Column \n diameter")
 
-        elif self.name == SliderNames.PARTICLE_SIZE:
-            self.slider = Slider(
-                name=SliderNames.PARTICLE_SIZE,
-                resolution=1,
-                minimum=0,
-                maximum=200,
-                interval=40,
-                initial_value=self.optimiser.particle_size,
-            )
-            title_label.setText("Particle \n size")
+        # elif self.name == SliderNames.PARTICLE_SIZE:
+        #     self.slider = Slider(
+        #         name=SliderNames.PARTICLE_SIZE,
+        #         resolution=1,
+        #         minimum=0,
+        #         maximum=200,
+        #         interval=40,
+        #         initial_value=self.optimiser.particle_size,
+        #     )
+        #     title_label.setText("Particle \n size")
 
         self.ticks = (self.slider.maximum - self.slider.minimum) / self.slider.interval
 
