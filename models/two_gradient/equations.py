@@ -12,15 +12,15 @@ class ParameterEquations:
 
         Arguments
         ---------
-        beta : (4,) np.ndarray
-        tr1 : (4,) np.ndarray
-        tr2 : (4,) np.ndarray
+        beta : (n,) np.ndarray
+        tr1 : (n,) np.ndarray
+        tr2 : (n,) np.ndarray
         t0 : float
         td : float
 
         Returns
         -------
-        b : (4,) np.ndarray
+        b : (n,) np.ndarray
         """
         b = np.sqrt(
             (
@@ -39,14 +39,14 @@ class ParameterEquations:
 
         Arguments
         ---------
-        b : (2,4) np.ndarray
-        tr : (2,4) np.ndarray
+        b : (2,n) np.ndarray
+        tr : (2,n) np.ndarray
         t0 : float
         td : float
 
         Returns
         -------
-        logk0_est : (2,4) np.ndarray
+        logk0_est : (2,n) np.ndarray
         """
         logk0_est = b * (tr - t0 - td) / t0 - np.log10(2.3 * b)
 
@@ -67,16 +67,16 @@ class ParameterEquations:
 
         Arguments
         ---------
-        b : (2,4) np.ndarray
-        b_est : (2,4) np.ndarray
-        logk0_est : (2,4) np.ndarray
-        tr : (2,4) np.ndarray
+        b : (n,) np.ndarray
+        b_est : (2,n) np.ndarray
+        logk0_est : (2,n) np.ndarray
+        tr : (2,n) np.ndarray
         t0 : float
         td : float
 
         Returns
         -------
-        (2,4) np.ndarray
+        (2,n) np.ndarray
             differences between estimated and observed retention times
         """
         b_est = b_est.flatten()
@@ -86,7 +86,7 @@ class ParameterEquations:
         tr_est = (
             (t0 / b_est)
             * np.log10(
-                2.3 * (10 ** logk0_est) * b * (1 - (td / (t0 * (10 ** logk0_est)))) + 1
+                2.3 * (10**logk0_est) * b * (1 - (td / (t0 * (10**logk0_est)))) + 1
             )
             + t0
             + td
@@ -95,22 +95,20 @@ class ParameterEquations:
         return np.sqrt((tr_est - tr) ** 2)
 
     @staticmethod
-    def calculate_s(
-        b: np.ndarray, tg: np.ndarray, delta_phi: np.ndarray, t0: float
-    ):
+    def calculate_s(b: np.ndarray, tg: np.ndarray, delta_phi: np.ndarray, t0: float):
         """
         Calculate s parameter.
 
         Arguments
         ---------
-        b : (2,4) np.ndarray
-        tg : (2,4) np.ndarray
-        delta_phi : (2,4) np.ndarray
+        b : (2,n) np.ndarray
+        tg : (2,n) np.ndarray
+        delta_phi : (2,n) np.ndarray
         t0 : float
 
         Returns
         -------
-        s : (2,4) np.ndarray
+        s : (2,n) np.ndarray
         """
         s = (b * tg) / (t0 * delta_phi)
 
@@ -123,15 +121,16 @@ class ParameterEquations:
 
         Arguments
         ---------
-        logk0 : (2,4) np.ndarray
-        s : (2,4) np.ndarray
+        logk0 : (2,n) np.ndarray
+        s : (2,n) np.ndarray
         phi0_init : float
 
         Returns
         -------
-        logkw : (2,4) np.ndarray
+        logkw : (2,n) np.ndarray
         """
         logkw = logk0 + (s * phi0_init)
+
         return logkw
 
     @staticmethod
@@ -143,19 +142,19 @@ class ParameterEquations:
 
         Arguments
         ---------
-        logk0 : (2,4) np.ndarray
-        b : (2,4) np.ndarray
-        w : (2,4) np.ndarray
+        logk0 : (2,n) np.ndarray
+        b : (2,n) np.ndarray
+        w : (2,n) np.ndarray
         t0 : float
         td : float
 
         Returns
         -------
-        logkw : (2,4) np.ndarray
+        logkw : (2,n) np.ndarray
         """
-        k_star = (10 ** logk0) / (2.3 * b * ((10 ** logk0) / 2) - (t0 / td) + 1)
+        k_star = (10**logk0) / (2.3 * b * ((10**logk0) / 2) - (t0 / td) + 1)
 
-        N = (4 * ((k_star + 2) ** 2) * (t0 ** 2)) / w ** 2
+        N = (4 * ((k_star + 2) ** 2) * (t0**2)) / w**2
 
         return N
 
@@ -167,13 +166,13 @@ class RetentionWidthEquations:
 
         Arguments
         ---------
-        logkw : (4,) np.ndarray
-        s : (4,) np.ndarray
+        logkw : (n,) np.ndarray
+        s : (n,) np.ndarray
         phi0 : float
 
         Returns
         -------
-        logk0 : (4,) np.ndarray
+        logk0 : (n,) np.ndarray
         """
         logk0 = logkw - (s * phi0)
 
@@ -185,14 +184,14 @@ class RetentionWidthEquations:
 
         Arguments
         ---------
-        s : (4,) np.ndarray
+        s : (n,) np.ndarray
         t0 : float
         delta_phi : float
         tg_final : float
 
         Returns
         -------
-        b : (4,) np.ndarray
+        b : (n,) np.ndarray
         """
         b = (s * t0 * delta_phi) / tg_final
 
@@ -205,13 +204,13 @@ class RetentionWidthEquations:
         Arguments
         ---------
         t0 : float
-        logk0 : (4,) np.ndarray
+        logk0 : (n,) np.ndarray
 
         Returns
         -------
-        tr : (4,) np.ndarray
+        tr : (n,) np.ndarray
         """
-        tr = t0 * (1 + (10 ** logk0))
+        tr = t0 * (1 + (10**logk0))
 
         return tr
 
@@ -223,39 +222,41 @@ class RetentionWidthEquations:
         ---------
         t0 : float
         td : float
-        b : (4,) np.ndarray
-        logk0 : (4,) np.ndarray
+        b : (n,) np.ndarray
+        logk0 : (n,) np.ndarray
 
         Returns
         -------
-        tr : (4,) np.ndarray
+        tr : (n,) np.ndarray
         """
         tr = (
             (t0 / b)
-            * np.log10(2.3 * (10 ** logk0) * b * (1 - (td / (t0 * (10 ** logk0)))) + 1)
+            * np.log10(2.3 * (10**logk0) * b * (1 - (td / (t0 * (10**logk0)))) + 1)
             + t0
             + td
         )
 
         return tr
 
-    def calculate_w(logk0: np.ndarray, b: np.ndarray, N: np.ndarray, t0: float, td: float):
+    def calculate_w(
+        logk0: np.ndarray, b: np.ndarray, N: np.ndarray, t0: float, td: float
+    ):
         """
         Calculate peak width.
 
         Arguments
         ---------
-        logk0 : (4,) np.ndarray
-        b : (4,) np.ndarray
-        N : (4,) np.ndarray
+        logk0 : (n,) np.ndarray
+        b : (n,) np.ndarray
+        N : (n,) np.ndarray
         t0 : float
         td : float
 
         Returns
         -------
-        w : (4,) np.ndarray
+        w : (n,) np.ndarray
         """
-        k_star = (10 ** logk0) / (2.3 * b * ((10 ** logk0) / 2) - (t0 / td) + 1)
+        k_star = (10**logk0) / (2.3 * b * ((10**logk0) / 2) - (t0 / td) + 1)
 
         w = (4 * (N ** (-1 / 2))) * t0 * (1 + (k_star / 2))
 
@@ -265,7 +266,15 @@ class RetentionWidthEquations:
 class ResolutionEquations:
     def calculate_res(tr1: np.ndarray, tr2: np.ndarray, w1: np.ndarray, w2: np.ndarray):
         """
-        Calculate resolution
+        Calculate resolution.
+
+        Arguments
+        ---------
+        tr1 : (n,) np.ndarray
+        tr2 : (n,) np.ndarray
+        w1 : (n,) np.ndarray
+        w2 : (n,) np.ndarray
         """
         res = np.sqrt((2 * (tr2 - tr1) / (w1 + w2)) ** 2)
+
         return res

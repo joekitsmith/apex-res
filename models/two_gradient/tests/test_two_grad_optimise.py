@@ -56,7 +56,7 @@ class TestCalculate:
         expected_logkw = np.array([4.092, 3.226, 2.604, 2.521])
         expected_N = np.array([6630.0, 16985.6, 15737.3, 11486.6])
         # act
-        optimiser.process_data()
+        optimiser._unpack_time_width_area()
         optimiser.calculate()
         # assert
         assert optimiser.s == pytest.approx(expected_s, abs=0.001)
@@ -64,7 +64,6 @@ class TestCalculate:
         assert optimiser.n == pytest.approx(expected_N, abs=0.1)
 
 
-# @pytest.mark.skip(reason="in the way")
 class TestPredict:
     def test_predict(self, optimiser):
         # assemble
@@ -113,18 +112,18 @@ class TestCalculateParameters:
 class TestGenerateMeshArrays:
     def test_generateMeshArrays(self, optimiser, mocker):
         # assemble
-        beta_np = np.array([[1.2, 2.4], [3.6, 4.8]])
+        beta_np = np.array([[1.2, 1.2], [2.4, 2.4]])
         tr_np = np.array([[6.0, 7.2], [8.4, 9.6]])
         w_np = np.array([[10.8, 12.0], [13.2, 14.4]])
         mocker.patch(
-            "two_grad_optimise.TwoGradOptimise._generate_mesh_arrays",
+            "two_grad_optimise.TwoGradOptimise._beta_mesh_arrays",
             return_value=[beta_np, tr_np, w_np],
         )
         optimiser.tg1 = 15
         optimiser.tg2 = 30
-        optimiser.phif_init = 0.4
-        optimiser.phi0_init = 1.0
-        expected_beta_np = np.array([[1.2, 2.4], [3.6, 4.8]])
+        optimiser.phif_init = 1.0
+        optimiser.phi0_init = 0.4
+        expected_beta_np = np.array([[1.2, 1.2], [2.4, 2.4]])
         expected_tr_np = np.array([[6.0, 7.2], [8.4, 9.6]])
         expected_w_np = np.array([[10.8, 12.0], [13.2, 14.4]])
         expected_tg_np = np.array([[15, 15], [30, 30]])
@@ -138,11 +137,11 @@ class TestGenerateMeshArrays:
             actual_delta_phi_np,
         ) = optimiser._generate_mesh_arrays()
         # assert
-        assert np.testing.assert_array_equal(actual_beta_np, expected_beta_np)
-        assert np.testing.assert_array_equal(actual_tr_np, expected_tr_np)
-        assert np.testing.assert_array_equal(actual_w_np, expected_w_np)
-        assert np.testing.assert_array_equal(actual_tg_np, expected_tg_np)
-        assert np.testing.assert_array_equal(actual_delta_phi_np, expected_delta_phi_np)
+        np.testing.assert_array_equal(actual_beta_np, expected_beta_np)
+        np.testing.assert_array_equal(actual_tr_np, expected_tr_np)
+        np.testing.assert_array_equal(actual_w_np, expected_w_np)
+        np.testing.assert_array_equal(actual_tg_np, expected_tg_np)
+        np.testing.assert_array_equal(actual_delta_phi_np, expected_delta_phi_np)
 
 
 class TestBetaMeshArrays:
@@ -150,19 +149,16 @@ class TestBetaMeshArrays:
         # assemble
         optimiser.tg1 = 15
         optimiser.tg2 = 30
-        optimiser.tr = np.array([[1.2, 2.4]])
-        optimiser.w = np.array([[0.36, 0.48]])
+        optimiser.tr = np.array([[1.2, 2.4], [3.6, 4.8]])
+        optimiser.w = np.array([[0.60, 0.72], [0.84, 0.96]])
         optimiser.number_of_peaks = 2
         expected_combined_values = [
-            np.array([[2, 2], [0.5, 0.5]]),
-            np.array([[1.2, 2.4], [1.2, 2.4]]),
-            np.array([[0.36, 0.48], [0.36, 0.48]]),
+            np.array([[2.0, 2.0], [0.5, 0.5]]),
+            np.array([[1.2, 3.6], [2.4, 4.8]]),
+            np.array([[0.60, 0.84], [0.72, 0.96]]),
         ]
         # act
-        combined_values = optimiser._generate_mesh_arrays()
+        combined_values = optimiser._beta_mesh_arrays()
         # assert
-        assert np.testing.assert_array_equal(actual_beta_np, expected_beta_np)
-        assert np.testing.assert_array_equal(actual_tr_np, expected_tr_np)
-        assert np.testing.assert_array_equal(actual_w_np, expected_w_np)
-        assert np.testing.assert_array_equal(actual_tg_np, expected_tg_np)
-        assert np.testing.assert_array_equal(actual_delta_phi_np, expected_delta_phi_np)
+        for i, value in enumerate(combined_values):
+            np.testing.assert_array_equal(value, expected_combined_values[i])

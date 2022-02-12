@@ -20,9 +20,7 @@ from models.two_gradient.data_classes import (
 
 @pytest.fixture
 def figure():
-    fig_canvas = CustomFigCanvas()
-    fig_canvas.drawChromatogram()
-    return fig_canvas
+    return ChromatogramCanvas()
 
 
 @pytest.fixture
@@ -31,7 +29,7 @@ def optimiser():
         InstrumentParams("", 3.05),
         ColumnParams("", 250, 4, 5, 2, 19000, 2.56),
         TwoGradMethodParams(1, 15, 0.6, 1, 254, 15, 30),
-        InputParams(8, 5),
+        InputParams(4, 5),
         np.array(
             [
                 [[9.06, 10.53], [0.200, 0.242], [326.5, 259.6]],
@@ -48,7 +46,6 @@ def plotter():
     return TwoGradOptimisePlot(figure, optimiser)
 
 
-@pytest.mark.skip(reason="in the way")
 class TestGenerateXY:
     def test_generateXY(self, optimiser, figure):
         # assemble
@@ -61,4 +58,4 @@ class TestGenerateXY:
         # assert
         assert actual_x.shape == (1000,)
         assert actual_total_y.shape == (1000,)
-        assert plotter.y_max == pytest.approx(26.54, abs=0.01)
+        assert plotter.y_max == pytest.approx(26.63, abs=0.01)

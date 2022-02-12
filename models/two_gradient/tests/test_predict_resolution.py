@@ -1,8 +1,15 @@
+from pathlib import Path
+import sys
+
+root_dir = (Path(__file__).parent / "../").resolve()
+sys.path.append(str(root_dir))
+
 import pytest
 import numpy as np
 
+from resolution import Resolution
 
-@pytest.mark.skip(reason="in the way")
+
 class TestPredictResolution:
     @pytest.mark.parametrize(
         "tr_pred, w_pred, tg_final, peak_of_interest, expected_total_res, expected_critical_res,",
@@ -19,7 +26,6 @@ class TestPredictResolution:
     )
     def test_predict_resolution(
         self,
-        optimiser,
         tr_pred,
         w_pred,
         tg_final,
@@ -27,13 +33,10 @@ class TestPredictResolution:
         expected_total_res,
         expected_critical_res,
     ):
-        # assemble
-        optimiser.tr_pred = tr_pred
-        optimiser.w_pred = w_pred
-        optimiser.tg_final = tg_final
-        optimiser.peak_of_interest = peak_of_interest
         # act
-        actual_total_res, actual_critical_res = optimiser.predictResolution()
+        actual_total_res, actual_critical_res = Resolution.predict_resolution(
+            tr_pred, w_pred, tg_final, peak_of_interest
+        )
         # assert
         assert actual_total_res == pytest.approx(expected_total_res, abs=0.01)
         assert actual_critical_res == pytest.approx(expected_critical_res, abs=0.01)
