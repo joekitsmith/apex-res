@@ -29,7 +29,7 @@ class TableCheckboxes(QWidget):
         self.layout = QVBoxLayout(self)
         self.layout.setContentsMargins(0, 0, 0, 0)
 
-        self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        # self.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
 
     def _create_checkbox(self):
         check = QCheckBox()

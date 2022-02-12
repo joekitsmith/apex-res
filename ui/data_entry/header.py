@@ -22,7 +22,7 @@ class TableHeader(QWidget):
 
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
-        self.grid_layout.setContentsMargins(0, 0, 0, 10)
+        self.grid_layout.setContentsMargins(0, 8, 0, 10)
 
     def _configure_font(self):
         self.font_run = QFont()

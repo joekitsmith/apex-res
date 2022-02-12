@@ -25,7 +25,7 @@ class TableConditions(QWidget):
 
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
-        self.grid_layout.setContentsMargins(20, 0, 10, 10)
+        self.grid_layout.setContentsMargins(20, 8, 10, 10)
 
     def _configure_font(self):
         self.font_label = QFont()

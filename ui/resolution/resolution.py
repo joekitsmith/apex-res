@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QSizePolicy
 
 
 class ResolutionWidget(QWidget):
@@ -83,6 +83,8 @@ class ResolutionWidget(QWidget):
         self.title_label = QLabel()
         self.title_label.setObjectName("ResolutionTitle")
         self.title_label.setText("RESOLUTION")
+        self.title_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         self.title_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         self.title_label.setFont(self.font_title)
         self.grid_layout.addWidget(self.title_label, 0, 0, 1, 2)
+        self.title_label.adjustSize()

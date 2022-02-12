@@ -108,7 +108,6 @@ class MainWidget(QWidget):
 
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
-        self.setAttribute(Qt.WA_StyledBackground, True)
 
 
 class Window(QMainWindow):

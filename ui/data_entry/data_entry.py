@@ -54,6 +54,6 @@ class DataEntryWidget(QWidget):
     def _add_title_label(self):
         title_label = QLabel()
         title_label.setText("DATA")
+        title_label.setStyleSheet("""border-top: 0px solid black; border-bottom: 2px solid black; padding: 1px""")
         title_label.setFont(self.font_title)
-        title_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        self.grid_layout.addWidget(title_label, 0, 0, 1, 1)
+        self.grid_layout.addWidget(title_label, 0, 0, 1, 2)

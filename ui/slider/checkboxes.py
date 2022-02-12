@@ -168,6 +168,7 @@ class SliderCheckBoxWidget(QWidget):
     def _add_label(self):
         label = QLabel("SLIDERS")
         label.setObjectName("SliderTitle")
+        label.setStyleSheet("""border-top: 0px solid black; border-bottom: 2px solid black; padding: 1px""")
         label.setFont(self.font_title)
         label.setAlignment(Qt.AlignLeft | Qt.AlignBottom)
         self.grid_layout.addWidget(label, 0, 0, 1, 1)

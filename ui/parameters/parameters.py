@@ -75,6 +75,7 @@ class ParametersWidget(QWidget):
         label_title = QLabel()
         label_title.setObjectName("ParametersTitle")
         label_title.setText("PARAMETERS")
+        label_title.setStyleSheet("""border-top: 0px solid black; border-bottom: 2px solid black; padding: 1px""")
         label_title.setFont(self.font_title)
         label_title.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         self.layout.addWidget(label_title, 0, 0, 1, 5)

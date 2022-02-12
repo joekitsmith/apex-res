@@ -1,18 +1,15 @@
 /*chromatogram*/
 QWidget#ChromatogramWidget {
-    border: 10px solid black;
 }
 
 /*parameters*/
 QWidget#ParametersWidget {
-    border: 1px solid black;
 }
 
 QLabel#ParametersTitle {
 }
 
 QWidget#ParametersGroupWidget {
-    border: 1px solid black;
 }
 
 /*resolution*/
@@ -29,7 +26,6 @@ QPushButton#MaximiseResolution {
 }
 
 ResolutionMap {
-    border: 1px solid black;
 }
 
 /*slider*/
@@ -37,9 +33,7 @@ QLabel#SliderTitle {
 }
 
 QWidget#SliderCheckboxes {
-    border: 1px solid black;
 }
 
 QWidget#SliderWidget {
-    border: 1px solid black;
 }
