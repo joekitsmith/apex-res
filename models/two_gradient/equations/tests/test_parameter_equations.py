@@ -1,17 +1,13 @@
 from pathlib import Path
 import sys
 
-root_dir = (Path(__file__).parent / "../../../").resolve()
+root_dir = (Path(__file__).parent / "../").resolve()
 sys.path.append(str(root_dir))
 
 import pytest
 import numpy as np
 
-from models.two_gradient.equations import (
-    ParameterEquations,
-    RetentionWidthEquations,
-    ResolutionEquations,
-)
+from parameter_equations import ParameterEquations
 
 
 class TestEstimateB:

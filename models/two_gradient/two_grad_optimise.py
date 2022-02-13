@@ -2,8 +2,10 @@ import numpy as np
 import scipy.optimize as optimize
 import itertools as itertools
 
-from models.two_gradient.equations import (
+from models.two_gradient.equations.parameter_equations import (
     ParameterEquations,
+)
+from models.two_gradient.equations.retention_width_equations import (
     RetentionWidthEquations,
 )
 from models.two_gradient.resolution import Resolution
@@ -83,7 +85,6 @@ class TwoGradOptimise:
 
         # estimate b and logk0
         b_est = self._estimate_b(beta_np, tr_np)
-
         logk0_est = ParameterEquations.calculate_logk0(b_est, tr_np, self.t0, self.td)
 
         # optimise value of b
@@ -102,7 +103,7 @@ class TwoGradOptimise:
 
         logk0 = RetentionWidthEquations.calculate_logk0(self.logkw, self.s, self.phi0)
         b = RetentionWidthEquations.calculate_b(
-            self.s, self.t0, self.delta_phi, self.tg_final
+            self.s, self.delta_phi, self.tg_final, self.t0
         )
 
         self._predict_retention(logk0, b)
@@ -221,13 +222,14 @@ class TwoGradOptimise:
             b_est,
             args=(b_est, logk0_est, tr_np, self.t0, self.td),
         ).x
+        print(b_est.shape)
         b_opt = np.reshape(b_opt, b_est.shape)
 
         return b_opt
 
     def _predict_retention(self, logk0, b):
         tr = np.zeros_like(self.s)
-        smallk0 = np.where((self.t0 * (10 ** logk0)) <= self.td)
+        smallk0 = np.where((self.t0 * (10**logk0)) <= self.td)
         tr[smallk0] = RetentionWidthEquations.calculate_tr_smallk0(
             self.t0, logk0[smallk0]
         )
