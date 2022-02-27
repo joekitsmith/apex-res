@@ -1,8 +1,11 @@
-import math
 import numpy as np
 
+
 class ResolutionEquations:
-    def calculate_res(tr1: np.ndarray, tr2: np.ndarray, w1: np.ndarray, w2: np.ndarray):
+    @classmethod
+    def calculate_res(
+        cls, tr1: np.ndarray, tr2: np.ndarray, w1: np.ndarray, w2: np.ndarray
+    ):
         """
         Calculate resolution.
 

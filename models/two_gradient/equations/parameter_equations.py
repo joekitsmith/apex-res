@@ -2,9 +2,9 @@ import math
 import numpy as np
 
 class ParameterEquations:
-    @staticmethod
+    @classmethod
     def estimate_b(
-        beta: np.ndarray, tr1: np.ndarray, tr2: np.ndarray, t0: float, td: float
+        cls, beta: np.ndarray, tr1: np.ndarray, tr2: np.ndarray, t0: float, td: float
     ):
         """
         Estimate value for gradient factor b from scouting data.
@@ -31,8 +31,8 @@ class ParameterEquations:
 
         return b
 
-    @staticmethod
-    def calculate_logk0(b: np.ndarray, tr: np.ndarray, t0: float, td: float):
+    @classmethod
+    def calculate_logk0(cls, b: np.ndarray, tr: np.ndarray, t0: float, td: float):
         """
         Calculate logk0 value from scouting data.
 
@@ -51,8 +51,9 @@ class ParameterEquations:
 
         return logk0_est
 
-    @staticmethod
+    @classmethod
     def retention_f(
+        cls,
         b: np.ndarray,
         b_est: np.ndarray,
         logk0_est: np.ndarray,
@@ -93,8 +94,8 @@ class ParameterEquations:
 
         return np.sqrt((tr_est - tr) ** 2)
 
-    @staticmethod
-    def calculate_s(b: np.ndarray, tg: np.ndarray, delta_phi: np.ndarray, t0: float):
+    @classmethod
+    def calculate_s(cls, b: np.ndarray, tg: np.ndarray, delta_phi: np.ndarray, t0: float):
         """
         Calculate s parameter.
 
@@ -113,8 +114,8 @@ class ParameterEquations:
 
         return s
 
-    @staticmethod
-    def calculate_logkw(logk0: np.ndarray, s: np.ndarray, phi0_init: float):
+    @classmethod
+    def calculate_logkw(cls, logk0: np.ndarray, s: np.ndarray, phi0_init: float):
         """
         Calculate logkw parameter - retention in water
 
@@ -132,9 +133,9 @@ class ParameterEquations:
 
         return logkw
 
-    @staticmethod
+    @classmethod
     def estimate_N(
-        logk0: np.ndarray, b: np.ndarray, w: np.ndarray, t0: float, td: float
+        cls, logk0: np.ndarray, b: np.ndarray, w: np.ndarray, t0: float, td: float
     ):
         """
         Calculate N parameter - resolution number
