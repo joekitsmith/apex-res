@@ -26,7 +26,7 @@ class Slider(QSlider):
         self.setMouseTracking(True)
 
         self.setRange(self.minimum, self.maximum)
-        self.setValue(self.initial_value * self.resolution)
+        self.setValue(int(self.initial_value * self.resolution))
 
         self.setTickPosition(QSlider.TicksBothSides)
         self.setTickInterval(self.interval)
@@ -201,7 +201,9 @@ class SliderObject(QWidget):
         #     )
         #     title_label.setText("Particle \n size")
 
-        self.ticks = (self.slider.maximum - self.slider.minimum) / self.slider.interval
+        self.ticks = int(
+            (self.slider.maximum - self.slider.minimum) / self.slider.interval
+        )
 
         self.grid_layout.addWidget(self.slider, 0, 1, self.ticks + 1, 1)
         self.grid_layout.addWidget(title_label, self.ticks + 1, 0, 1, 2)
