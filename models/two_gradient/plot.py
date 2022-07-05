@@ -4,7 +4,7 @@ import numpy as np
 from models.two_gradient.resolution import Resolution
 
 
-class TwoGradOptimisePlot:
+class  TwoGradOptimisePlot:
     def __init__(self, fig_canvas, optimiser):
         """
         Parameters
@@ -21,6 +21,8 @@ class TwoGradOptimisePlot:
 
         # constant to modulate hight (inversely proportional)
         self.c = 100
+
+        self.plot_generated = False
 
         self.fig_canvas = fig_canvas
 
@@ -41,6 +43,8 @@ class TwoGradOptimisePlot:
         self._set_limits()
         self._set_xticks()
 
+        self.plot_generated = True
+
     def update_plot(self, optimiser):
         """
         Update chromatogram with new data.
@@ -48,7 +52,6 @@ class TwoGradOptimisePlot:
         self.optimiser = optimiser
 
         # run model under currently set conditions
-        self.optimiser.predict()
         x, y = self._generate_x_y()
 
         # add data to plot
@@ -100,7 +103,7 @@ class TwoGradOptimisePlot:
         time_diff_matrix, w_matrix, area_matrix = self._generate_mesh_arrays(x)
 
         h = area_matrix / (np.sqrt(np.pi) * self.c)
-        y = h * np.exp(-1 * ((time_diff_matrix ** 2) / ((w_matrix / 2) ** 2)))
+        y = h * np.exp(-1 * ((time_diff_matrix**2) / ((w_matrix / 2) ** 2)))
 
         total_y = np.sum(y, axis=0)
 
@@ -141,7 +144,7 @@ class TwoGradOptimisePlot:
         Set limits on x and y axis according to model parameters.
         """
         # set x limit to gradient time
-        self.fig_canvas.ax1.set_xlim([0, self.optimiser.tg_final])
+        self.fig_canvas.ax1.set_xlim([-2, self.optimiser.tg_final + 2])
         # set y limit dependent slightly below 0 to maximum y
         if self.y_max != 0:
             self.fig_canvas.ax1.set_ylim([(0 - self.y_max / 100), self.y_max])
@@ -150,22 +153,18 @@ class TwoGradOptimisePlot:
         """
         Set x-ticks of plot depending on current gradient time.
         """
-        tg_final = self.optimiser.tg_final
-        if tg_final <= 1:
-            xticks = np.round(
-                np.linspace(0, tg_final, math.floor((tg_final / 0.2) + 1)), 1
-            )
-        elif tg_final <= 2:
-            xticks = np.round(
-                np.linspace(0, tg_final, math.floor((tg_final / 0.4) + 1)), 1
-            )
-        elif tg_final <= 4:
-            xticks = np.linspace(0, tg_final, math.floor((tg_final / 0.5) + 1))
-        elif tg_final <= 20:
-            xticks = range(0, math.floor(tg_final + 1), 1)
-        elif tg_final <= 50:
-            xticks = range(0, math.floor(tg_final + 1) + 1, 2)
+        tg = self.optimiser.tg_final
+        if tg <= 1:
+            xticks = np.round(np.linspace(0, tg, math.floor((tg / 0.2) + 1)), 1)
+        elif tg <= 2:
+            xticks = np.round(np.linspace(0, tg, math.floor((tg / 0.4) + 1)), 1)
+        elif tg <= 4:
+            xticks = np.linspace(0, tg, math.floor((tg / 0.5) + 1))
+        elif tg <= 20:
+            xticks = range(0, math.floor(tg + 1), 1)
+        elif tg <= 50:
+            xticks = range(0, math.floor(tg + 1) + 1, 2)
         else:
-            xticks = range(0, math.floor(tg_final + 1), 5)
+            xticks = range(0, math.floor(tg + 1), 5)
 
         self.fig_canvas.ax1.set_xticks(xticks)

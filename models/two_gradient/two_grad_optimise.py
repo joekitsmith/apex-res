@@ -12,9 +12,7 @@ from models.two_gradient.resolution import Resolution
 
 
 class TwoGradOptimise:
-    def __init__(
-        self, instrument_params, column_params, method_params, input_params, data
-    ):
+    def __init__(self):
         """
         Parameters
         ----------
@@ -25,61 +23,85 @@ class TwoGradOptimise:
         data : np.ndarray
         """
         ## Instrument
-        self.instrument_name = instrument_params.name
-        self.td = instrument_params.td
+        self.instrument_name = None
+        self.td = None
+        self.phi0_init = None
 
-        ## Column
-        self.column_name = column_params.column_name
-        self.column_length = column_params.column_length
-        self.column_diameter = column_params.column_diameter
-        self.particle_size = column_params.particle_size
-        self.pore_diameter = column_params.pore_diameter
-        self.n_est = column_params.n_est
-        self.t0 = column_params.t0
+        # Column
+        self.column_name = None
+        self.column_length = None
+        self.column_diameter = None
+        self.n_est = None
+        self.particle_size = None
+        self.pore_diameter = None
+        self.t0 = None
 
         ## Method
-        self.flow_rate = method_params.flow_rate
-        self.phi0_init = method_params.phi0
-        self.phif_init = method_params.phif
-        self.uv = method_params.uv
-        self.tg1 = method_params.tg1
-        self.tg2 = method_params.tg2
-        self.tg_final = self.tg1
+        self.flow_rate = None
+        self.phi0_init = None
+        self.phif_init = None
+        self.uv = None
+        self.tg1 = None
+        self.tg2 = None
 
         ## Data
-        self.number_of_peaks = input_params.number_of_peaks
-        self.peak_of_interest = input_params.peak_of_interest
-        self.data = data
-        self._unpack_time_width_area()
+        self.peak_of_interest = 2
+        self.data = np.zeros((8, 3, 2))
 
         ## Resolution
-        self.phi0 = np.array([method_params.phi0])
-        self.phif = np.array([method_params.phif])
-        self.delta_phi = np.subtract(self.phif, self.phi0)
-        self.tg = np.array([method_params.tg_final])
+        self.phi0 = None
+        self.phif = None
+        self.delta_phi = None
+        self.tg = None
+        self.tg_final = None
+
         self.total_res = 0
         self.critical_res = 0
 
         ## Graph
         self.y_max = 0
 
-    def _unpack_time_width_area(self):
-        self.tr = self.data[:, 0]
+        self.is_initialised = False
+
+    def initialise(self):
+        print(self.data)
+        self.tr = self.data[:, 0][np.all(self.data[:, 0] == 0, axis=1)]
         self.tr1 = self.tr[0]
         self.tr2 = self.tr[1]
 
-        self.w = self.data[:, 1]
+        self.w = self.data[:, 1][np.all(self.data[:, 1] == 0, axis=1)]
         self.w1 = self.w[0]
         self.w2 = self.w[1]
 
-        self.area = self.data[:, 2]
+        self.area = self.data[:, 2][np.all(self.data[:, 2] == 0, axis=1)]
         self.area1 = self.area[0]
         self.area2 = self.area[1]
+
+        self.number_of_peaks = sum(np.all(self.tr == 0, axis=1))
+
+        self.phi0 = np.array([float(self.phi0_init)] * self.number_of_peaks)
+        self.phif = np.array([float(self.phif_init)] * self.number_of_peaks)
+        self.delta_phi = np.subtract(self.phif, self.phi0)
+        self.tg_final = np.array([float(self.tg1)] * self.number_of_peaks)
+
+        self.is_initialised = True
 
     def calculate(self):
         """
         Calculate s, logkw and N values.
         """
+        print(f"{self.tr=}")
+        print(f"{self.w=}")
+        print(f"{self.area=}")
+        print(f"{self.number_of_peaks=}")
+        print(f"{self.phi0_init=}")
+        print(f"{self.phif_init=}")
+        print(f"{self.phi0=}")
+        print(f"{self.phif=}")
+        print(f"{self.delta_phi=}")
+        print(f"{self.tg1=}")
+        print(f"{self.tg2=}")
+        print(f"{self.tg_final=}")
         # generate mesh arrays for vectorisation
         beta_np, tr_np, w_np, tg_np, delta_phi_np = self._generate_mesh_arrays()
 
@@ -141,7 +163,8 @@ class TwoGradOptimise:
         s = ParameterEquations.calculate_s(b_opt, tg_np, delta_phi_np, self.t0)
         logk0 = ParameterEquations.calculate_logk0(b_opt, tr_np, self.t0, self.td)
         logkw = ParameterEquations.calculate_logkw(logk0, s, self.phi0_init)
-        N = ParameterEquations.estimate_N(logk0, b_opt, w_np, self.t0, self.td)
+        # N = ParameterEquations.estimate_N(logk0, b_opt, w_np, self.t0, self.td) # calculate N using peak width
+        N = np.array([self.n_est] * self.number_of_peaks)
 
         # determine average between both runs
         s_avg = s.mean(axis=0)
@@ -222,7 +245,6 @@ class TwoGradOptimise:
             b_est,
             args=(b_est, logk0_est, tr_np, self.t0, self.td),
         ).x
-        print(b_est.shape)
         b_opt = np.reshape(b_opt, b_est.shape)
 
         return b_opt

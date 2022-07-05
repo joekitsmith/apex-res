@@ -33,18 +33,18 @@ class ParametersWidget(QWidget):
         self._configure()
 
     def add_parameters(self):
-        instrument_parameters = ParametersGroupWidget(
+        self.instrument = ParametersGroupWidget(
             self.optimiser, ParameterGroupNames.INSTRUMENT
         )
-        method_parameters = ParametersGroupWidget(
-            self.optimiser, ParameterGroupNames.METHOD
-        )
+        self.method = ParametersGroupWidget(self.optimiser, ParameterGroupNames.METHOD)
         # peak_parameters = ParametersGroupWidget(
         #     self.optimiser, ParameterGroupNames.PEAKS
         # )
 
-        self.layout.addWidget(instrument_parameters, 1, 0, 1, 1)
-        self.layout.addWidget(method_parameters, 1, 2, 1, 1)
+        self.parameters = self.instrument.parameters + self.method.parameters
+
+        self.layout.addWidget(self.instrument, 1, 0, 1, 1)
+        self.layout.addWidget(self.method, 2, 0, 1, 1)
         # self.layout.addWidget(peak_parameters, 1, 4, 1, 1)
 
     def _configure(self):
@@ -60,11 +60,10 @@ class ParametersWidget(QWidget):
         self.layout = QGridLayout(self)
 
         self.layout.setContentsMargins(20, 2, 20, 0)
-        self.layout.setSpacing(0)
+        self.layout.setSpacing(10)
 
-        self.layout.setColumnStretch(0, 3)
-        self.layout.setColumnStretch(2, 2)
-        # self.layout.setColumnStretch(4, 8)
+        self.layout.setColumnMinimumWidth(1, 1)
+        self.layout.setColumnMinimumWidth(0, 3)
 
     def _configure_fonts(self):
         self.font_title = QFont()
@@ -75,10 +74,13 @@ class ParametersWidget(QWidget):
         label_title = QLabel()
         label_title.setObjectName("ParametersTitle")
         label_title.setText("PARAMETERS")
-        label_title.setStyleSheet("""border-top: 0px solid black; border-bottom: 2px solid black; padding: 1px""")
+        label_title.setStyleSheet(
+            """border-top: 0px solid black; border-bottom: 2px solid black; padding: 8px"""
+        )
         label_title.setFont(self.font_title)
         label_title.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
-        self.layout.addWidget(label_title, 0, 0, 1, 5)
+        label_title.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        self.layout.addWidget(label_title, 0, 0, 1, 1)
 
     def _add_background(self):
         vline1 = QFrame()

@@ -17,7 +17,6 @@ from ui.chromatogram.chromatogram import ChromatogramWidget
 from models.two_gradient.example import generate_example_inputs
 from models.two_gradient.two_grad_optimise import TwoGradOptimise
 from ui.slider.slider import SliderWidget
-from ui.slider.checkboxes import SliderCheckBoxWidget
 from ui.slider.data_classes import SliderNames
 from ui.resolution.resolution import ResolutionWidget
 from ui.parameters.parameters import ParametersWidget
@@ -27,7 +26,7 @@ from ui.update.update import UpdateUI
 
 class MainWidget(QWidget):
     def __init__(self):
-        super(MainWidget, self).__init__()
+        super().__init__()
 
         self._configure_layout()
 
@@ -62,34 +61,25 @@ class MainWidget(QWidget):
             self.parameters_widget,
             self.slider_widget,
             self.resolution_widget,
+            self.data_entry_widget
         )
 
     def initialise_model(self):
-        inputs = generate_example_inputs()
-
-        self.optimiser = TwoGradOptimise(*inputs)
-        self.optimiser.calculate()
+        self.optimiser = TwoGradOptimise()
 
     def add_chromatogram_widget(self):
         self.chromatogram_widget = ChromatogramWidget(self.optimiser)
         self.chromatogram_widget.create_plot()
         self.optimiser = self.chromatogram_widget.optimiser
-        self.grid_layout.addWidget(self.chromatogram_widget, 2, 1, 4, 2)
+        self.grid_layout.addWidget(self.chromatogram_widget, 2, 1, 1, 2)
 
     def add_slider_interface(self):
-        self.slider_widget = SliderWidget(self.optimiser)
-        self.slider_checkboxes = SliderCheckBoxWidget(
-            self.slider_widget, self.initial_sliders
-        )
+        self.slider_widget = SliderWidget(self.optimiser, self.initial_sliders)
+        self.slider_widget.enable_checkboxes(self.initial_slider_checks)
 
-        for slider_name in self.initial_slider_checks:
-            self.slider_checkboxes.add_checkbox(slider_name)
-
-        self.slider_widget = self.slider_checkboxes.slider_widget
         self.optimiser = self.slider_widget.optimiser
 
-        self.grid_layout.addWidget(self.slider_widget, 2, 0, 4, 1)
-        self.grid_layout.addWidget(self.slider_checkboxes, 1, 0, 1, 1)
+        self.grid_layout.addWidget(self.slider_widget, 1, 0, 2, 1)
 
     def add_parameters_widget(self):
         self.parameters_widget = ParametersWidget(self.optimiser)
@@ -103,11 +93,14 @@ class MainWidget(QWidget):
         self.grid_layout.addWidget(self.resolution_widget, 0, 0, 1, 1)
 
     def add_data_entry_widget(self):
-        self.data_entry_widget = DataEntryWidget()
+        self.data_entry_widget = DataEntryWidget(self.optimiser)
         self.grid_layout.addWidget(self.data_entry_widget, 0, 2, 2, 1)
 
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
+        self.grid_layout.setRowStretch(2, 2)
+        self.grid_layout.setColumnStretch(2, 5)
+        self.grid_layout.setColumnStretch(1, 2)
 
 
 class Window(QMainWindow):

@@ -16,6 +16,7 @@ class ResolutionWidget(QWidget):
 
         self.critical_value.setText("%s" % (round(self.optimiser.critical_res, 2)))
         self.total_value.setText("%s" % (round(self.optimiser.total_res, 2)))
+        return self.optimiser
 
     def _configure(self):
         self.setObjectName("ResolutionWidget")
@@ -82,8 +83,11 @@ class ResolutionWidget(QWidget):
     def _add_title_label(self):
         self.title_label = QLabel()
         self.title_label.setObjectName("ResolutionTitle")
+        self.title_label.setStyleSheet(
+            """border-top: 0px solid black; border-bottom: 2px solid black; padding: 8px"""
+        )
         self.title_label.setText("RESOLUTION")
-        self.title_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+        self.title_label.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         self.title_label.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         self.title_label.setFont(self.font_title)
         self.grid_layout.addWidget(self.title_label, 0, 0, 1, 2)

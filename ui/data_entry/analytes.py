@@ -14,13 +14,15 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 
 from .checkbox import TableCheckboxes
+from .table import DataEntryTable
 
 
 class TableAnalytes(QWidget):
-    def __init__(self, total_analytes):
+    def __init__(self, optimiser, total_analytes):
         super(TableAnalytes, self).__init__()
 
         self.inputs = []
+        self.optimiser = optimiser
         self.total_analytes = total_analytes
 
         self._configure_layout()
@@ -82,12 +84,18 @@ class TableAnalytes(QWidget):
             tr_label = self._create_label(
                 "tR", self.font_tr, Qt.AlignHCenter | Qt.AlignTop
             )
+            # w_label = self._create_label(
+            #     "Width", self.font_area, Qt.AlignHCenter | Qt.AlignTop
+            # )
             area_label = self._create_label(
                 "Area", self.font_area, Qt.AlignHCenter | Qt.AlignTop
             )
             self.grid_layout.addWidget(
                 tr_label, 0, 2 * n, 1, 1, alignment=Qt.AlignCenter
             )
+            # self.grid_layout.addWidget(
+            #     w_label, 0, 2 * n + 1, 1, 1, alignment=Qt.AlignCenter
+            # )
             self.grid_layout.addWidget(
                 area_label, 0, 2 * n + 1, 1, 1, alignment=Qt.AlignCenter
             )
@@ -105,7 +113,7 @@ class TableAnalytes(QWidget):
         self._add_table()
 
     def _add_table(self):
-        self.table = QTableWidget()
+        self.table = DataEntryTable(self.optimiser)
         self.table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
         self.table.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)

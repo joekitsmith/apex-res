@@ -33,7 +33,7 @@ class RetentionWidthEquations:
         ---------
         s : (n,) np.ndarray
         delta_phi : (n,) np.ndarray
-        tg_final : (n,) np.ndarray
+        tg : (n,) np.ndarray
         t0 : float
 
         Returns

@@ -138,37 +138,19 @@ class SliderCheckBoxWidget(QWidget):
     def _configure(self):
         self.setObjectName("SliderCheckboxes")
 
-        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
         self.setMouseTracking(True)
 
         self._create_layout()
         self._configure_font()
-        self._add_label()
 
     def _configure_font(self):
         self.font_label = QFont()
         self.font_label.setPointSize(11)
 
-        self.font_title = QFont()
-        self.font_title.setPointSize(14)
-        self.font_title.setBold(True)
-
     def _create_layout(self):
-        self.grid_layout = QGridLayout(self)
-        self.grid_layout.setContentsMargins(10, 0, 10, 0)
-
-        self.checkbox_layout = QGridLayout()
-        self.checkbox_layout.setAlignment(Qt.AlignHCenter | Qt.AlignBottom)
-        self.checkbox_layout.setVerticalSpacing(1)
+        self.checkbox_layout = QGridLayout(self)
+        self.checkbox_layout.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        self.checkbox_layout.setVerticalSpacing(5)
         self.checkbox_layout.setHorizontalSpacing(20)
         self.checkbox_layout.setContentsMargins(0, 10, 0, 0)
-
-        self.grid_layout.addLayout(self.checkbox_layout, 1, 0, 2, 1)
-
-    def _add_label(self):
-        label = QLabel("SLIDERS")
-        label.setObjectName("SliderTitle")
-        label.setStyleSheet("""border-top: 0px solid black; border-bottom: 2px solid black; padding: 1px""")
-        label.setFont(self.font_title)
-        label.setAlignment(Qt.AlignLeft | Qt.AlignBottom)
-        self.grid_layout.addWidget(label, 0, 0, 1, 1)
+        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)

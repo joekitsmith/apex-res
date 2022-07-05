@@ -1,6 +1,7 @@
 import math
 import numpy as np
 
+
 class ParameterEquations:
     @classmethod
     def estimate_b(
@@ -63,7 +64,7 @@ class ParameterEquations:
     ):
         """
         Function used to optimise value of b by arriving back at retention times in scouting data.
-        b varied in order to minimise difference between estimated and observed retention times.
+        b varied to minimise difference between estimated and observed retention times.
 
         Arguments
         ---------
@@ -157,5 +158,3 @@ class ParameterEquations:
         N = (4 * ((k_star + 2) ** 2) * (t0**2)) / w**2
 
         return N
-
-

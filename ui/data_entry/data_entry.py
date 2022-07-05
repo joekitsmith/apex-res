@@ -18,10 +18,11 @@ from .conditions import TableConditions
 
 
 class DataEntryWidget(QWidget):
-    def __init__(self):
-        super(DataEntryWidget, self).__init__()
+    def __init__(self, optimiser):
+        super().__init__()
 
         self.input_list = []
+        self.optimiser = optimiser
         self.total_analytes = 8
 
         self._configure_layout()
@@ -31,13 +32,21 @@ class DataEntryWidget(QWidget):
         self.create_table()
 
     def create_table(self):
-        header = TableHeader()
-        analytes = TableAnalytes(self.total_analytes)
-        conditions = TableConditions()
+        self.header = TableHeader(self.optimiser)
+        self.analytes = TableAnalytes(self.optimiser, self.total_analytes)
+        self.conditions = TableConditions(self.optimiser)
 
-        self.grid_layout.addWidget(header, 1, 0, 1, 1)
-        self.grid_layout.addWidget(analytes, 2, 0, 1, 2)
-        self.grid_layout.addWidget(conditions, 1, 1, 1, 1)
+        self.data = self.header.data + self.conditions.data
+
+        self.grid_layout.addWidget(self.header, 2, 0, 1, 1)
+        self.grid_layout.addWidget(self.analytes, 3, 0, 1, 2)
+        self.grid_layout.addWidget(self.conditions, 1, 0, 1, 1)
+
+    def update_data(self):
+        self.optimiser = self.header.update_model(self.optimiser)
+        self.optimiser = self.analytes.update_model(self.optimiser)
+        self.optimiser = self.conditions.update_model(self.optimiser)
+        return self.optimiser
 
     def _configure_layout(self):
         self.grid_layout = QGridLayout(self)
@@ -54,6 +63,9 @@ class DataEntryWidget(QWidget):
     def _add_title_label(self):
         title_label = QLabel()
         title_label.setText("DATA")
-        title_label.setStyleSheet("""border-top: 0px solid black; border-bottom: 2px solid black; padding: 1px""")
+        title_label.setStyleSheet(
+            """border-top: 0px solid black; border-bottom: 2px solid black; padding: 8px"""
+        )
         title_label.setFont(self.font_title)
+        title_label.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         self.grid_layout.addWidget(title_label, 0, 0, 1, 2)
