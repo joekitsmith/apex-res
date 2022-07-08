@@ -1,7 +1,7 @@
 import numpy as np
 import itertools
 
-from models.two_gradient.equations import ResolutionEquations
+from models.two_gradient.equations.resolution_equations import ResolutionEquations
 
 
 class Resolution:

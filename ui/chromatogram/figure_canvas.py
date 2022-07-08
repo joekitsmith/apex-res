@@ -32,6 +32,8 @@ class ChromatogramCanvas(FigureCanvas):
         self.ax1.tick_params(labelsize=8)
         self.ax1.minorticks_on()
 
+        self.ax1.margins(0)
+
         # maximise axis
         self.ax_maximise = self.figure.add_axes([0.72, 0.91, 0.2, 0.05])
         self.ax_maximise.set_visible(False)
