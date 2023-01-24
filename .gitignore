@@ -1,3 +1,7 @@
+# Python
 *.pyc
 *DS_Store*
 */old/*
+
+# React
+node_modules
