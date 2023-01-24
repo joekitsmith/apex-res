@@ -26,5 +26,5 @@ export const protectedRoutes = [
   {
     path: "/",
     element: <div>Protected home</div>,
-  }
+  },
 ];

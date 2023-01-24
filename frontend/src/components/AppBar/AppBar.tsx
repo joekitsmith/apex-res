@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useAuth } from "../../lib/auth";
 import { useNavigate } from "react-router";
 
-export const pages = [{ name: "Playlists", navigateTo: "playlists" }]
+export const pages = [{ name: "Playlists", navigateTo: "playlists" }];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();

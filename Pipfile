@@ -16,10 +16,14 @@ python-jose = {extras = ["cryptography"], version = "*"}
 passlib = {extras = ["bcrypt"], version = "*"}
 
 [dev-packages]
-pytest = "*"
-pytest-mock = "*"
-mypy = "*"
+pre-commit = "*"
 black = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-mock = "*"
+isort = "*"
+mypy = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.10"

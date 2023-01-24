@@ -14,5 +14,5 @@ export const publicRoutes = [
   {
     path: "/login",
     element: <AuthRoutes />,
-  }
+  },
 ];
