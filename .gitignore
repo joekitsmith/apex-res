@@ -5,3 +5,6 @@
 
 # React
 node_modules
+
+# DB
+*.db
