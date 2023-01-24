@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -14,6 +15,7 @@ class User(BaseModel):
     email: str | None = None
     full_name: str | None = None
     disabled: bool | None = None
+
     class Config:
         orm_mode = True
 
