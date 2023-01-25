@@ -8,11 +8,7 @@ const { AuthRoutes } = lazyImport(
 
 export const publicRoutes = [
   {
-    path: "/",
-    element: <Navigate replace to="/login" />,
-  },
-  {
-    path: "/login",
+    path: "/*",
     element: <AuthRoutes />,
   },
 ];

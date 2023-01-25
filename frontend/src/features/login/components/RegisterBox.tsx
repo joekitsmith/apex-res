@@ -4,24 +4,17 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useAuth } from "../../../lib/auth";
-import { useNavigate } from "react-router-dom";
 
-type LoginBoxProps = {
+type RegisterBoxProps = {
   onSuccess: () => void;
 };
 
-export function LoginBox({ onSuccess }: LoginBoxProps) {
-  const navigate = useNavigate();
-
-  const { login, isLoggingIn } = useAuth();
-
-  const useClickLogin = async () => {
-    await login(null);
-    onSuccess();
-  };
+export function RegisterBox({ onSuccess }: RegisterBoxProps) {
+  const { register, isRegistering } = useAuth();
 
   const useClickRegister = async () => {
-    navigate("/register");
+    await register(null);
+    onSuccess();
   };
 
   return (
@@ -54,24 +47,6 @@ export function LoginBox({ onSuccess }: LoginBoxProps) {
         m="auto"
         src={require("../../../assets/peak-icon.webp")}
       />
-      <Button
-        onClick={useClickLogin}
-        sx={{
-          borderTop: "2px solid black",
-          borderRadius: 0,
-          p: 1,
-          backgroundColor: "#5797ff",
-          width: "100%",
-          mt: 3,
-          "&.MuiButton-text": {
-            color: "#000000",
-            fontWeight: "bold",
-            fontSize: 18,
-          },
-        }}
-      >
-        Login
-      </Button>
       <Button
         onClick={useClickRegister}
         sx={{
