@@ -1,6 +1,11 @@
 import * as React from "react";
-import { TokenResponse, UserResponse } from "../features/login";
-import { loginWithSpotify, getUser } from "../features/login";
+import {
+  LoginCredentials,
+  RegisterCredentials,
+  TokenResponse,
+  UserResponse,
+} from "../features/login";
+import { login, getUser, register } from "../features/login";
 import storage from "../utils/storage";
 import { initReactQueryAuth } from "react-query-auth";
 
@@ -16,15 +21,23 @@ async function loadUser() {
   return null;
 }
 
-async function loginFn() {
-  const response = await loginWithSpotify();
+async function loginFn(data: LoginCredentials) {
+  const response = await login(data);
   await handleTokenResponse(response);
   const user = await loadUser();
   return user;
 }
 
-async function registerFn() {
-  return Promise.resolve({ username: "" });
+async function registerFn(registerData: RegisterCredentials) {
+  register(registerData);
+  const loginData = {
+    username: registerData.username,
+    password: registerData.password,
+  };
+  const response = await login(loginData);
+  await handleTokenResponse(response);
+  const user = await loadUser();
+  return user;
 }
 
 async function logoutFn() {
