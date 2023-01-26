@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Box } from "@mui/material";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -7,14 +8,15 @@ type LayoutProps = {
 
 export const Layout = ({ children, title }: LayoutProps) => {
   return (
-    <>
-      <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            {children}
-          </div>
-        </div>
-      </div>
-    </>
+    <Box
+      sx={{
+        display: "flex",
+        height: "65vh",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {children}
+    </Box>
   );
 };

@@ -8,20 +8,19 @@ import {
   TextField,
 } from "@mui/material";
 import { useAuth } from "../../../lib/auth";
-import { useNavigate } from "react-router-dom";
-import { LoginCredentials } from "../api/login";
+import { RegisterCredentials } from "../api/register";
 
-type LoginBoxProps = {
+type RegisterBoxProps = {
   onSuccess: () => void;
 };
 
-export function LoginBox({ onSuccess }: LoginBoxProps) {
-  const navigate = useNavigate();
-
+export function RegisterBox({ onSuccess }: RegisterBoxProps) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [fullName, setFullName] = React.useState("");
 
-  const loginInputs = [
+  const registerInputs = [
     {
       label: "Username",
       type: "text",
@@ -32,25 +31,30 @@ export function LoginBox({ onSuccess }: LoginBoxProps) {
       type: "password",
       setValue: setPassword,
     },
+    {
+      label: "Email",
+      type: "email",
+      setValue: setEmail,
+    },
+    {
+      label: "Full Name",
+      type: "text",
+      setValue: setFullName,
+    },
   ];
 
-  const { login, isLoggingIn } = useAuth();
+  const { register, isRegistering } = useAuth();
 
-  const useClickLogin = async () => {
-    const credentials: LoginCredentials = {
-      grant_type: "",
+  const handleClickRegister = async () => {
+    const credentials: RegisterCredentials = {
       username: username,
       password: password,
-      scope: "",
-      client_id: "",
-      client_secret: "",
+      email: email,
+      full_name: fullName,
+      disabled: false,
     };
-    await login(credentials);
+    await register(credentials);
     onSuccess();
-  };
-
-  const useClickRegister = async () => {
-    navigate("/register");
   };
 
   return (
@@ -85,7 +89,7 @@ export function LoginBox({ onSuccess }: LoginBoxProps) {
           src={require("../../../assets/peak-icon.webp")}
         />
         <Stack spacing={2}>
-          {loginInputs.map((input) => (
+          {registerInputs.map((input) => (
             <TextField
               key={input.label}
               onChange={(e) => {
@@ -101,7 +105,7 @@ export function LoginBox({ onSuccess }: LoginBoxProps) {
         </Stack>
         <Stack sx={{ width: "100%" }}>
           <Button
-            onClick={useClickLogin}
+            onClick={handleClickRegister}
             sx={{
               borderTop: "2px solid black",
               borderRadius: 0,
@@ -112,22 +116,6 @@ export function LoginBox({ onSuccess }: LoginBoxProps) {
                 color: "#000000",
                 fontWeight: "bold",
                 fontSize: 18,
-              },
-            }}
-          >
-            Login
-          </Button>
-          <Button
-            onClick={useClickRegister}
-            sx={{
-              borderTop: "2px solid black",
-              borderRadius: 0,
-              p: 1,
-              backgroundColor: "#9dc1fc",
-              width: "100%",
-              "&.MuiButton-text": {
-                color: "#000000",
-                fontSize: 12,
               },
             }}
           >

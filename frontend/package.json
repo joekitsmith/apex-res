@@ -19,7 +19,6 @@
     "prettier": "*",
     "react": "*",
     "react-dom": "*",
-    "react-redux": "*",
     "react-scripts": "*",
     "typescript": "*",
     "react-query": "*",

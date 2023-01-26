@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
 import { Layout } from "../components/Layout";
-import { LoginBox } from "../components/LoginBox";
+import { RegisterBox } from "../components/RegisterBox";
 
-export const Login = () => {
+export const Register = () => {
   const navigate = useNavigate();
 
   return (
     <Layout title="Log in to your account">
-      <LoginBox onSuccess={() => navigate("/")} />
+      <RegisterBox onSuccess={() => navigate("/")} />
     </Layout>
   );
 };
