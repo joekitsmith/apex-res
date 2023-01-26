@@ -8,7 +8,7 @@ export const Login = () => {
 
   return (
     <Layout title="Log in to your account">
-      <LoginBox onSuccess={() => navigate("/app")} />
+      <LoginBox onSuccess={() => navigate("/")} />
     </Layout>
   );
 };

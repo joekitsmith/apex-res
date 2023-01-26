@@ -29,14 +29,16 @@ async function loginFn(data: LoginCredentials) {
 }
 
 async function registerFn(registerData: RegisterCredentials) {
-  register(registerData);
+  const registerResponse = await register(registerData);
   const loginData = {
+    grant_type: "",
     username: registerData.username,
     password: registerData.password,
+    scope: "",
+    client_id: "",
+    client_secret: "",
   };
-  const response = await login(loginData);
-  await handleTokenResponse(response);
-  const user = await loadUser();
+  const user = await loginFn(loginData);
   return user;
 }
 
@@ -61,7 +63,7 @@ const authConfig = {
 
 export const { AuthProvider, useAuth } = initReactQueryAuth<
   UserResponse | null,
-  UserResponse | null,
-  UserResponse | null,
-  null
+  unknown,
+  LoginCredentials,
+  RegisterCredentials
 >(authConfig);
