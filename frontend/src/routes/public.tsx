@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { lazyImport } from "../utils/lazyImport";
 
 const { AuthRoutes } = lazyImport(
-  () => import("../features/login"),
+  () => import("../features/auth"),
   "AuthRoutes"
 );
 
