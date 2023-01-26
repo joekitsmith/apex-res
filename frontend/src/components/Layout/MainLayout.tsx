@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, Stack, Paper, ButtonBase } from "@mui/material";
+import { Box } from "@mui/material";
 import { Head } from "../Head";
 import ResponsiveAppBar, { pages } from "../AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router";
@@ -9,12 +9,12 @@ type Title = {
   navigateTo: string;
 };
 
-type ContentLayoutProps = {
+type MainLayoutProps = {
   children: React.ReactNode;
   header: any;
 };
 
-export const ContentLayout = ({ children, header }: ContentLayoutProps) => {
+export const MainLayout = ({ children, header }: MainLayoutProps) => {
   const location = useLocation();
   const currentTitle = pages.find(
     (page) => page.navigateTo === location.pathname.split("/")[1]
@@ -24,7 +24,9 @@ export const ContentLayout = ({ children, header }: ContentLayoutProps) => {
 
   return (
     <>
-      <div>Test</div>
+      <Head title={currentTitle} />
+      <ResponsiveAppBar />
+      {children}
     </>
   );
 };
