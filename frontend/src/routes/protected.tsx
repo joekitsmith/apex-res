@@ -3,7 +3,10 @@ import { Navigate, Outlet } from "react-router-dom";
 import { MainLayout } from "../components/Layout";
 import { lazyImport } from "../utils/lazyImport";
 
-// const { Playlists } = lazyImport();
+const { TwoGradientRoutes } = lazyImport(
+  () => import("../features/twoGradient"),
+  "TwoGradientRoutes"
+);
 
 const App = () => {
   return (
@@ -25,5 +28,9 @@ export const protectedRoutes = [
   {
     path: "/",
     element: <App />,
+    children: [
+      { path: "/two-gradient/*", element: <TwoGradientRoutes /> },
+      { path: "/", element: <Navigate to="/two-gradient" /> },
+    ],
   },
 ];

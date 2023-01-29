@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 import { Head } from "../Head";
 import ResponsiveAppBar, { pages } from "../AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router";
@@ -26,7 +26,7 @@ export const MainLayout = ({ children, header }: MainLayoutProps) => {
     <>
       <Head title={currentTitle} />
       <ResponsiveAppBar />
-      {children}
+      <Box sx={{ px: 3 }}>{children}</Box>
     </>
   );
 };

@@ -61,8 +61,8 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="static" elevation={0} color="transparent">
-      <Container maxWidth={false} sx={{ mx: 1 }}>
-        <Toolbar disableGutters>
+      <Container maxWidth={false}>
+        <Toolbar disableGutters sx={{ px: 1 }}>
           <Box
             component="img"
             sx={{ width: 20, height: 20, mr: 2, border: "1px solid grey" }}
