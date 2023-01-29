@@ -4,10 +4,9 @@ import { Layout } from "../components/Layout";
 import { DataEntry } from "../components/DataEntry";
 import { Chromatogram } from "../components/Chromatogram";
 import { Sliders } from "../components/Sliders";
+import { Resolution } from "../components/Resolution";
 
 export const TwoGradient = () => {
-  const navigate = useNavigate();
-
   return (
     <Layout>
       <Grid
@@ -27,8 +26,15 @@ export const TwoGradient = () => {
         </Grid>
         <Grid item xs={9}>
           <Grid container spacing={0}>
-            <Grid item xs={12} sx={{ height: "22vh", borderBottom: 1 }}>
+            <Grid item xs={9} sx={{ height: "22vh", borderBottom: 1 }}>
               <Sliders />
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              sx={{ height: "22vh", borderBottom: 1, borderLeft: 2 }}
+            >
+              <Resolution />
             </Grid>
             <Grid item xs={12} sx={{ height: "67vh" }}>
               <Chromatogram />
