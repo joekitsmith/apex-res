@@ -4,8 +4,8 @@ import {
   RegisterCredentials,
   TokenResponse,
   UserResponse,
-} from "../features/login";
-import { login, getUser, register } from "../features/login";
+} from "../features/auth";
+import { login, getUser, register } from "../features/auth";
 import storage from "../utils/storage";
 import { initReactQueryAuth } from "react-query-auth";
 

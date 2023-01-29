@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useAuth } from "../../lib/auth";
 import { useNavigate } from "react-router";
 
-export const pages = [{ name: "Playlists", navigateTo: "playlists" }];
+export const pages = [{ name: "Two gradient", navigateTo: "/two-gradient" }];
 
 function ResponsiveAppBar() {
   const navigate = useNavigate();
@@ -61,11 +61,11 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="static" elevation={0} color="transparent">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      <Container maxWidth={false}>
+        <Toolbar disableGutters sx={{ px: 1 }}>
           <Box
             component="img"
-            sx={{ width: 20, height: 20, mr: 2 }}
+            sx={{ width: 20, height: 20, mr: 2, border: "1px solid grey" }}
             src={require("../../assets/peak-icon.webp")}
           />
           <Typography
@@ -124,7 +124,7 @@ function ResponsiveAppBar() {
               <Button
                 disabled={page.name !== "Two gradient"}
                 key={page.name}
-                onClick={handleCloseNavMenu}
+                onClick={() => navigate(page.navigateTo)}
                 sx={{ my: 2, mx: 0.5, color: "#2b2b2b", display: "block" }}
               >
                 {page.name}
