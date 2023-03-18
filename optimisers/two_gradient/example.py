@@ -1,10 +1,10 @@
 import numpy as np
 
 from .data_classes import (
-    InstrumentParams,
     ColumnParams,
-    TwoGradMethodParams,
     InputParams,
+    InstrumentParams,
+    TwoGradMethodParams,
 )
 
 

@@ -1,26 +1,25 @@
-import sys
 import os
-
-from PyQt5.QtWidgets import QApplication
+import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
-    QMainWindow,
-    QWidget,
+    QApplication,
     QGridLayout,
-    QStackedLayout,
+    QMainWindow,
     QPushButton,
+    QStackedLayout,
     QVBoxLayout,
+    QWidget,
 )
 
+from optimisers.two_gradient.example import generate_example_inputs
+from optimisers.two_gradient.two_grad_optimise import TwoGradOptimise
 from ui.chromatogram.chromatogram import ChromatogramWidget
-from models.two_gradient.example import generate_example_inputs
-from models.two_gradient.two_grad_optimise import TwoGradOptimise
-from ui.slider.slider import SliderWidget
-from ui.slider.data_classes import SliderNames
-from ui.resolution.resolution import ResolutionWidget
-from ui.parameters.parameters import ParametersWidget
 from ui.data_entry.data_entry import DataEntryWidget
+from ui.parameters.parameters import ParametersWidget
+from ui.resolution.resolution import ResolutionWidget
+from ui.slider.data_classes import SliderNames
+from ui.slider.slider import SliderWidget
 from ui.update.update import UpdateUI
 
 
@@ -61,7 +60,7 @@ class MainWidget(QWidget):
             self.parameters_widget,
             self.slider_widget,
             self.resolution_widget,
-            self.data_entry_widget
+            self.data_entry_widget,
         )
 
     def initialise_model(self):

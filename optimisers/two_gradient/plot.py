@@ -1,10 +1,11 @@
 import math
+
 import numpy as np
 
-from models.two_gradient.resolution import Resolution
+from optimisers.two_gradient.resolution import Resolution
 
 
-class  TwoGradOptimisePlot:
+class TwoGradOptimisePlot:
     def __init__(self, fig_canvas, optimiser):
         """
         Parameters

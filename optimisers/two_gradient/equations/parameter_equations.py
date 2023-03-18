@@ -1,4 +1,3 @@
-import math
 import numpy as np
 
 
@@ -96,7 +95,9 @@ class ParameterEquations:
         return np.sqrt((tr_est - tr) ** 2)
 
     @classmethod
-    def calculate_s(cls, b: np.ndarray, tg: np.ndarray, delta_phi: np.ndarray, t0: float):
+    def calculate_s(
+        cls, b: np.ndarray, tg: np.ndarray, delta_phi: np.ndarray, t0: float
+    ):
         """
         Calculate s parameter.
 
