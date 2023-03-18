@@ -1,5 +1,3 @@
-import itertools as itertools
-
 import numpy as np
 import scipy.optimize as optimize
 
@@ -21,7 +19,7 @@ class TwoGradOptimise:
         input_params : InputParameters
         data : np.ndarray
         """
-        ## Instrument
+        # Instrument
         self.instrument_name = None
         self.td = None
         self.phi0_init = None
@@ -35,7 +33,7 @@ class TwoGradOptimise:
         self.pore_diameter = None
         self.t0 = None
 
-        ## Method
+        # Method
         self.flow_rate = None
         self.phi0_init = None
         self.phif_init = None
@@ -43,11 +41,11 @@ class TwoGradOptimise:
         self.tg1 = None
         self.tg2 = None
 
-        ## Data
+        # Data
         self.peak_of_interest = 2
         self.data = np.zeros((8, 3, 2))
 
-        ## Resolution
+        # Resolution
         self.phi0 = None
         self.phif = None
         self.delta_phi = None
@@ -57,7 +55,7 @@ class TwoGradOptimise:
         self.total_res = 0
         self.critical_res = 0
 
-        ## Graph
+        # Graph
         self.y_max = 0
 
         self.is_initialised = False

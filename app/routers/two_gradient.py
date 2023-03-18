@@ -54,7 +54,7 @@ async def initialise_model(
     optimiser.calculate()
 
     if optimiser.is_initialised:
-        return {"message": "Model initialised"}
+        return MessageResponse(message="Model initialised")
 
     raise HTTPException(status_code=400, detail="Model not initialised")
 

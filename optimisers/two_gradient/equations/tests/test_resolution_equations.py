@@ -1,9 +1,3 @@
-import sys
-from pathlib import Path
-
-root_dir = (Path(__file__).parent / "../").resolve()
-sys.path.append(str(root_dir))
-
 import numpy as np
 import pytest
 from resolution_equations import ResolutionEquations
