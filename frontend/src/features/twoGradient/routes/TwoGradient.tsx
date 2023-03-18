@@ -107,17 +107,13 @@ export const TwoGradient = () => {
         </Grid>
         <Grid item xs={9}>
           <Grid container spacing={0}>
-            <Grid item xs={9} sx={{ height: "22vh", borderBottom: 1 }}>
+            <Grid item xs={9} sx={{ borderBottom: 1 }}>
               <Sliders />
             </Grid>
-            <Grid
-              item
-              xs={3}
-              sx={{ height: "22vh", borderBottom: 1, borderLeft: 2 }}
-            >
+            <Grid item xs={3} sx={{ borderBottom: 1, borderLeft: 2 }}>
               <Resolution />
             </Grid>
-            <Grid item xs={12} sx={{ height: "67vh" }}>
+            <Grid item xs={12} sx={{ height: "100%" }}>
               <Chromatogram />
             </Grid>
           </Grid>
