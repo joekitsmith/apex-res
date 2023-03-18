@@ -1,21 +1,15 @@
-from pathlib import Path
-import sys
-
-root_dir = (Path(__file__).parent / "../../../").resolve()
-sys.path.append(str(root_dir))
-
-import pytest
 import numpy as np
+import pytest
 
-from ui.chromatogram.figure_canvas import ChromatogramCanvas
-from models.two_gradient.plot import TwoGradOptimisePlot
-from models.two_gradient.two_grad_optimise import TwoGradOptimise
-from models.two_gradient.data_classes import (
-    InstrumentParams,
+from optimisers.two_gradient.data_classes import (
     ColumnParams,
-    TwoGradMethodParams,
     InputParams,
+    InstrumentParams,
+    TwoGradMethodParams,
 )
+from optimisers.two_gradient.plot import TwoGradOptimisePlot
+from optimisers.two_gradient.two_grad_optimise import TwoGradOptimise
+from ui.chromatogram.figure_canvas import ChromatogramCanvas
 
 
 @pytest.fixture

@@ -9,9 +9,13 @@ import app.crud.user as crud
 import app.models.user as models
 from app.database import SessionLocal, engine
 from app.schemas.user import Token, TokenData, User, UserAuth
-from app.utils.security import (ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM,
-                                SECRET_KEY, create_access_token,
-                                verify_password)
+from app.utils.security import (
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+    ALGORITHM,
+    SECRET_KEY,
+    create_access_token,
+    verify_password,
+)
 
 user_router = APIRouter()
 

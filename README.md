@@ -1,7 +1,9 @@
 # apex-res
+
 Chromatography modelling program in Python
 
 Package dependencies:
+
 - pyqt5
 - matplotlib
 - numpy

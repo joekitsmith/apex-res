@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routers.two_gradient import two_gradient_router
 from app.routers.user import user_router
 
 app = FastAPI()
@@ -17,6 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(two_gradient_router, prefix="/two_gradient", tags=["Two gradient"])
 app.include_router(user_router, prefix="/user", tags=["User"])
 
 

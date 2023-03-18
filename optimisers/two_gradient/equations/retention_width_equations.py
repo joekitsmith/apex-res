@@ -1,4 +1,3 @@
-import math
 import numpy as np
 
 
@@ -58,7 +57,7 @@ class RetentionWidthEquations:
         -------
         tr : (n,) np.ndarray
         """
-        tr = t0 * (1 + (10 ** logk0))
+        tr = t0 * (1 + (10**logk0))
 
         return tr
 
@@ -82,7 +81,7 @@ class RetentionWidthEquations:
         """
         tr = (
             (t0 / b)
-            * np.log10(2.3 * (10 ** logk0) * b * (1 - (td / (t0 * (10 ** logk0)))) + 1)
+            * np.log10(2.3 * (10**logk0) * b * (1 - (td / (t0 * (10**logk0)))) + 1)
             + t0
             + td
         )
@@ -107,7 +106,7 @@ class RetentionWidthEquations:
         -------
         k_star : (n,) np.ndarray
         """
-        k_star = (10 ** logk0) / (2.3 * b * ((10 ** logk0) / 2) - (t0 / td) + 1)
+        k_star = (10**logk0) / (2.3 * b * ((10**logk0) / 2) - (t0 / td) + 1)
 
         return k_star
 
