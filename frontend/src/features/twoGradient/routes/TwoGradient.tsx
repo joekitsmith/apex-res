@@ -60,6 +60,8 @@ export const TwoGradient = () => {
     },
   ]);
 
+  const [b0Value, setB0Value] = React.useState({ initial: 0.4, final: 1 });
+
   const initialise = useInitialise(setInitialised);
   const predict = usePredict(initialised);
 
@@ -111,7 +113,7 @@ export const TwoGradient = () => {
               <Sliders />
             </Grid>
             <Grid item xs={3} sx={{ borderBottom: 1, borderLeft: 2 }}>
-              <Resolution />
+              <Resolution currentConditions={b0Value} />
             </Grid>
             <Grid item xs={12} sx={{ height: "100%" }}>
               <Chromatogram />
