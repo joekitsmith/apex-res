@@ -7,20 +7,12 @@ import {
   GridColumns,
   GridColumnHeaderParams,
   GridRenderCellParams,
-  GridRowModel,
 } from "@mui/x-data-grid";
-
-type Row = {
-  peak: string;
-  tr1: number;
-  area1: number;
-  tr2: number;
-  area2: number;
-};
+import { PeakDataItem } from "../types";
 
 const columns: GridColumns = [
   {
-    field: "peak",
+    field: "name",
     flex: 1,
     headerAlign: "center",
     align: "center",
@@ -38,7 +30,7 @@ const columns: GridColumns = [
     ),
   },
   {
-    field: "tr1",
+    field: "retention_time_first",
     flex: 1,
     headerAlign: "center",
     align: "center",
@@ -50,7 +42,19 @@ const columns: GridColumns = [
     ),
   },
   {
-    field: "area1",
+    field: "width_first",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+    type: "number",
+    editable: true,
+    sortable: false,
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <Typography sx={{ fontSize: 14, fontWeight: "bold" }}>w 1</Typography>
+    ),
+  },
+  {
+    field: "area_first",
     flex: 1,
     headerAlign: "center",
     align: "center",
@@ -62,7 +66,7 @@ const columns: GridColumns = [
     ),
   },
   {
-    field: "tr2",
+    field: "retention_time_second",
     flex: 1,
     headerAlign: "center",
     align: "center",
@@ -74,7 +78,19 @@ const columns: GridColumns = [
     ),
   },
   {
-    field: "area2",
+    field: "width_second",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+    type: "number",
+    editable: true,
+    sortable: false,
+    renderHeader: (params: GridColumnHeaderParams) => (
+      <Typography sx={{ fontSize: 14, fontWeight: "bold" }}>w 2</Typography>
+    ),
+  },
+  {
+    field: "area_second",
     flex: 1,
     headerAlign: "center",
     align: "center",
@@ -87,44 +103,40 @@ const columns: GridColumns = [
   },
 ];
 
-export function PeakTable() {
-  const [rows, setRows] = React.useState<Row[]>([
-    {
-      peak: "1",
-      tr1: 1,
-      area1: 2,
-      tr2: 3,
-      area2: 4,
-    },
-    {
-      peak: "2",
-      tr1: 1,
-      area1: 2,
-      tr2: 3,
-      area2: 4,
-    },
-  ]);
+type PeakTableProps = {
+  peakData: PeakDataItem[];
+  setPeakData: React.Dispatch<React.SetStateAction<PeakDataItem[]>>;
+};
 
+export function PeakTable({ peakData, setPeakData }: PeakTableProps) {
   const createNextRow = () => {
-    return { peak: `${rows.length + 1}`, tr1: 0, area1: 0, tr2: 0, area2: 0 };
+    return {
+      name: `${peakData.length + 1}`,
+      retention_time_first: 0,
+      width_first: 0,
+      area_first: 0,
+      retention_time_second: 0,
+      width_second: 0,
+      area_second: 0,
+    };
   };
 
   const handleAddRow = () => {
-    setRows((prevRows) => [...prevRows, createNextRow()]);
+    setPeakData((prevRows: PeakDataItem[]) => [...prevRows, createNextRow()]);
   };
 
   const handleRemoveRow = () => {
-    setRows((prevRows) => prevRows.slice(0, -1));
+    setPeakData((prevRows: PeakDataItem[]) => prevRows.slice(0, -1));
   };
 
   const processRowUpdate = (newRow: any, oldRow: any) => {
-    const updatedRows = rows.map((row) => {
-      if (row.peak === newRow.peak) {
+    const updatedRows = peakData.map((peak: PeakDataItem) => {
+      if (peak.name === newRow.name) {
         return newRow;
       }
-      return row;
+      return peak;
     });
-    setRows(updatedRows);
+    setPeakData(updatedRows);
     return newRow;
   };
 
@@ -140,17 +152,17 @@ export function PeakTable() {
         spacing={3}
         sx={{ pr: 3 }}
       >
-        <IconButton disabled={rows.length > 8} onClick={handleAddRow}>
+        <IconButton disabled={peakData.length > 8} onClick={handleAddRow}>
           <AddIcon />
         </IconButton>
-        <IconButton disabled={rows.length < 3} onClick={handleRemoveRow}>
+        <IconButton disabled={peakData.length < 3} onClick={handleRemoveRow}>
           <RemoveIcon />
         </IconButton>
       </Stack>
       <DataGrid
         columns={columns}
-        rows={rows}
-        getRowId={(row) => row.peak}
+        rows={peakData}
+        getRowId={(row) => row.name}
         processRowUpdate={processRowUpdate}
         onProcessRowUpdateError={handleProcessRowUpdateError}
         density="compact"

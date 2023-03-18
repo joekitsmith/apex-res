@@ -3,10 +3,10 @@ from fastapi import APIRouter, HTTPException
 
 from app.schemas.two_gradient import (
     GradientSolventConditions,
+    InitialisedResponse,
     InstrumentParameters,
-    MessageResponse,
     MethodParameters,
-    PeakData,
+    PeakDataItem,
     PredictionResponse,
     PredictionResult,
     ResolutionResult,
@@ -22,8 +22,8 @@ optimiser = TwoGradOptimise()
 async def initialise_model(
     instrument_params: InstrumentParameters,
     method_params: MethodParameters,
-    peak_data: PeakData,
-) -> MessageResponse:
+    peak_data: list[PeakDataItem],
+) -> InitialisedResponse:
     optimiser.t0 = instrument_params.dwell_time
     optimiser.td = instrument_params.dead_time
     optimiser.n_est = instrument_params.N
@@ -33,7 +33,6 @@ async def initialise_model(
     optimiser.phi0_init = method_params.gradient_solvent.initial
     optimiser.phif_init = method_params.gradient_solvent.final
 
-    peaks = peak_data.items
     data = np.array(
         [
             (
@@ -44,17 +43,17 @@ async def initialise_model(
                 p.area_first,
                 p.area_second,
             )
-            for p in peaks
+            for p in peak_data
         ]
     )
-    optimiser.data = data.reshape(len(peaks), 3, 2)
+    optimiser.data = data.reshape(len(peak_data), 3, 2)
 
     optimiser.initialise()
 
     optimiser.calculate()
 
     if optimiser.is_initialised:
-        return MessageResponse(message="Model initialised")
+        return InitialisedResponse(is_initialised=True)
 
     raise HTTPException(status_code=400, detail="Model not initialised")
 
