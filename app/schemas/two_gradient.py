@@ -28,8 +28,8 @@ class PredictionResponse(BaseModel):
     results: list
 
 
-class MessageResponse(BaseModel):
-    message: str
+class InitialisedResponse(BaseModel):
+    is_initialised: bool
 
 
 class InstrumentParameters(BaseModel):
@@ -46,10 +46,6 @@ class PeakDataItem(BaseModel):
     width_second: float
     area_first: float
     area_second: float
-
-
-class PeakData(BaseModel):
-    items: list[PeakDataItem]
 
 
 class MethodParameters(BaseModel):
