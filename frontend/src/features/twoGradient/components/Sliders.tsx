@@ -2,11 +2,31 @@ import * as React from "react";
 import { Box, Stack, Slider, Typography } from "@mui/material";
 
 export function Sliders() {
+  const minBRange = 15;
+
   const [b0Value, setB0Value] = React.useState<number[]>([40, 100]);
   const [tGValue, setTGValue] = React.useState<number>(15);
 
-  const handleB0Change = (event: Event, newValue: number | number[]) => {
-    setB0Value(newValue as number[]);
+  const handleB0Change = (
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number
+  ) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minBRange) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], 100 - minBRange);
+        setB0Value([clamped, clamped + minBRange]);
+      } else {
+        const clamped = Math.max(newValue[1], minBRange);
+        setB0Value([clamped - minBRange, clamped]);
+      }
+    } else {
+      setB0Value(newValue as number[]);
+    }
   };
 
   const handleTGChange = (event: Event, newValue: number | number[]) => {
@@ -36,6 +56,7 @@ export function Sliders() {
             value={b0Value}
             onChange={handleB0Change}
             valueLabelDisplay="auto"
+            disableSwap
           />
         </Stack>
         <Stack
