@@ -1,10 +1,14 @@
 import * as React from "react";
 import { Box, Stack, Slider, Typography } from "@mui/material";
 
-export function Sliders() {
-  const minBRange = 15;
+type SlidersProps = {
+  bValue: number[];
+  setBValue: React.Dispatch<React.SetStateAction<number[]>>;
+};
 
-  const [b0Value, setB0Value] = React.useState<number[]>([40, 100]);
+export function Sliders({ bValue, setBValue }: SlidersProps) {
+  const minBRange = 0.15;
+
   const [tGValue, setTGValue] = React.useState<number>(15);
 
   const handleB0Change = (
@@ -19,13 +23,13 @@ export function Sliders() {
     if (newValue[1] - newValue[0] < minBRange) {
       if (activeThumb === 0) {
         const clamped = Math.min(newValue[0], 100 - minBRange);
-        setB0Value([clamped, clamped + minBRange]);
+        setBValue([clamped, clamped + minBRange]);
       } else {
         const clamped = Math.max(newValue[1], minBRange);
-        setB0Value([clamped - minBRange, clamped]);
+        setBValue([clamped - minBRange, clamped]);
       }
     } else {
-      setB0Value(newValue as number[]);
+      setBValue(newValue as number[]);
     }
   };
 
@@ -53,9 +57,12 @@ export function Sliders() {
             B:
           </Typography>
           <Slider
-            value={b0Value}
+            value={bValue}
             onChange={handleB0Change}
             valueLabelDisplay="auto"
+            min={0}
+            max={1}
+            step={0.01}
             disableSwap
           />
         </Stack>

@@ -5,10 +5,10 @@ import { usePredict } from "../api/predict";
 const getResolution = (results: any, conditions: any) => {
   let result = results.filter(
     (item: any) =>
-      Math.round(item.conditions.initial * 100) / 100 === conditions.initial &&
-      Math.round(item.conditions.final * 100) / 100 === conditions.final
+      Math.round(item.conditions.initial * 100) / 100 === conditions[0] &&
+      Math.round(item.conditions.final * 100) / 100 === conditions[1]
   );
-  if (result === undefined) {
+  if (result[0] === undefined) {
     return { total: 0, critical: 0 };
   }
   result = result[0];
@@ -19,23 +19,23 @@ const getResolution = (results: any, conditions: any) => {
 };
 
 type ResolutionProps = {
-  currentConditions: any;
-  setCurrentConditions: React.Dispatch<React.SetStateAction<any>>;
+  bValue: any;
+  setBValue: React.Dispatch<React.SetStateAction<any>>;
 };
 
-export function Resolution({
-  currentConditions,
-  setCurrentConditions,
-}: ResolutionProps) {
+export function Resolution({ bValue, setBValue }: ResolutionProps) {
   const predict = usePredict();
   const resolution =
     predict.data !== undefined
-      ? getResolution(predict.data.results, currentConditions)
+      ? getResolution(predict.data.results, bValue)
       : { total: 0, critical: 0 };
 
   const handleOptimiseClicked = () => {
     if (predict.data !== undefined) {
-      setCurrentConditions(predict.data.optimum.conditions);
+      setBValue([
+        predict.data.optimum.conditions.initial,
+        predict.data.optimum.conditions.final,
+      ]);
     }
   };
 
