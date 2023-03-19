@@ -26,7 +26,9 @@
     "react-router-dom": "*",
     "zustand": "*",
     "react-error-boundary": "*",
-    "react-helmet-async": "*"
+    "react-helmet-async": "*",
+    "d3": "*",
+    "@types/d3": "*"
   },
   "scripts": {
     "start": "react-scripts start",
