@@ -60,12 +60,10 @@ export const TwoGradient = () => {
     },
   ]);
 
-  const [b0Value, setB0Value] = React.useState({ initial: 0.4, final: 1 });
+  const [bValue, setBValue] = React.useState({ initial: 0.4, final: 1 });
 
   const initialise = useInitialise(setInitialised);
   const predict = usePredict(initialised);
-
-  console.log(predict.data);
 
   const handleUpdateClicked = async () => {
     await initialise.mutateAsync({
@@ -113,7 +111,10 @@ export const TwoGradient = () => {
               <Sliders />
             </Grid>
             <Grid item xs={3} sx={{ borderBottom: 1, borderLeft: 2 }}>
-              <Resolution currentConditions={b0Value} />
+              <Resolution
+                currentConditions={bValue}
+                setCurrentConditions={setBValue}
+              />
             </Grid>
             <Grid item xs={12} sx={{ height: "100%" }}>
               <Chromatogram />
