@@ -92,6 +92,9 @@ export function Chromatogram({ bValue }: ChromatogramProps) {
         return sum;
       });
 
+      const xExtent = d3.extent(xValues) as number[];
+      const yMax = yValues.length > 2 ? (d3.max(yValues) as number) : 10;
+
       var parent = svg.node().parentElement;
       var svgWidth = parent.clientWidth;
       var svgHeight = parent.clientHeight;
@@ -117,12 +120,12 @@ export function Chromatogram({ bValue }: ChromatogramProps) {
 
       const xScale = d3
         .scaleLinear()
-        .domain(d3.extent(xValues) as number[])
+        .domain(xExtent)
         .range([0, svgWidth - margin.left - margin.right]);
 
       const yScale = d3
         .scaleLinear()
-        .domain([0, d3.max(yValues) as number])
+        .domain([0, yMax])
         .range([0, -(svgHeight - margin.top - margin.bottom)]);
 
       const xAxis = d3.axisBottom(xScale);
