@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import { Layout } from "../components/Layout";
 import { DataEntry } from "../components/DataEntry";
 import { Chromatogram } from "../components/Chromatogram";
@@ -113,7 +113,7 @@ export const TwoGradient = () => {
             <Grid item xs={3} sx={{ borderBottom: 1, borderLeft: 2 }}>
               <Resolution bValue={bValue} setBValue={setBValue} />
             </Grid>
-            <Grid item xs={12} sx={{ height: "100%" }}>
+            <Grid item xs={12} sx={{ height: "75vh" }}>
               <Chromatogram />
             </Grid>
           </Grid>
