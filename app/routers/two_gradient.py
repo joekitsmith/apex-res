@@ -60,7 +60,7 @@ async def initialise_model(
 
 @two_gradient_router.get("/predict")
 async def predict() -> PredictionResponse:
-    RESOLUTION = 100
+    RESOLUTION = 101
 
     # generate all phi0 and phif values and pair up in mesh
     m = np.linspace(0, 1, RESOLUTION)
