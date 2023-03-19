@@ -114,7 +114,7 @@ export const TwoGradient = () => {
               <Resolution bValue={bValue} setBValue={setBValue} />
             </Grid>
             <Grid item xs={12} sx={{ height: "75vh" }}>
-              <Chromatogram />
+              <Chromatogram bValue={bValue} />
             </Grid>
           </Grid>
         </Grid>
