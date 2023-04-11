@@ -84,6 +84,7 @@ async def predict() -> PredictionResponse:
     phif = (conditions[:, 1]).tolist()
     tr_pred = optimiser.tr_pred.T
     w_pred = optimiser.w_pred.T
+    area = optimiser.area.mean(axis=1).tolist()
 
     results = []
     for i, phi0_val in enumerate(phi0):
@@ -92,6 +93,7 @@ async def predict() -> PredictionResponse:
                 conditions=GradientSolventConditions(initial=phi0_val, final=phif[i]),
                 retention_times=tr_pred[i].tolist(),
                 widths=w_pred[i].tolist(),
+                areas=area,
                 resolution=ResolutionResult(
                     total=optimiser.total_res[i], critical=optimiser.critical_res[i]
                 ),
@@ -106,6 +108,8 @@ async def predict() -> PredictionResponse:
     optimal_total_res = optimiser.total_res[optimal_idx]
     optimal_critical_res = optimiser.critical_res[optimal_idx]
 
+    area = optimiser.area.mean(axis=1).tolist()
+
     return PredictionResponse(
         optimum=PredictionResult(
             conditions=GradientSolventConditions(
@@ -113,6 +117,7 @@ async def predict() -> PredictionResponse:
             ),
             retention_times=optimal_tr_pred,
             widths=optimal_w_pred,
+            areas=area,
             resolution=ResolutionResult(
                 total=optimal_total_res, critical=optimal_critical_res
             ),

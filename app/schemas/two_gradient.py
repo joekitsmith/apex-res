@@ -20,6 +20,7 @@ class PredictionResult(BaseModel):
     conditions: GradientSolventConditions
     retention_times: list
     widths: list
+    areas: list
     resolution: ResolutionResult
 
 

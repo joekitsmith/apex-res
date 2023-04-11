@@ -123,50 +123,48 @@ export function DataEntry({
   };
 
   return (
-    <Box
+    <Stack
+      justifyContent="space-between"
+      alignItems="center"
       sx={{
-        width: "100%",
         height: "100%",
         backgroundColor: "#d6d6d6",
+        display: "flex",
+        flexGrow: 1,
+        flexDirection: "column",
       }}
     >
-      <Stack
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{ height: "100%" }}
-      >
-        <Stack spacing={6}>
-          <Typography
-            variant="h6"
-            sx={{
-              px: 2,
-              pt: 1,
-            }}
-          >
-            Data
-          </Typography>
-          <Stack spacing={3}>
-            <Grid container rowSpacing={4}>
-              <InstrumentParameterDataEntry
-                instrumentParameters={instrumentParameters}
-                setInstrumentParameters={setInstrumentParameters}
-              />
-              <MethodParameterDataEntry
-                methodParameters={methodParameters}
-                setMethodParameters={setMethodParameters}
-              />
-            </Grid>
-            <PeakTable peakData={peakData} setPeakData={setPeakData} />
-          </Stack>
-        </Stack>
-        <Button
-          variant="outlined"
-          onClick={handleUpdateClicked}
-          sx={{ mb: 2, width: "fit-content" }}
+      <Stack spacing={6}>
+        <Typography
+          variant="h6"
+          sx={{
+            px: 2,
+            pt: 1,
+          }}
         >
-          Update
-        </Button>
+          Data
+        </Typography>
+        <Stack spacing={3}>
+          <Grid container rowSpacing={4}>
+            <InstrumentParameterDataEntry
+              instrumentParameters={instrumentParameters}
+              setInstrumentParameters={setInstrumentParameters}
+            />
+            <MethodParameterDataEntry
+              methodParameters={methodParameters}
+              setMethodParameters={setMethodParameters}
+            />
+          </Grid>
+          <PeakTable peakData={peakData} setPeakData={setPeakData} />
+        </Stack>
       </Stack>
-    </Box>
+      <Button
+        variant="outlined"
+        onClick={handleUpdateClicked}
+        sx={{ mb: 2, width: "fit-content" }}
+      >
+        Update
+      </Button>
+    </Stack>
   );
 }

@@ -38,53 +38,41 @@ export function Sliders({ bValue, setBValue }: SlidersProps) {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#d6d6d6",
-      }}
-    >
-      <Stack spacing={5} sx={{ py: 5, px: 8 }}>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={5}
-        >
-          <Typography
-            component="span"
-            sx={{ fontWeight: "bold", fontSize: 16 }}
-          >
-            B:
-          </Typography>
-          <Slider
-            value={bValue}
-            onChange={handleB0Change}
-            valueLabelDisplay="auto"
-            min={0}
-            max={1}
-            step={0.01}
-            disableSwap
-          />
-        </Stack>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={5}
-        >
-          <Typography
-            component="span"
-            sx={{ fontWeight: "bold", fontSize: 16 }}
-          >
-            tG:
-          </Typography>
-          <Slider
-            value={tGValue}
-            onChange={handleTGChange}
-            valueLabelDisplay="auto"
-          />
-        </Stack>
+    <Stack spacing={5} sx={{ py: 5, px: 5 }}>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={5}
+      >
+        <Typography component="span" sx={{ fontWeight: "bold", fontSize: 16 }}>
+          B:
+        </Typography>
+        <Slider
+          value={bValue}
+          onChange={handleB0Change}
+          valueLabelDisplay="auto"
+          min={0}
+          max={1}
+          step={0.01}
+          disableSwap
+        />
       </Stack>
-    </Box>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={5}
+      >
+        <Typography component="span" sx={{ fontWeight: "bold", fontSize: 16 }}>
+          tG:
+        </Typography>
+        <Slider
+          value={tGValue}
+          onChange={handleTGChange}
+          valueLabelDisplay="auto"
+        />
+      </Stack>
+    </Stack>
   );
 }
