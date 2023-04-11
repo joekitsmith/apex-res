@@ -118,7 +118,7 @@ export const TwoGradient = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid xs={10} item>
+            <Grid xs={12} item>
               <Chromatogram bValue={bValue} />
             </Grid>
           </Grid>

@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  apex-res-mongodb:
+    image: mongo:latest
+    container_name: apex-res-mongodb
+    network_mode: host
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 5s
+      timeout: 10s
+      retries: 20
+
+  apex-res-api:
+    image: apex-res-api
+    build:
+      context: ..
+      dockerfile: ./deploy/api.Dockerfile
+    environment:
+      - API_SECRET_KEY=${API_SECRET_KEY}
+    container_name: apex-res-api
+    network_mode: host
+    depends_on:
+      apex-res-mongodb:
+        condition: service_healthy
+    healthcheck:
+      test: wget http://localhost:8080/docs -O - || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 20
+
+  apex-res-frontend:
+    image: apex-res-frontend
+    build:
+      context: ..
+      dockerfile: ./deploy/frontend.Dockerfile
+    container_name: apex-res-frontend
+    network_mode: host
+    volumes:
+      - /node_modules
+    depends_on:
+      apex-res-api:
+        condition: service_healthy
