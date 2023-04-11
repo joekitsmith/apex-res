@@ -1,7 +1,7 @@
 import numpy as np
 from fastapi import APIRouter, HTTPException
 
-from app.schemas.two_gradient import (
+from apex_res.schemas.two_gradient import (
     GradientSolventConditions,
     InitialisedResponse,
     InstrumentParameters,

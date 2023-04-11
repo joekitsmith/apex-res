@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
-import app.models.user as models
-import app.schemas.user as schemas
-from app.utils.security import get_password_hash
+import apex_res.models.user as models
+import apex_res.schemas.user as schemas
+from apex_res.utils.security import get_password_hash
 
 
 def get_user_by_username(db: Session, username: str):

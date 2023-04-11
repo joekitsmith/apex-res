@@ -5,11 +5,11 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
-import app.crud.user as crud
-import app.models.user as models
-from app.database import SessionLocal, engine
-from app.schemas.user import Token, TokenData, User, UserAuth
-from app.utils.security import (
+import apex_res.crud.user as crud
+import apex_res.models.user as models
+from apex_res.database import SessionLocal, engine
+from apex_res.schemas.user import Token, TokenData, User, UserAuth
+from apex_res.utils.security import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
     ALGORITHM,
     SECRET_KEY,

@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, String
 
-from app.database import Base
+from apex_res.database import Base
 
 
 class User(Base):
