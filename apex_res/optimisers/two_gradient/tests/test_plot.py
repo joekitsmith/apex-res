@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from optimisers.two_gradient.data_classes import (
     ColumnParams,
     InputParams,

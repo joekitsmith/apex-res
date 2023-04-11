@@ -1,7 +1,6 @@
 import itertools
 
 import numpy as np
-
 from optimisers.two_gradient.equations.resolution_equations import ResolutionEquations
 
 
