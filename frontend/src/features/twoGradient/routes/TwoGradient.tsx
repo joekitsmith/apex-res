@@ -82,17 +82,10 @@ export const TwoGradient = () => {
 
   return (
     <Layout>
-      <Grid
-        container
-        spacing={0}
-        direction="row"
-        justifyContent="center"
-        alignItems="stretch"
-        sx={{ height: "100%", border: 2 }}
-      >
-        <Grid item xs={3}>
+      <Grid container sx={{ height: "100%" }}>
+        <Grid item xs={3} sx={{ display: "flex" }}>
           <Grid container>
-            <Grid item xs={12} sx={{ height: "89vh", borderRight: 2 }}>
+            <Grid item xs={12} sx={{ borderRight: 2 }}>
               <DataEntry
                 setUpdateClicked={setUpdateClicked}
                 instrumentParameters={instrumentParameters}
@@ -105,15 +98,27 @@ export const TwoGradient = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={9}>
-          <Grid container spacing={0}>
-            <Grid item xs={9} sx={{ borderBottom: 1 }}>
-              <Sliders bValue={bValue} setBValue={setBValue} />
+        <Grid item xs={9} sx={{ display: "flex" }}>
+          <Grid container direction="column">
+            <Grid item xs={2} sx={{ display: "flex", height: "100%" }}>
+              <Grid container direction="row" spacing={0}>
+                <Grid
+                  item
+                  xs={9}
+                  sx={{ borderBottom: 2, backgroundColor: "#d6d6d6" }}
+                >
+                  <Sliders bValue={bValue} setBValue={setBValue} />
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{ border: 2, borderTop: 0, backgroundColor: "#d6d6d6" }}
+                >
+                  <Resolution bValue={bValue} setBValue={setBValue} />
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={3} sx={{ borderBottom: 1, borderLeft: 2 }}>
-              <Resolution bValue={bValue} setBValue={setBValue} />
-            </Grid>
-            <Grid item xs={12} sx={{ height: "75vh" }}>
+            <Grid xs={10} item>
               <Chromatogram bValue={bValue} />
             </Grid>
           </Grid>

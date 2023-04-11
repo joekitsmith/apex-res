@@ -10,9 +10,8 @@ export const Layout = ({ children }: LayoutProps) => {
     <Paper
       elevation={6}
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        height: "87vh",
+        border: 4,
       }}
     >
       {children}
