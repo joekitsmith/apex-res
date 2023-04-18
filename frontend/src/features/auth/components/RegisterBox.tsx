@@ -82,11 +82,11 @@ export function RegisterBox({ onSuccess }: RegisterBoxProps) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: 80,
-            height: 80,
+            width: 300,
+            height: 70,
           }}
           m="auto"
-          src={require("../../../assets/peak-icon.webp")}
+          src={require("../../../assets/apex-res-logo.png")}
         />
         <Stack spacing={2}>
           {registerInputs.map((input) => (
@@ -110,7 +110,7 @@ export function RegisterBox({ onSuccess }: RegisterBoxProps) {
               borderTop: "2px solid black",
               borderRadius: 0,
               p: 1,
-              backgroundColor: "#5797ff",
+              backgroundColor: "#acb7fa",
               width: "100%",
               "&.MuiButton-text": {
                 color: "#000000",

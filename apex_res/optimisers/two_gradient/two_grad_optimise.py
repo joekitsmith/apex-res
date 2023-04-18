@@ -1,11 +1,13 @@
 import numpy as np
 import scipy.optimize as optimize
 
-from optimisers.two_gradient.equations.parameter_equations import ParameterEquations
-from optimisers.two_gradient.equations.retention_width_equations import (
+from apex_res.optimisers.two_gradient.equations.parameter_equations import (
+    ParameterEquations,
+)
+from apex_res.optimisers.two_gradient.equations.retention_width_equations import (
     RetentionWidthEquations,
 )
-from optimisers.two_gradient.resolution import Resolution
+from apex_res.optimisers.two_gradient.resolution import Resolution
 
 
 class TwoGradOptimise:

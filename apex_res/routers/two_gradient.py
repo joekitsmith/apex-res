@@ -1,7 +1,8 @@
 import numpy as np
 from fastapi import APIRouter, HTTPException
 
-from app.schemas.two_gradient import (
+from apex_res.optimisers.two_gradient.two_grad_optimise import TwoGradOptimise
+from apex_res.schemas.two_gradient import (
     GradientSolventConditions,
     InitialisedResponse,
     InstrumentParameters,
@@ -11,7 +12,6 @@ from app.schemas.two_gradient import (
     PredictionResult,
     ResolutionResult,
 )
-from optimisers.two_gradient.two_grad_optimise import TwoGradOptimise
 
 two_gradient_router = APIRouter()
 

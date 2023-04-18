@@ -1,7 +1,6 @@
 import math
 
 import numpy as np
-
 from optimisers.two_gradient.resolution import Resolution
 
 

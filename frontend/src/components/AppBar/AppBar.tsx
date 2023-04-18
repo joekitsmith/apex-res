@@ -65,8 +65,8 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters sx={{ px: 1 }}>
           <Box
             component="img"
-            sx={{ width: 20, height: 20, mr: 2, border: "1px solid grey" }}
-            src={require("../../assets/peak-icon.webp")}
+            sx={{ width: 100, height: 20, mr: 2, border: "1px solid grey" }}
+            src={require("../../assets/apex-res-logo.png")}
           />
           <Typography
             variant="h6"

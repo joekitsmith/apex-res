@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers.two_gradient import two_gradient_router
-from app.routers.user import user_router
+from apex_res.routers.two_gradient import two_gradient_router
+from apex_res.routers.user import user_router
 
 app = FastAPI()
 
