@@ -82,8 +82,8 @@ export function RegisterBox({ onSuccess }: RegisterBoxProps) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: 80,
-            height: 80,
+            width: 300,
+            height: 70,
           }}
           m="auto"
           src={require("../../../assets/apex-res-logo.png")}
