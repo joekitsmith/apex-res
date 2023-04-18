@@ -1,6 +1,9 @@
-# Apex Res
+<p align="center">
+  <img src="./frontend/src/assets/apex-res-logo.png" style="width:300px;height:60px;">
+  <h1 align="center">Apex Res</h1>
+</p>
 
-<img src="./frontend/src/assets/apex-res-logo.png" style="width:300px;height:60px;">
+## Overview
 
 Apex Res is a reversed-phase HPLC retention modelling web application that can be used to optimise the separation of chromatographic analytes.
 
@@ -11,7 +14,7 @@ Future work will include the ability to model retention using more complex model
 ## Contents
 
 - [Deployment](#deployment)
-- [Development](#development)
+- [Installation](#installation)
   - [Backend](#backend)
   - [Frontend](#frontend)
 - [Documentation](#documentation)
@@ -31,7 +34,7 @@ docker compose -f deploy/docker-compose.yml up -d --build
 
 This will build the docker images and start the application. The application will be available at http://localhost:3000.
 
-## Development
+## Installation
 
 ### Backend
 
