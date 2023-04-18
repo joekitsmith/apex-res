@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./frontend/src/assets/apex-res-logo.png" style="width:300px;height:60px;">
+  <img src="./frontend/src/assets/apex-res-logo.png" style="width:300px;height:60px;border:2px solid #acb7fa;">
   <h1 align="center">Apex Res</h1>
 </p>
 
