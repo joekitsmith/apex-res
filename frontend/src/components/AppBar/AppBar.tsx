@@ -66,7 +66,7 @@ function ResponsiveAppBar() {
           <Box
             component="img"
             sx={{ width: 20, height: 20, mr: 2, border: "1px solid grey" }}
-            src={require("../../assets/peak-icon.webp")}
+            src={require("../../assets/apex-res-logo.png")}
           />
           <Typography
             variant="h6"

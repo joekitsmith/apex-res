@@ -62,27 +62,18 @@ export function LoginBox({ onSuccess }: LoginBoxProps) {
       }}
     >
       <Stack alignItems="center" spacing={3}>
-        <Typography
-          variant="h4"
-          sx={{
-            pt: 3,
-            mx: 5,
-            textAlign: "center",
-          }}
-        >
-          Apex Res
-        </Typography>
         <Box
           component="img"
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: 80,
-            height: 80,
+            pt: 3,
+            width: 300,
+            height: 70,
           }}
           m="auto"
-          src={require("../../../assets/peak-icon.webp")}
+          src={require("../../../assets/apex-res-logo.png")}
         />
         <Stack spacing={2}>
           {loginInputs.map((input) => (
@@ -106,7 +97,7 @@ export function LoginBox({ onSuccess }: LoginBoxProps) {
               borderTop: "2px solid black",
               borderRadius: 0,
               p: 1,
-              backgroundColor: "#5797ff",
+              backgroundColor: "#acb7fa",
               width: "100%",
               "&.MuiButton-text": {
                 color: "#000000",
@@ -123,10 +114,11 @@ export function LoginBox({ onSuccess }: LoginBoxProps) {
               borderTop: "2px solid black",
               borderRadius: 0,
               p: 1,
-              backgroundColor: "#9dc1fc",
+              backgroundColor: "#d0d5f7",
               width: "100%",
               "&.MuiButton-text": {
                 color: "#000000",
+                fontWeight: "bold",
                 fontSize: 12,
               },
             }}

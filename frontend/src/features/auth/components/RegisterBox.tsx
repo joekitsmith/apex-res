@@ -86,7 +86,7 @@ export function RegisterBox({ onSuccess }: RegisterBoxProps) {
             height: 80,
           }}
           m="auto"
-          src={require("../../../assets/peak-icon.webp")}
+          src={require("../../../assets/apex-res-logo.png")}
         />
         <Stack spacing={2}>
           {registerInputs.map((input) => (
@@ -110,7 +110,7 @@ export function RegisterBox({ onSuccess }: RegisterBoxProps) {
               borderTop: "2px solid black",
               borderRadius: 0,
               p: 1,
-              backgroundColor: "#5797ff",
+              backgroundColor: "#acb7fa",
               width: "100%",
               "&.MuiButton-text": {
                 color: "#000000",
