@@ -5,9 +5,9 @@
 
 ## Overview
 
-Apex Res is a reversed-phase HPLC retention modelling web application that can be used to optimise the separation of chromatographic analytes.
+Apex Res is a reversed-phase HPLC retention modelling web application for optimisation of chromatographic analyte separation.
 
-Currently, users can supply two scouting runs with different gradient times and the application will interactively model and visualise retention across all valid gradient conditions using the Linear Solvent Strength (LSS) model.
+Currently, users supply two scouting runs with different gradient times and the application will interactively model and visualise retention across all valid gradient conditions using the Linear Solvent Strength (LSS) model.
 
 Future work will include the ability to model retention using more complex models.
 
@@ -22,7 +22,7 @@ Future work will include the ability to model retention using more complex model
 
 ## Deployment
 
-Deployment is currently controlled using docker compose.
+Deployment is controlled using docker compose.
 
 Linux users can install docker and docker compose by following the instructions [here](https://docs.docker.com/compose/install/). Windows users will first need to install WSL2 and then follow the Linux instructions.
 
