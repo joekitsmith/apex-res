@@ -1,26 +1,22 @@
 export type InstrumentParameters = {
-  dwell_time: number | null;
-  dead_time: number | null;
-  N: number | null;
+  dwell_time: string;
+  dead_time: string;
+  N: string;
 };
 
 export type MethodParameters = {
-  gradient_time: {
-    first: number | null;
-    second: number | null;
-  };
-  gradient_solvent: {
-    initial: number | null;
-    final: number | null;
-  };
+  gradient_time_first: string;
+  gradient_time_second: string;
+  gradient_solvent_initial: string;
+  gradient_solvent_final: string;
 };
 
 export type PeakDataItem = {
   name: string;
-  retention_time_first?: number;
-  width_first?: number;
-  area_first?: number;
-  retention_time_second?: number;
-  width_second?: number;
-  area_second?: number;
+  retention_time_first: string;
+  width_first: string;
+  area_first: string;
+  retention_time_second: string;
+  width_second: string;
+  area_second: string;
 };

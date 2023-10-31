@@ -29,21 +29,15 @@ const InstrumentParameterInputs = ({
   instrumentParameters,
   setInstrumentParameters,
 }: InstrumentParameterInputsProps) => {
-  const [t0, setT0] = React.useState<number | null>(
-    instrumentParameters.dwell_time
-  );
-  const [td, setTd] = React.useState<number | null>(
-    instrumentParameters.dead_time
-  );
-  const [N, setN] = React.useState<number | null>(instrumentParameters.N);
-
-  React.useEffect(() => {
-    setInstrumentParameters({
-      dwell_time: t0,
-      dead_time: td,
-      N: N,
-    });
-  }, [t0, td, N]);
+  const updateInstrumentParameter = (
+    key: keyof InstrumentParameters,
+    newValue: string
+  ) => {
+    setInstrumentParameters((prevState) => ({
+      ...prevState,
+      [key]: newValue,
+    }));
+  };
 
   return (
     <Grid container rowSpacing={2}>
@@ -51,24 +45,28 @@ const InstrumentParameterInputs = ({
         <SingleValueEntry
           label={`t\u2080`}
           descriptor="Dwell time (s)"
-          value={t0}
-          setValue={setT0}
+          value={instrumentParameters.dwell_time}
+          updateValue={(newValue) =>
+            updateInstrumentParameter("dwell_time", newValue)
+          }
         />
       </Grid>
       <Grid item xs={6}>
         <SingleValueEntry
           label={`t\u1d48`}
           descriptor="Dead time (s)"
-          value={td}
-          setValue={setTd}
+          value={instrumentParameters.dead_time}
+          updateValue={(newValue) =>
+            updateInstrumentParameter("dead_time", newValue)
+          }
         />
       </Grid>
       <Grid item xs={6}>
         <SingleValueEntry
           label="N"
           descriptor="Plate number"
-          value={N}
-          setValue={setN}
+          value={instrumentParameters.N}
+          updateValue={(newValue) => updateInstrumentParameter("N", newValue)}
         />
       </Grid>
     </Grid>
@@ -79,18 +77,15 @@ const MethodParameterInputs = ({
   methodParameters,
   setMethodParameters,
 }: MethodParameterInputsProps) => {
-  const [tg1, setTg1] = React.useState<number | null>(
-    methodParameters.gradient_time.first
-  );
-  const [tg2, setTg2] = React.useState<number | null>(
-    methodParameters.gradient_time.second
-  );
-  const [b0, setB0] = React.useState<number | null>(
-    methodParameters.gradient_solvent.initial
-  );
-  const [bf, setBf] = React.useState<number | null>(
-    methodParameters.gradient_solvent.final
-  );
+  const updateMethodParameter = (
+    key: keyof MethodParameters,
+    newValue: string
+  ) => {
+    setMethodParameters((prevState) => ({
+      ...prevState,
+      [key]: newValue,
+    }));
+  };
 
   return (
     <Grid container rowSpacing={2}>
@@ -98,32 +93,40 @@ const MethodParameterInputs = ({
         <SingleValueEntry
           label={`B\u2080`}
           descriptor="Initial % organic"
-          value={b0}
-          setValue={setB0}
+          value={methodParameters.gradient_solvent_initial}
+          updateValue={(newValue) =>
+            updateMethodParameter("gradient_solvent_initial", newValue)
+          }
         />
       </Grid>
       <Grid item xs={6}>
         <SingleValueEntry
           label={`B\u1da0`}
           descriptor="Final % organic"
-          value={bf}
-          setValue={setBf}
+          value={methodParameters.gradient_solvent_final}
+          updateValue={(newValue) =>
+            updateMethodParameter("gradient_solvent_final", newValue)
+          }
         />
       </Grid>
       <Grid item xs={6}>
         <SingleValueEntry
           label={`tG\u2081`}
           descriptor="Run 1 gradient time (min)"
-          value={tg1}
-          setValue={setTg1}
+          value={methodParameters.gradient_time_first}
+          updateValue={(newValue) =>
+            updateMethodParameter("gradient_time_first", newValue)
+          }
         />
       </Grid>
       <Grid item xs={6}>
         <SingleValueEntry
           label={`tG\u2082`}
           descriptor="Run 2 gradient time (min)"
-          value={tg2}
-          setValue={setTg2}
+          value={methodParameters.gradient_time_second}
+          updateValue={(newValue) =>
+            updateMethodParameter("gradient_time_second", newValue)
+          }
         />
       </Grid>
     </Grid>

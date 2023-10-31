@@ -5,14 +5,14 @@ type SingleValueEntryProps = {
   label: string;
   descriptor: string;
   value: any;
-  setValue: React.Dispatch<React.SetStateAction<any>>;
+  updateValue: (newValue: string) => void;
 };
 
 export function SingleValueEntry({
   label,
   descriptor,
   value,
-  setValue,
+  updateValue,
 }: SingleValueEntryProps) {
   return (
     <Stack
@@ -31,7 +31,7 @@ export function SingleValueEntry({
         <TextField
           value={value}
           variant="outlined"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => updateValue(e.target.value)}
           size="small"
           InputProps={{
             style: { padding: 0, paddingBottom: 0, fontSize: 13 },
