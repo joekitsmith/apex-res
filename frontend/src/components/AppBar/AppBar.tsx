@@ -63,7 +63,12 @@ function ResponsiveAppBar() {
     <AppBar elevation={2}>
       <Toolbar
         variant="dense"
-        sx={{ px: 5, height: "50px", backgroundColor: "#2b0e45" }}
+        sx={{
+          px: 5,
+          height: "50px",
+          backgroundColor: "#2b0e45",
+          borderBottom: "1px solid white",
+        }}
       >
         <Box
           component="img"
