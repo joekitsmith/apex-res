@@ -6,7 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -60,109 +59,119 @@ function ResponsiveAppBar() {
   ];
 
   return (
-    <AppBar position="static" elevation={0} color="transparent">
-      <Container maxWidth={false}>
-        <Toolbar disableGutters sx={{ px: 1 }}>
-          <Box
-            component="img"
-            sx={{ width: 100, height: 20, mr: 2, border: "1px solid grey" }}
-            src={require("../../assets/apex-res-logo.png")}
-          />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
+    <AppBar elevation={2}>
+      <Toolbar
+        variant="dense"
+        sx={{
+          px: 5,
+          height: "50px",
+          backgroundColor: "#2b0e45",
+          borderBottom: "1px solid white",
+        }}
+      >
+        <Box
+          component="img"
+          sx={{
+            width: 100,
+            height: 20,
+            mr: 2,
+            border: "3px solid white",
+            borderRadius: "0.5rem",
+          }}
+          src={require("../../assets/apex-res-logo.png")}
+        />
+        <Typography
+          noWrap
+          component="a"
+          href="/"
+          sx={{
+            mr: 2,
+            display: { xs: "none", md: "flex" },
+            fontWeight: 700,
+            color: "#ffffff",
+            textDecoration: "none",
+          }}
+        >
+          Apex Res
+        </Typography>
+
+        <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorElNav}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            open={Boolean(anchorElNav)}
+            onClose={handleCloseNavMenu}
             sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontWeight: 700,
-              fontFamily: "monospace",
-              color: "inherit",
-              textDecoration: "none",
+              display: { xs: "block", md: "none" },
             }}
           >
-            Apex Res
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          <Box sx={{ flexGrow: 1, ml: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                disabled={page.name !== "Two gradient"}
-                key={page.name}
-                onClick={() => navigate(page.navigateTo)}
-                sx={{ my: 2, mx: 0.5, color: "#2b2b2b", display: "block" }}
-              >
-                {page.name}
-              </Button>
+              <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">{page.name}</Typography>
+              </MenuItem>
             ))}
-          </Box>
+          </Menu>
+        </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+        <Box sx={{ flexGrow: 1, ml: 1, display: { xs: "none", md: "flex" } }}>
+          {pages.map((page) => (
+            <Button
+              disabled={page.name !== "Two gradient"}
+              key={page.name}
+              onClick={() => navigate(page.navigateTo)}
+              sx={{ mx: 0.5, color: "#ffffff", display: "block", fontSize: 12 }}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting.name} onClick={() => setting.onClick()}>
-                  <Typography textAlign="center">{setting.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
+              {page.name}
+            </Button>
+          ))}
+        </Box>
+
+        <Box sx={{ flexGrow: 0 }}>
+          <Tooltip title="Open settings">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar
+                alt="Remy Sharp"
+                src="/static/images/avatar/2.jpg"
+                sx={{ width: 24, height: 24, fontSize: 14 }}
+              />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            sx={{ mt: "45px" }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+          >
+            {settings.map((setting) => (
+              <MenuItem key={setting.name} onClick={() => setting.onClick()}>
+                <Typography textAlign="center">{setting.name}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
+      </Toolbar>
     </AppBar>
   );
 }

@@ -10,7 +10,32 @@ export type InitialiseModelQuery = {
 };
 
 export const initialise = (data: InitialiseModelQuery): Promise<any> => {
-  return axios.post("/two_gradient/initialise", data);
+  console.log({
+    ...data,
+    method_params: {
+      gradient_time: {
+        first: data.method_params.gradient_time_first,
+        second: data.method_params.gradient_time_second,
+      },
+      gradient_solvent: {
+        initial: data.method_params.gradient_solvent_initial,
+        final: data.method_params.gradient_solvent_final,
+      },
+    },
+  });
+  return axios.post("/two_gradient/initialise", {
+    ...data,
+    method_params: {
+      gradient_time: {
+        first: data.method_params.gradient_time_first,
+        second: data.method_params.gradient_time_second,
+      },
+      gradient_solvent: {
+        initial: data.method_params.gradient_solvent_initial,
+        final: data.method_params.gradient_solvent_final,
+      },
+    },
+  });
 };
 
 export const useInitialise = (

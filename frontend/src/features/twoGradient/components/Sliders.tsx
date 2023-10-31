@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Stack, Slider, Typography } from "@mui/material";
+import { Paper, Stack, Slider, Typography } from "@mui/material";
 
 type SlidersProps = {
   bValue: number[];
@@ -38,41 +38,81 @@ export function Sliders({ bValue, setBValue }: SlidersProps) {
   };
 
   return (
-    <Stack spacing={5} sx={{ py: 5, px: 5 }}>
-      <Stack
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={5}
-      >
-        <Typography component="span" sx={{ fontWeight: "bold", fontSize: 16 }}>
-          B:
+    <Paper
+      elevation={4}
+      sx={{
+        backgroundColor: "#ffffff",
+        borderRadius: "0.5rem",
+        height: "100%",
+      }}
+    >
+      <Stack>
+        <Typography
+          sx={{
+            backgroundColor: "#30115c",
+            borderRadius: "0.5rem 0.5rem 0px 0px",
+            py: 0.5,
+            px: 1.5,
+            fontWeight: "bold",
+            color: "#ffffff",
+            fontSize: 14,
+          }}
+        >
+          Conditions
         </Typography>
-        <Slider
-          value={bValue}
-          onChange={handleB0Change}
-          valueLabelDisplay="auto"
-          min={0}
-          max={1}
-          step={0.01}
-          disableSwap
-        />
+        <Stack spacing={3} sx={{ p: 3, pr: 6 }}>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={4}
+          >
+            <Stack sx={{ textAlign: "right" }}>
+              <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
+                %B
+              </Typography>
+              <Typography
+                sx={{ fontSize: 11, color: "grey", minWidth: "70px" }}
+              >
+                % organic
+              </Typography>
+            </Stack>
+            <Slider
+              value={bValue}
+              onChange={handleB0Change}
+              valueLabelDisplay="auto"
+              color="secondary"
+              min={0}
+              max={1}
+              step={0.01}
+              disableSwap
+            />
+          </Stack>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={5}
+          >
+            <Stack sx={{ textAlign: "right" }}>
+              <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
+                tG
+              </Typography>
+              <Typography
+                sx={{ fontSize: 11, color: "grey", minWidth: "70px" }}
+              >
+                Gradient time
+              </Typography>
+            </Stack>
+            <Slider
+              value={tGValue}
+              onChange={handleTGChange}
+              valueLabelDisplay="auto"
+              color="secondary"
+            />
+          </Stack>
+        </Stack>
       </Stack>
-      <Stack
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={5}
-      >
-        <Typography component="span" sx={{ fontWeight: "bold", fontSize: 16 }}>
-          tG:
-        </Typography>
-        <Slider
-          value={tGValue}
-          onChange={handleTGChange}
-          valueLabelDisplay="auto"
-        />
-      </Stack>
-    </Stack>
+    </Paper>
   );
 }

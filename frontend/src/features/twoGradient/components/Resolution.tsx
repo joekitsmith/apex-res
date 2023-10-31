@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, Stack, Grid, Button } from "@mui/material";
+import { Paper, Typography, Stack, Grid, Button } from "@mui/material";
 import { usePredict } from "../api/predict";
 
 const getResolution = (results: any, conditions: any) => {
@@ -40,48 +40,56 @@ export function Resolution({ bValue, setBValue }: ResolutionProps) {
   };
 
   return (
-    <Stack
-      spacing={3}
+    <Paper
+      elevation={4}
       sx={{
-        pt: 1,
+        backgroundColor: "#ffffff",
+        borderRadius: "0.5rem",
+        height: "100%",
       }}
     >
-      <Typography variant="h6" sx={{ px: 2 }}>
-        Resolution
-      </Typography>
-      <Grid container columnSpacing={2}>
-        <Grid item xs={6}>
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <Stack direction="row" spacing={1}>
-                <Typography sx={{ fontSize: 14 }}>
-                  Critical resolution:
-                </Typography>
-                <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
-                  {resolution.critical}
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid item xs={12}>
-              <Stack direction="row" spacing={1}>
-                <Typography sx={{ fontSize: 14 }}>Total resolution:</Typography>
-                <Typography sx={{ fontWeight: "bold" }}>
-                  {resolution.total}
-                </Typography>
-              </Stack>
-            </Grid>
+      <Stack spacing={3}>
+        <Typography
+          sx={{
+            backgroundColor: "#30115c",
+            borderRadius: "0.5rem 0.5rem 0px 0px",
+            py: 0.5,
+            px: 1.5,
+            fontWeight: "bold",
+            color: "#ffffff",
+            fontSize: 14,
+          }}
+        >
+          Resolution
+        </Typography>
+        <Grid container>
+          <Grid item xs={6}>
+            <Stack spacing={0.5} sx={{ textAlign: "center" }}>
+              <Typography sx={{ fontSize: 13 }}>Total</Typography>
+              <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
+                {resolution.total}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={6}>
+            <Stack spacing={0.5} sx={{ textAlign: "center" }}>
+              <Typography sx={{ fontSize: 13 }}>Critical</Typography>
+              <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
+                {resolution.critical}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} sx={{ textAlign: "center", mt: 3 }}>
+            <Button
+              onClick={handleOptimiseClicked}
+              variant="outlined"
+              sx={{ fontSize: 12 }}
+            >
+              Optimise
+            </Button>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <Button
-            onClick={handleOptimiseClicked}
-            variant="outlined"
-            sx={{ fontSize: 12 }}
-          >
-            Optimise
-          </Button>
-        </Grid>
-      </Grid>
-    </Stack>
+      </Stack>
+    </Paper>
   );
 }
