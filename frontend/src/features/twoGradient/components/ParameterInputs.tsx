@@ -1,17 +1,9 @@
 import React from "react";
-import {
-  Paper,
-  Typography,
-  Grid,
-  TextField,
-  Stack,
-  Button,
-} from "@mui/material";
+import { Paper, Typography, Grid, Stack } from "@mui/material";
 import { SingleValueEntry } from "./SingleValueEntry";
-import { PeakTable } from "./PeakTable";
-import { InstrumentParameters, MethodParameters, PeakDataItem } from "../types";
+import { InstrumentParameters, MethodParameters } from "../types";
 
-interface DataEntryProps {
+interface ParameterInputsProps {
   setUpdateClicked: React.Dispatch<React.SetStateAction<boolean>>;
   instrumentParameters: InstrumentParameters;
   setInstrumentParameters: React.Dispatch<
@@ -19,31 +11,24 @@ interface DataEntryProps {
   >;
   methodParameters: MethodParameters;
   setMethodParameters: React.Dispatch<React.SetStateAction<MethodParameters>>;
-  peakData: PeakDataItem[];
-  setPeakData: React.Dispatch<React.SetStateAction<PeakDataItem[]>>;
 }
 
-interface InstrumentParameterDataEntryProps {
+interface InstrumentParameterInputsProps {
   instrumentParameters: InstrumentParameters;
   setInstrumentParameters: React.Dispatch<
     React.SetStateAction<InstrumentParameters>
   >;
 }
 
-interface MethodParameterDataEntryProps {
+interface MethodParameterInputsProps {
   methodParameters: MethodParameters;
   setMethodParameters: React.Dispatch<React.SetStateAction<MethodParameters>>;
 }
 
-interface PeakDataEntryProps {
-  peakData: PeakDataItem[];
-  setPeakData: React.Dispatch<React.SetStateAction<PeakDataItem[]>>;
-}
-
-const InstrumentParameterDataEntry = ({
+const InstrumentParameterInputs = ({
   instrumentParameters,
   setInstrumentParameters,
-}: InstrumentParameterDataEntryProps) => {
+}: InstrumentParameterInputsProps) => {
   const [t0, setT0] = React.useState<number | null>(
     instrumentParameters.dwell_time
   );
@@ -90,10 +75,10 @@ const InstrumentParameterDataEntry = ({
   );
 };
 
-const MethodParameterDataEntry = ({
+const MethodParameterInputs = ({
   methodParameters,
   setMethodParameters,
-}: MethodParameterDataEntryProps) => {
+}: MethodParameterInputsProps) => {
   const [tg1, setTg1] = React.useState<number | null>(
     methodParameters.gradient_time.first
   );
@@ -128,7 +113,7 @@ const MethodParameterDataEntry = ({
       <Grid item xs={6}>
         <SingleValueEntry
           label={`tG\u2081`}
-          descriptor="Run 1 gradient time (s)"
+          descriptor="Run 1 gradient time (min)"
           value={tg1}
           setValue={setTg1}
         />
@@ -136,7 +121,7 @@ const MethodParameterDataEntry = ({
       <Grid item xs={6}>
         <SingleValueEntry
           label={`tG\u2082`}
-          descriptor="Run 2 gradient time (s)"
+          descriptor="Run 2 gradient time (min)"
           value={tg2}
           setValue={setTg2}
         />
@@ -145,15 +130,13 @@ const MethodParameterDataEntry = ({
   );
 };
 
-export function DataEntry({
+export function ParameterInputs({
   setUpdateClicked,
   instrumentParameters,
   setInstrumentParameters,
   methodParameters,
   setMethodParameters,
-  peakData,
-  setPeakData,
-}: DataEntryProps) {
+}: ParameterInputsProps) {
   const handleUpdateClicked = () => {
     setUpdateClicked(true);
   };
@@ -164,7 +147,6 @@ export function DataEntry({
       sx={{
         backgroundColor: "#ffffff",
         borderRadius: "0.5rem",
-        height: "100%",
       }}
     >
       <Stack alignItems="center" spacing={2} sx={{ pb: 3 }}>
@@ -180,27 +162,19 @@ export function DataEntry({
               fontSize: 14,
             }}
           >
-            Data
+            Parameters
           </Typography>
           <Stack spacing={1}>
-            <InstrumentParameterDataEntry
+            <InstrumentParameterInputs
               instrumentParameters={instrumentParameters}
               setInstrumentParameters={setInstrumentParameters}
             />
-            <MethodParameterDataEntry
+            <MethodParameterInputs
               methodParameters={methodParameters}
               setMethodParameters={setMethodParameters}
             />
-            <PeakTable peakData={peakData} setPeakData={setPeakData} />
           </Stack>
         </Stack>
-        <Button
-          variant="outlined"
-          onClick={handleUpdateClicked}
-          sx={{ width: "fit-content" }}
-        >
-          Update
-        </Button>
       </Stack>
     </Paper>
   );

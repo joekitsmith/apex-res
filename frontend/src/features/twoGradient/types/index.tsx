@@ -17,10 +17,10 @@ export type MethodParameters = {
 
 export type PeakDataItem = {
   name: string;
-  retention_time_first: number;
-  width_first: number;
-  area_first: number;
-  retention_time_second: number;
-  width_second: number;
-  area_second: number;
+  retention_time_first?: number;
+  width_first?: number;
+  area_first?: number;
+  retention_time_second?: number;
+  width_second?: number;
+  area_second?: number;
 };

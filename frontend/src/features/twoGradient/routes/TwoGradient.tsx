@@ -1,13 +1,31 @@
 import * as React from "react";
 import { Grid, Box } from "@mui/material";
 import { Layout } from "../components/Layout";
-import { DataEntry } from "../components/DataEntry";
+import { PeakInputs } from "../components/PeakInputs";
 import { Chromatogram } from "../components/Chromatogram";
 import { Sliders } from "../components/Sliders";
 import { Resolution } from "../components/Resolution";
 import { useInitialise } from "../api/initialise";
 import { usePredict } from "../api/predict";
 import { InstrumentParameters, MethodParameters, PeakDataItem } from "../types";
+import { ParameterInputs } from "../components/ParameterInputs";
+import { Update } from "../components/Update";
+
+const isValidPeak = (obj: any) => {
+  return (
+    typeof obj.name === "string" &&
+    typeof obj.retention_time_first === "number" &&
+    typeof obj.width_first === "number" &&
+    typeof obj.area_first === "number" &&
+    typeof obj.retention_time_second === "number" &&
+    typeof obj.width_second === "number" &&
+    typeof obj.area_second === "number"
+  );
+};
+
+const filterPeakData = (peakData: PeakDataItem[]) => {
+  return peakData.filter((peakDataItem) => isValidPeak(peakDataItem));
+};
 
 export const TwoGradient = () => {
   const [initialised, setInitialised] = React.useState(false);
@@ -58,6 +76,24 @@ export const TwoGradient = () => {
       width_second: 0.332,
       area_second: 1028.5,
     },
+    {
+      name: "4",
+    },
+    {
+      name: "5",
+    },
+    {
+      name: "6",
+    },
+    {
+      name: "7",
+    },
+    {
+      name: "8",
+    },
+    {
+      name: "9",
+    },
   ]);
 
   const [bValue, setBValue] = React.useState<number[]>([0.4, 1]);
@@ -66,10 +102,11 @@ export const TwoGradient = () => {
   const predict = usePredict(initialised);
 
   const handleUpdateClicked = async () => {
+    console.log(filterPeakData(peakData));
     await initialise.mutateAsync({
       instrument_params: instrumentParameters,
       method_params: methodParameters,
-      peak_data: peakData,
+      peak_data: filterPeakData(peakData),
     });
   };
 
@@ -82,19 +119,31 @@ export const TwoGradient = () => {
 
   return (
     <Layout>
-      <Grid container columnSpacing={3} sx={{ height: "100%" }}>
-        <Grid item xs={3}>
-          <DataEntry
-            setUpdateClicked={setUpdateClicked}
-            instrumentParameters={instrumentParameters}
-            setInstrumentParameters={setInstrumentParameters}
-            methodParameters={methodParameters}
-            setMethodParameters={setMethodParameters}
-            peakData={peakData}
-            setPeakData={setPeakData}
-          />
+      <Grid container columns={24} columnSpacing={3} sx={{ height: "100%" }}>
+        <Grid item xs={7} sx={{ minWidth: 430 }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <ParameterInputs
+                setUpdateClicked={setUpdateClicked}
+                instrumentParameters={instrumentParameters}
+                setInstrumentParameters={setInstrumentParameters}
+                methodParameters={methodParameters}
+                setMethodParameters={setMethodParameters}
+              />
+            </Grid>
+            <Grid item xs={12} sx={{ mt: 3 }}>
+              <PeakInputs peakData={peakData} setPeakData={setPeakData} />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{ mt: 3, mb: 3, height: "100%", textAlign: "right" }}
+            >
+              <Update setUpdateClicked={setUpdateClicked} />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={9} sx={{ height: "100%" }}>
+        <Grid item xs={17} sx={{ height: "100%", minWidth: 430 }}>
           <Grid container direction="column" sx={{ height: "100%" }}>
             <Grid item>
               <Grid container columnSpacing={3}>

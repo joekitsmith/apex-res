@@ -18,20 +18,32 @@ export function SingleValueEntry({
     <Stack
       direction="row"
       alignItems="center"
-      justifyContent="flex-end"
+      justifyContent="flex-start"
       spacing={2}
-      sx={{ px: 2.5 }}
+      sx={{ px: 2 }}
     >
-      <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>{label}</Typography>
+      <Typography
+        sx={{ fontSize: 16, fontWeight: "bold", width: 40, textAlign: "right" }}
+      >
+        {label}
+      </Typography>
       <Stack direction="row" alignItems="center" spacing={1}>
         <TextField
           value={value}
           variant="outlined"
           onChange={(e) => setValue(e.target.value)}
           size="small"
-          InputProps={{ style: { fontSize: 13 } }}
+          InputProps={{
+            style: { padding: 0, paddingBottom: 0, fontSize: 13 },
+            inputProps: {
+              style: {
+                paddingTop: 4,
+                paddingBottom: 4,
+              },
+            },
+          }}
         />
-        <Typography sx={{ fontSize: 8, color: "grey", maxWidth: "30px" }}>
+        <Typography sx={{ fontSize: 8, color: "grey", maxWidth: "40px" }}>
           {descriptor}
         </Typography>
       </Stack>
