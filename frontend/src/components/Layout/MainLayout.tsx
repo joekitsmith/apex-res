@@ -26,7 +26,7 @@ export const MainLayout = ({ children, header }: MainLayoutProps) => {
     <>
       <Head title={currentTitle} />
       <ResponsiveAppBar />
-      <Box sx={{ px: 3 }}>{children}</Box>
+      <Box sx={{ px: 3, mt: 10 }}>{children}</Box>
     </>
   );
 };

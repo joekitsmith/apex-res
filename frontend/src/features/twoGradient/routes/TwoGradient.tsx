@@ -82,8 +82,8 @@ export const TwoGradient = () => {
 
   return (
     <Layout>
-      <Grid container sx={{ height: "100%" }}>
-        <Grid item xs={3} sx={{ borderRight: 2 }}>
+      <Grid container columnSpacing={3} sx={{ height: "100%" }}>
+        <Grid item xs={3}>
           <DataEntry
             setUpdateClicked={setUpdateClicked}
             instrumentParameters={instrumentParameters}
@@ -94,31 +94,19 @@ export const TwoGradient = () => {
             setPeakData={setPeakData}
           />
         </Grid>
-        <Grid item xs={9} rowSpacing={0}>
-          <Grid
-            container
-            direction="column"
-            sx={{ height: "100%", justifyContent: "space-between" }}
-          >
+        <Grid item xs={9} sx={{ height: "100%" }}>
+          <Grid container direction="column" sx={{ height: "100%" }}>
             <Grid item>
-              <Grid container direction="row" spacing={0}>
-                <Grid
-                  item
-                  xs={9}
-                  sx={{ borderBottom: 2, backgroundColor: "#d6d6d6" }}
-                >
+              <Grid container columnSpacing={3}>
+                <Grid item xs={9}>
                   <Sliders bValue={bValue} setBValue={setBValue} />
                 </Grid>
-                <Grid
-                  item
-                  xs={3}
-                  sx={{ border: 2, borderTop: 0, backgroundColor: "#d6d6d6" }}
-                >
+                <Grid item xs={3}>
                   <Resolution bValue={bValue} setBValue={setBValue} />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item sx={{ flexGrow: 1 }}>
+            <Grid item sx={{ flexGrow: 1, mt: 3 }}>
               <Chromatogram bValue={bValue} />
             </Grid>
           </Grid>

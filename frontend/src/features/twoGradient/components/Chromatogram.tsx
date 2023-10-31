@@ -3,6 +3,7 @@ import { useD3 } from "../hooks/useD3";
 import * as d3 from "d3";
 // import "../../../css/style.css";
 import { usePredict } from "../api/predict";
+import { Paper, Stack, Typography } from "@mui/material";
 
 const C = 100;
 
@@ -102,21 +103,23 @@ export function Chromatogram({ bValue }: ChromatogramProps) {
       const root = svg.append("g");
       root.attr("transform", undefined);
 
-      const margin = { top: 50, right: 70, bottom: 50, left: 70 };
+      const margin = { top: 30, right: 60, bottom: 30, left: 60 };
 
       const xAxisGroup = root
         .append("g")
         .attr(
           "transform",
           `translate(${margin.left}, ${svgHeight - margin.bottom})`
-        );
+        )
+        .attr("stroke-width", 1.5);
 
       const yAxisGroup = root
         .append("g")
         .attr(
           "transform",
           `translate(${margin.left}, ${svgHeight - margin.bottom})`
-        );
+        )
+        .attr("stroke-width", 1.5);
 
       const xScale = d3
         .scaleLinear()

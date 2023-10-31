@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Typography, Grid, TextField, Stack, Button } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Grid,
+  TextField,
+  Stack,
+  Button,
+} from "@mui/material";
 import { SingleValueEntry } from "./SingleValueEntry";
 import { PeakTable } from "./PeakTable";
 import { InstrumentParameters, MethodParameters, PeakDataItem } from "../types";
@@ -54,19 +61,30 @@ const InstrumentParameterDataEntry = ({
   }, [t0, td, N]);
 
   return (
-    <Grid container rowSpacing={4}>
-      <Grid item xs={12}>
-        <Grid container rowSpacing={2}>
-          <Grid item xs={6}>
-            <SingleValueEntry label="t0" value={t0} setValue={setT0} />
-          </Grid>
-          <Grid item xs={6}>
-            <SingleValueEntry label="td" value={td} setValue={setTd} />
-          </Grid>
-          <Grid item xs={6}>
-            <SingleValueEntry label="N" value={N} setValue={setN} />
-          </Grid>
-        </Grid>
+    <Grid container rowSpacing={2}>
+      <Grid item xs={6}>
+        <SingleValueEntry
+          label={`t\u2080`}
+          descriptor="Dwell time (s)"
+          value={t0}
+          setValue={setT0}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SingleValueEntry
+          label={`t\u1d48`}
+          descriptor="Dead time (s)"
+          value={td}
+          setValue={setTd}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SingleValueEntry
+          label="N"
+          descriptor="Plate number"
+          value={N}
+          setValue={setN}
+        />
       </Grid>
     </Grid>
   );
@@ -90,20 +108,38 @@ const MethodParameterDataEntry = ({
   );
 
   return (
-    <Grid item xs={12}>
-      <Grid container rowSpacing={2}>
-        <Grid item xs={6}>
-          <SingleValueEntry label="B0" value={b0} setValue={setB0} />
-        </Grid>
-        <Grid item xs={6}>
-          <SingleValueEntry label="Bf" value={bf} setValue={setBf} />
-        </Grid>
-        <Grid item xs={6}>
-          <SingleValueEntry label="tG1" value={tg1} setValue={setTg1} />
-        </Grid>
-        <Grid item xs={6}>
-          <SingleValueEntry label="tG2" value={tg2} setValue={setTg2} />
-        </Grid>
+    <Grid container rowSpacing={2}>
+      <Grid item xs={6}>
+        <SingleValueEntry
+          label={`B\u2080`}
+          descriptor="Initial % organic"
+          value={b0}
+          setValue={setB0}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SingleValueEntry
+          label={`B\u1da0`}
+          descriptor="Final % organic"
+          value={bf}
+          setValue={setBf}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SingleValueEntry
+          label={`tG\u2081`}
+          descriptor="Run 1 gradient time (s)"
+          value={tg1}
+          setValue={setTg1}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SingleValueEntry
+          label={`tG\u2082`}
+          descriptor="Run 2 gradient time (s)"
+          value={tg2}
+          setValue={setTg2}
+        />
       </Grid>
     </Grid>
   );
@@ -123,29 +159,30 @@ export function DataEntry({
   };
 
   return (
-    <Stack
-      justifyContent="space-between"
-      alignItems="center"
+    <Paper
+      elevation={4}
       sx={{
+        backgroundColor: "#ffffff",
+        borderRadius: "0.5rem",
         height: "100%",
-        backgroundColor: "#d6d6d6",
-        display: "flex",
-        flexGrow: 1,
-        flexDirection: "column",
       }}
     >
-      <Stack spacing={6}>
-        <Typography
-          variant="h6"
-          sx={{
-            px: 2,
-            pt: 1,
-          }}
-        >
-          Data
-        </Typography>
-        <Stack spacing={3}>
-          <Grid container rowSpacing={4}>
+      <Stack alignItems="center" spacing={2} sx={{ pb: 3 }}>
+        <Stack spacing={2.5}>
+          <Typography
+            sx={{
+              backgroundColor: "#30115c",
+              borderRadius: "0.5rem 0.5rem 0px 0px",
+              py: 0.5,
+              px: 1.5,
+              fontWeight: "bold",
+              color: "#ffffff",
+              fontSize: 14,
+            }}
+          >
+            Data
+          </Typography>
+          <Stack spacing={1}>
             <InstrumentParameterDataEntry
               instrumentParameters={instrumentParameters}
               setInstrumentParameters={setInstrumentParameters}
@@ -154,17 +191,17 @@ export function DataEntry({
               methodParameters={methodParameters}
               setMethodParameters={setMethodParameters}
             />
-          </Grid>
-          <PeakTable peakData={peakData} setPeakData={setPeakData} />
+            <PeakTable peakData={peakData} setPeakData={setPeakData} />
+          </Stack>
         </Stack>
+        <Button
+          variant="outlined"
+          onClick={handleUpdateClicked}
+          sx={{ width: "fit-content" }}
+        >
+          Update
+        </Button>
       </Stack>
-      <Button
-        variant="outlined"
-        onClick={handleUpdateClicked}
-        sx={{ mb: 2, width: "fit-content" }}
-      >
-        Update
-      </Button>
-    </Stack>
+    </Paper>
   );
 }

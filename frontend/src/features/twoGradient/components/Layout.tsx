@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Paper } from "@mui/material";
+import { Box } from "@mui/material";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -7,14 +7,12 @@ type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <Paper
-      elevation={6}
+    <Box
       sx={{
         height: "87vh",
-        border: 4,
       }}
     >
       {children}
-    </Paper>
+    </Box>
   );
 };
